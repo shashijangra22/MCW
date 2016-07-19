@@ -1,0 +1,25 @@
+-welcome.blade.php is removed
+-test.blade.php is removed
+-postController@loadmore does'nt exist, its route is removed
+
+-Validators are fixed in registration form
+-nav-bar changed a little bit
+-home1 is changed, a center feed column only so far
+	-when an image is uploaded for a post, a check sign will confirm the upload
+	-Post button is disabled untill someone enters some text first
+	-LIKE BUTTON is added though needed some improvements on the front end only
+-profile page is changed a bit
+	-DP change is easy, click on image , select an image, done
+	-profile settings now have a new page
+-Models & relationships are used to reduce php code in files
+	for example : 
+		## {{--*/$pics=$users->where('username',$post->username)/*--}}
+		@foreach($pics as $pic)
+			{{--*/$pic_path=$pic->displaypic/*--}}
+		@endforeach ## 
+	is reduced to : 
+
+	{{$pic_path=$post->user->displaypic}}
+-some routes are added as per need
+-some functions are added to controllers as per need
+-all scripts are moved to bottom of page for faster loading

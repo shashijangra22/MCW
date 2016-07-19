@@ -1,0 +1,20 @@
+.padding-top-10{
+	padding-top: 10px;
+}
+
+body {
+	margin-top:10px; 
+}
+
+@media (max-width: 768px){
+	.input-group{
+		margin-bottom: 5px;
+		
+	}	
+
+	.mar-btm{
+		margin-bottom: 5px;
+	}
+
+
+}

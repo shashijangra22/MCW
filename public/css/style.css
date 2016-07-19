@@ -1,0 +1,27 @@
+body{
+	margin-top:60px;
+}
+.navbar_custom{
+	background:linear-gradient(black,#300032);
+}
+
+.panel_custom{
+	
+	border:none;
+	color:#c43235;
+	box-shadow:10px 10px 10px black;
+	background:linear-gradient(to left,black 70%,#300032);
+}
+#mcw{
+	background:linear-gradient(to right,black,#300032 70%);
+	box-shadow:10px 10px 10px #300032;
+}
+#logo{
+	background:linear-gradient(to left,black 70%,#300032);
+	box-shadow:10px 10px 10px #300032;
+}
+#bcas{
+	background:linear-gradient(to right,black,#300032 70%);
+	box-shadow:10px 10px 10px black;
+	
+}
