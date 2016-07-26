@@ -94,6 +94,16 @@
 			{!!str_replace('/?', '?', $posts->render());!!}
 		</div>
 </div>
+
+<div class="col-md-3">
+	<div class="panel panel-default" style="width:80%; height:200px; ">
+		<div class="panel-body" id="chatbox">
+
+		</div>
+		
+	</div>
+	<input type="text" name="text" id="input">
+</div>
 </div>
 @endsection
 
@@ -188,5 +198,27 @@ $('#mytext').change(function(){
 		$('#imagepreview').attr('src',a);
    		$('#imagemodal').modal('show'); 
 	}
-			
+
+
+
+	$(document).ready(function(){
+		$(document).keyup(function(e){
+			if(e.keyCode==13)
+			{
+				sendMessage();
+			}
+		});
+	});
+
+	function sendMessage(){
+		var text=$("#input").val();
+		$.ajax({
+			type:"POST"
+			url:"sendmessage"
+			data:text
+		})
+		.done(function(){
+			alert("hello");
+		});
+	}			
 @endsection

@@ -34,3 +34,6 @@ Route::post('updateprofile','UserController@updateProfile');
 
 Route::get('profile',['middleware' => 'auth','uses' => 'PagesController@getProfile']);
 Route::post('updatepic/{post}','UserController@updatePic');
+
+
+Route::post('sendmessage','ChatController@sendMessage');

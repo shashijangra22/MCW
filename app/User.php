@@ -13,6 +13,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
     public function likes()
     {
         return $this->hasMany(Like::class);
