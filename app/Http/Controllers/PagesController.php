@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use App\Like;
+use App\Chat;
 use Request;
 use Auth;
 use Illuminate\Support\Facades\View;
@@ -24,9 +25,10 @@ class PagesController extends Controller{
 	{
 		$user=Auth::user();
 		$user_all=User::all();
+		$chat=Chat::all();
 		$likes=Like::where('user_id',$user->id)->get();
 		$posts=Post::orderBy('created_at','desc')->paginate(5);
-		return view('home1')->with('posts',$posts)->with('users',$user_all)->with('user',$user)->with('likes',$likes);
+		return view('home1')->with('posts',$posts)->with('users',$user_all)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
 	}
 	public function test(){
 		echo 'hello';

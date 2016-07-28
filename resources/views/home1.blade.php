@@ -96,18 +96,31 @@
 </div>
 
 <div class="col-md-3">
-	<div class="panel panel-default" style="width:80%; height:200px; ">
+	<div class="panel panel-default" style="width:80%; height:200px; overflow-y: scroll;">
 		<div class="panel-body" id="chatbox">
+		@foreach($chats as $chat)
+		@if((Auth::user()->id)==($chat->user->id))
+		<br><div style="text-align:right">
+		@else
+		<br><div class="row">
+		@endif
+		{{$chat->message}}
+		</div><br>
+				
+		{{--*/$msgid=$chat->id/*--}}
+
+		@endforeach
 
 		</div>
 		
 	</div>
-	<input type="text" name="text" id="input">
+	<input type="text" name="text" id="message">
 </div>
 </div>
 @endsection
 
 @section('jscript')
+var x={{$msgid}};
 
 $('#image').change(function() {
   $("#check").removeClass("hidden");
@@ -202,6 +215,8 @@ $('#mytext').change(function(){
 
 
 	$(document).ready(function(){
+
+		
 		$(document).keyup(function(e){
 			if(e.keyCode==13)
 			{
@@ -209,16 +224,64 @@ $('#mytext').change(function(){
 			}
 		});
 	});
+	
+	$(document).ready(function(){
+		pullMsg();
 
-	function sendMessage(){
-		var text=$("#input").val();
+	});
+
+	function pullMsg()
+	{
+
+		ajaxMsg();
+		setTimeout(pullMsg,3000);
+
+	}
+	function ajaxMsg()
+	{
+		
 		$.ajax({
-			type:"POST"
-			url:"sendmessage"
-			data:text
+			type:"POST",
+			url:"pullMsg/"+x,
+			
+
 		})
-		.done(function(){
-			alert("hello");
+		.done(function(result){
+			var user={{Auth::user()->id}};
+			
+			for(var key in result)
+			{
+				if(result[key].user_id!=user)
+				{
+				$('#chatbox').append('<br><div style="text-align:left;">'+result[key].message+'</div><br>');
+
+				}
+				x=result[key].id;
+
+
+
+			}
+		
 		});
-	}			
+		}
+
+	function sendMessage()
+	{
+		var message=$("#message").val();
+		if(message.length>0)
+		{
+		$.ajax({
+			type:"POST",
+			data:{text:message},
+			url:"sendmessage"
+		})
+		.done(function(result){
+			$('#chatbox').append('<br><div style="text-align:right;">'+message+'</div><br>');
+			$("#message").val('');
+
+		}); 		
+	}
+	}
+
+				
 @endsection
