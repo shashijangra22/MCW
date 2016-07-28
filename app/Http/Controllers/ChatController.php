@@ -23,8 +23,15 @@ class ChatController extends Controller
  	public function pullMsg(Request $request,$mid)
  	{
  		//$mid=$request->input('mid');
+ 		while(1)
+ 		{
+
  		$chats=Chat::where('id','>',$mid)->get();
+ 		if($chats->count()>0)
  		return $chats;
+ 		else
+ 		sleep(1);
+ 	}
  	}
 
 

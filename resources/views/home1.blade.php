@@ -78,12 +78,26 @@
 							@break
 						@endif							
 					@endforeach
-						@if ($flag==0)
+						
+
+						<div class="row">
+						<div class="col-xs-3">
+							@if ($flag==0)
 							<a onclick="setlike('{{$user->id}}','{{$post->id}}','0');" href="#"><i id="likebutton" class="fa fa-heart-o"></i></a>
 						@else
 							<a onclick="setlike('{{$user->id}}','{{$post->id}}','{{$flag}}');" href="#"><i id="unlikebutton" class="fa fa-heart"></i></a>
 						@endif
-						{{$post->likes()->count()}}
+						{{$post->likes()->count()}}	
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control input-sm">
+						</div>
+						<div class="col-xs-2 col-xs-offset-1">
+								<button class=" btn btn-xs btn-danger pull-right" type="button">comment
+								</button>
+						</div>
+					</div>	
+
 					</div>
 				</div>
 			</div>
@@ -121,6 +135,7 @@
 
 @section('jscript')
 var x={{$msgid}};
+var xhr;
 
 $('#image').change(function() {
   $("#check").removeClass("hidden");
@@ -219,7 +234,7 @@ $('#mytext').change(function(){
 		
 		$(document).keyup(function(e){
 			if(e.keyCode==13)
-			{
+			{	
 				sendMessage();
 			}
 		});
@@ -234,13 +249,13 @@ $('#mytext').change(function(){
 	{
 
 		ajaxMsg();
-		setTimeout(pullMsg,3000);
+		
 
 	}
 	function ajaxMsg()
 	{
 		
-		$.ajax({
+	var xhr=$.ajax({
 			type:"POST",
 			url:"pullMsg/"+x,
 			
@@ -260,13 +275,16 @@ $('#mytext').change(function(){
 
 
 
+
 			}
+			ajaxMsg();
 		
 		});
 		}
 
 	function sendMessage()
 	{
+		
 		var message=$("#message").val();
 		if(message.length>0)
 		{
