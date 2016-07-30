@@ -30,80 +30,82 @@
 			</div>
 		</form>
 	</div>
-
 	@foreach($posts as $post)
 	<div class="row feed">
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">
+				<div class="panel-body">
 					<div class="row">
 						<div class="col-xs-2">
 							<img src="{{$post->user->displaypic}}" class="img-circle profile-pic" width="35" height="35" />	
 						</div>
-						<div class="col-xs-3 col-xs-offset-1">
+						<div class="col-xs-7 col-xs-offset-1">
 							<div class="row">
 							<a href="#" onclick="user_profile(event);">
 							{{ $post->user->username }}</a></div>
 							<div class="row" style="font-size:10px">
 							{{$post->created_at}}</div>
 						</div>
-						<div class="col-xs-2 col-xs-offset-4">
+						<div class="col-xs-2 pull-right">
 							@if ($post->user_id==$user->id)
 								<button class=" btn btn-sm btn-danger pull-right delButton" type="button" id="delButton" value="{{$post->id}}" >
 									<span class="glyphicon glyphicon-trash"/>
 								</button>
 							@endif
 						</div>
-					</div>	
-				</div>
-				<div class="panel-body">
+					</div>
+					<hr>
 					<div class="row" style="margin:auto">
 						{{$post->data}}
 					</div>
-	               	@if($post->path!=NULL)
-	               		<br>  
+					<hr>
+	               	@if($post->path!=NULL)  
 						<div class="row" style="overflow:hidden; margin:auto">
 							<a class="pop" onclick="pop('{{$post->path}}');" href="#">
 								<img id="imagesource" class="thumbnail img-responsive" src="{{$post->path}}"/>
 							</a>
 						</div>
 					@endif
-				</div>
-				<div class="panel-footer">
-					<div class="row" id="mydiv" style="margin:auto">
-					{{--*/$flag=0/*--}}
-					@foreach ($likes as $like)
-						@if ($post->id==$like->post_id)
-							{{--*/$flag=$like->id/*--}}
-							@break
-						@endif							
-					@endforeach
-						
-
-						<div class="row">
-						<div class="col-xs-3">
-							@if ($flag==0)
-							<a onclick="setlike('{{$user->id}}','{{$post->id}}','0');" href="#"><i id="likebutton" class="fa fa-heart-o"></i></a>
-						@else
-							<a onclick="setlike('{{$user->id}}','{{$post->id}}','{{$flag}}');" href="#"><i id="unlikebutton" class="fa fa-heart"></i></a>
+					<div class="row" style="font-size: 13px;margin:auto">
+						<b>{{$post->likes()->count()}}</b> Likes <b>{{$post->comments()->count()}}</b> Comments
+					</div>
+					@foreach($comments as $comment)
+						@if ($comment->post_id==$post->id)
+						<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto">
+							<img src="{{$comment->user->displaypic}}" class="img-circle profile-pic" width="12" height="12" />	<b>{{$comment->user->username}}</b> {{$comment->data}}
+						</div>
 						@endif
-						{{$post->likes()->count()}}	
+					@endforeach
+					<br>
+					<div class="row" style="margin:auto">
+					<div class="row">
+						<div class="col-xs-1" style="padding-top:3px">
+							@if($likes->contains('post_id',$post->id))
+							<a class="likebutton" href="#" value="{{$post->id}}"><i class="heart fa fa-heart" style="font-size:22px"></i></a>	
+							@else
+							<a class="likebutton"href="#" value="{{$post->id}}"><i class="heart fa fa-heart-o" style="font-size:22px"></i></a>
+							@endif
 						</div>
-						<div class="col-xs-6">
-							<input type="text" class="form-control input-sm">
-						</div>
-						<div class="col-xs-2 col-xs-offset-1">
-								<button class=" btn btn-xs btn-danger pull-right" type="button">comment
-								</button>
-						</div>
-					</div>	
-
+							<div class="col-xs-9 col-md-10">
+								<input onkeydown = "if (event.keyCode == 13) addComment('{{$user->id}}','{{$post->id}}')" id="{{$post->id}}" type="text" class="form-control input-sm" placeholder="write a comment :)">
+							</div>
+							<div class="col-xs-1 pull-right">
+								<button onclick="addComment('{{$user->id}}','{{$post->id}}');" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
+							</div>
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 @endforeach
+
+
+
+
+
+
+
 		<div class="row text-center" id='posts'>
 			{!!str_replace('/?', '?', $posts->render());!!}
 		</div>
@@ -112,6 +114,7 @@
 <div class="col-md-3">
 	<div class="panel panel-default" style="width:80%; height:200px; overflow-y: scroll;">
 		<div class="panel-body" id="chatbox">
+		{{--*/$msgid=-1/*--}}
 		@foreach($chats as $chat)
 		@if((Auth::user()->id)==($chat->user->id))
 		<br><div style="text-align:right">
@@ -199,7 +202,6 @@ $('#mytext').change(function(){
 			{
 				$("#test").html(result)
 			}
-			$("#loadingdiv").addClass("hidden");
 			});
 		
 			

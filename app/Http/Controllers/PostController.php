@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Post;
 use App\Like;
 use App\User;
+use App\Comment;
 use Auth;
 use Image;
 
@@ -49,10 +50,15 @@ class PostController extends Controller
     {
         $post=Post::find($id);
         $image=$post->path;
-        $likes=Like::where('post_id',$id)->get();
+        $likes=Like::withTrashed()->where('post_id',$id)->get();
         foreach ($likes as $like) 
         {
-            $like->delete();
+            $like->forceDelete();
+        }
+        $comments=Comment::where('post_id',$id)->get();
+        foreach ($comments as $comment) 
+        {
+            $comment->delete();
         }
         $post->delete();
         if($image!=NULL)

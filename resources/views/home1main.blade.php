@@ -95,28 +95,56 @@
 
 @yield('jscript')
 
-function setlike(value1,value2,value3)
+$(".likebutton").on("click",function(event)
 {
-    $.ajax({
+
+	 var el=$(this);
+	 el.css("pointer-events","none");
+	 var pid=$(this).attr('value');
+	 //var count=$(this).siblings('p').html();
+
+  		 $.ajax({
 			url: "likepost",
 			type:"POST",
-			data:{user_id:value1,post_id:value2,onezero:value3}
+			data:{post_id:pid}
+			})
+		.done(function(result){
+
+			if(result=='like')
+			{
+				//el.siblings('p').html(++count);
+				el.children("i").removeClass('fa fa-heart-o');
+				el.children('i').addClass('fa fa-heart');
+
+			}
+			else if(result=='unlike')
+			{
+				//el.siblings('p').html(--count);
+				el.children("i").removeClass('fa fa-heart');
+				el.children('i').addClass('fa fa-heart-o');
+
+			}
+			el.css("pointer-events","auto");
+			});
+});
+
+function addComment(value1,value2) 
+{
+	var value3=$('#'+value2).val().trim();
+	if (value3.length<=0) { return false;}
+	$.ajax({
+			url: "savecomment",
+			type:"POST",
+			data:{user_id:value1,post_id:value2,data:value3}
 			})
 		.done(function(result){
 			if(result==0)
 			{
-				$('#likebutton').removeClass('fa-heart-o');
-				$('#likebutton').addClass('fa-heart');
-				window.location.replace('home');
-			}
-			if(result==1)
-			{
-				$('#unlikebutton').removeClass('fa-heart');
-				$('#unlikebutton').addClass('fa-heart-o');
 				window.location.replace('home');
 			}
 			});
 }
+
 
 $(".delButton").on("click",function(event)
 {

@@ -15,25 +15,28 @@ class LikeController extends Controller
 {
     public function setlike(Request $request)
     {
-    	if ($request->onezero==0) 
-    	{
-    		$like=new Like;
-	        $like->user_id=$request->user_id;
-	        $like->post_id=$request->post_id;
-	        $like->save();
-            $post=Post::find($request->post_id);
-            $post->likes++;
-            $post->save();
-            return "0";
-    	}
+
+        $userid=Auth::id();
+        $postid=$request->post_id;
+        if(Like::where('post_id',$postid)->where('user_id',$userid)->exists())
+        {
+            $existing_like=Like::where('post_id','=',$postid)->where('user_id','=',$userid)->first();
+            $existing_like->delete();
+            return 'unlike';
+
+
+            
+        }
     	else
-    	{
-    		$like=Like::find($request->onezero);
-    		$like->delete();
-            $post=Post::find($request->post_id);
-            $post->likes--;
-            $post->save();
-    		return "1";
-    	}
-    }
+        {
+            $new_like=new Like;
+            $new_like->post_id=$postid;
+            $new_like->user_id=$userid;
+            $new_like->save();
+            return 'like';
+        }
+
+    	
+    
+}
 }
