@@ -16,6 +16,18 @@ use Image;
 
 class PostController extends Controller
 {
+
+
+
+    public function checkPost(Request $request)
+    {
+        $pid=$request->pid;                                                            
+         $new=Post::where('id','>',$pid)->get()->count();
+         return $new;
+    }
+
+
+
     public function store(Request $request)
     {
         $Text=$_POST["mytext"];
@@ -50,16 +62,8 @@ class PostController extends Controller
     {
         $post=Post::find($id);
         $image=$post->path;
-        $likes=Like::withTrashed()->where('post_id',$id)->get();
-        foreach ($likes as $like) 
-        {
-            $like->forceDelete();
-        }
-        $comments=Comment::where('post_id',$id)->get();
-        foreach ($comments as $comment) 
-        {
-            $comment->delete();
-        }
+        Like::where('post_id',$id)->delete();
+        Comment::where('post_id',$id)->delete();
         $post->delete();
         if($image!=NULL)
         File::delete($image);

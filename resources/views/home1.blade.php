@@ -23,26 +23,35 @@
 								
 						</div>
 						<div class="col-xs-2">
-							<button name="post" id="post" type="submit" disabled="true" class="pull-right btn btn-sm btn-info">Post</button>				
+							<button name="post" id="post" type="submit" disabled="true" class="pull-right btn btn-sm btn-info">Post <i id="PostLoader" class="hidden fa fa-refresh fa-spin fa-fw"></i>
+							</button>	
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
+
 	</div>
+	{{--*/$postflag=0/*--}}
+	{{--*/$postid=-1/*--}}
 	@foreach($posts as $post)
+	@if($postflag==0)
+	{{--*/$postid=$post->id/*--}}
+	{{--*/$postflag=1/*--}}
+	@endif
+	
 	<div class="row feed">
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="row">
+				<div class="panel-body" >
+					<div class="row" >
 						<div class="col-xs-2">
 							<img src="{{$post->user->displaypic}}" class="img-circle profile-pic" width="35" height="35" />	
 						</div>
 						<div class="col-xs-7 col-xs-offset-1">
 							<div class="row">
-							<a href="#" onclick="user_profile(event);">
-							{{ $post->user->username }}</a></div>
+							<!-- <a href="#" onclick="user_profile(event);"> -->
+							{{ $post->user->username }}<!-- </a> --></div>
 							<div class="row" style="font-size:10px">
 							{{$post->created_at}}</div>
 						</div>
@@ -56,7 +65,7 @@
 					</div>
 					<hr>
 					<div class="row" style="margin:auto">
-						{{$post->data}}
+						{!!nl2br($post->data)!!}
 					</div>
 					<hr>
 	               	@if($post->path!=NULL)  
@@ -67,15 +76,19 @@
 						</div>
 					@endif
 					<div class="row" style="font-size: 13px;margin:auto">
-						<b>{{$post->likes()->count()}}</b> Likes <b>{{$post->comments()->count()}}</b> Comments
+						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}likes" style="display:inline;">{{$post->likes()->count()}}</p></b> Likes</span>
+						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}comments" style="display:inline;">{{$post->comments()->count()}}</p></b> Comments</span>
 					</div>
+					<div id="{{$post->id}}commentbox">
 					@foreach($comments as $comment)
 						@if ($comment->post_id==$post->id)
+
 						<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto">
 							<img src="{{$comment->user->displaypic}}" class="img-circle profile-pic" width="12" height="12" />	<b>{{$comment->user->username}}</b> {{$comment->data}}
 						</div>
 						@endif
 					@endforeach
+					</div>
 					<br>
 					<div class="row" style="margin:auto">
 					<div class="row">
@@ -83,14 +96,14 @@
 							@if($likes->contains('post_id',$post->id))
 							<a class="likebutton" href="#" value="{{$post->id}}"><i class="heart fa fa-heart" style="font-size:22px"></i></a>	
 							@else
-							<a class="likebutton"href="#" value="{{$post->id}}"><i class="heart fa fa-heart-o" style="font-size:22px"></i></a>
+							<a class="likebutton" href="#" value="{{$post->id}}"><i class="heart fa fa-heart-o" style="font-size:22px"></i></a>
 							@endif
 						</div>
 							<div class="col-xs-9 col-md-10">
-								<input onkeydown = "if (event.keyCode == 13) addComment('{{$user->id}}','{{$post->id}}')" id="{{$post->id}}" type="text" class="form-control input-sm" placeholder="write a comment :)">
+								<input onkeydown = "if (event.keyCode == 13) addComment('{{$post->id}}');" id="{{$post->id}}" type="text" class="form-control input-sm" placeholder="write a comment :)">
 							</div>
 							<div class="col-xs-1 pull-right">
-								<button onclick="addComment('{{$user->id}}','{{$post->id}}');" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
+								<button onclick="addComment('{{$post->id}}');" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
 							</div>
 					</div>
 					</div>
@@ -111,33 +124,40 @@
 		</div>
 </div>
 
-<div class="col-md-3">
-	<div class="panel panel-default" style="width:80%; height:200px; overflow-y: scroll;">
-		<div class="panel-body" id="chatbox">
-		{{--*/$msgid=-1/*--}}
-		@foreach($chats as $chat)
-		@if((Auth::user()->id)==($chat->user->id))
-		<br><div style="text-align:right">
-		@else
-		<br><div class="row">
-		@endif
-		{{$chat->message}}
-		</div><br>
-				
-		{{--*/$msgid=$chat->id/*--}}
-
-		@endforeach
-
-		</div>
 		
+		<div class="panel panel-default" id="chat-panel" style="bottom: 0; right:0;position:fixed;  margin:-1px !important; border-top:none;">
+			<a data-toggle="collapse" href="#collapse1"><div style="background: #0084FF; color:white;" class="panel-heading text-center" id="big-chat" ><b>Chatbox</b><span class="badge">0</span></div></a>
+			<!-- <a data-toggle="collapse" href="#collapse1" id="small-chat" ><button class="btn btn-sm btn-info pull-right"><span class="glyphicon glyphicon-comment"></span></button></a> -->
+			<div id="collapse1" class="panel-collapse collapse">
+				<div class="scrollbar" id="scroll-chat">
+					<div class="panel-body scrollbox-content" id="chatbox" >
+						{{--*/$msgid=-1/*--}}
+						@foreach($chats as $chat)
+							@if((Auth::user()->id)==($chat->user->id))
+								<div class="row" style="padding:4px">
+									<div class="pull-right rightmsg">{{$chat->message}}</div>
+								</div>
+							@else
+								<div class="row" style="padding:4px">
+									<div class="leftmsg pull-left">{{$chat->message}}</div>
+								</div>
+							@endif	
+							{{--*/$msgid=$chat->id/*--}}
+						@endforeach
+					</div>
+				</div>
+				<div class="panel-footer">
+					<input onkeydown = "if (event.keyCode == 13) sendMessage();" class="form-control" type="text" name="text" id="message" placeholder="Enter your message :)">
+				</div>
+			</div>
+		</div>		
 	</div>
-	<input type="text" name="text" id="message">
-</div>
-</div>
+
 @endsection
 
 @section('jscript')
 var x={{$msgid}};
+var postid={{$postid}};
 var xhr;
 
 $('#image').change(function() {
@@ -147,13 +167,7 @@ $('#mytext').change(function(){
 	$('#post').disabled='false';
 });
 
-	$.ajaxSetup({
-		headers: 
-		{                  
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-		});
-
+	
 	$(document).ready(function(e){
 		
 		var validator=$("#post-form").bootstrapValidator({
@@ -181,7 +195,7 @@ $('#mytext').change(function(){
 		.on("success.form.bv",function(e){
 			e.preventDefault();
 
-			$("#loadingdiv").removeClass("hidden");
+			$("#PostLoader").removeClass("hidden");
 			var formData = new FormData($("#post-form")[0]);
 		$.ajax({
 			url: "savedata",
@@ -209,6 +223,12 @@ $('#mytext').change(function(){
 		
 	
 	});
+
+
+
+
+
+
 	$(".profile-pic").on("error",function(){
 
 		$(this).attr("src","profile_pic/default.png")
@@ -231,63 +251,74 @@ $('#mytext').change(function(){
 
 
 
-	$(document).ready(function(){
 
 		
-		$(document).keyup(function(e){
-			if(e.keyCode==13)
-			{	
-				sendMessage();
-			}
-		});
-	});
 	
 	$(document).ready(function(){
 		pullMsg();
+		count=0;
+		$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
 
 	});
-
 	function pullMsg()
 	{
-
-		ajaxMsg();
+		if($.active==0)
+		{
 		
-
-	}
-	function ajaxMsg()
-	{
-		
-	var xhr=$.ajax({
+	$.ajax({
 			type:"POST",
-			url:"pullMsg/"+x,
+			url:"pullMsg",
+			data:{mid:x},
+
 			
 
 		})
 		.done(function(result){
-			var user={{Auth::user()->id}};
+			if(result!=0)
+			{
+			
 			
 			for(var key in result)
 			{
-				if(result[key].user_id!=user)
-				{
-				$('#chatbox').append('<br><div style="text-align:left;">'+result[key].message+'</div><br>');
-
-				}
+				$('#chatbox').append('<div class="row" style="padding:4px;"><div class="leftmsg pull-left">'+result[key].message+'</div></div>');
 				x=result[key].id;
+				count=count+1;
+
 
 
 
 
 			}
-			ajaxMsg();
+	
+				$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
+			}
+			if($( "#collapse1" ).is( ":visible" ))
+			{
+				
+				$("#big-chat").children('.badge').html('0');
+				count=0;
+				
+			}
+			else
+			{
+				$("#big-chat").children('.badge').html(count);	
+			}
+			
+			
+
 		
 		});
+		}
+		setTimeout(pullMsg,3000);
+		
+		
+
 		}
 
 	function sendMessage()
 	{
 		
-		var message=$("#message").val();
+		var message=$("#message").val().trim();
 		if(message.length>0)
 		{
 		$.ajax({
@@ -296,12 +327,48 @@ $('#mytext').change(function(){
 			url:"sendmessage"
 		})
 		.done(function(result){
-			$('#chatbox').append('<br><div style="text-align:right;">'+message+'</div><br>');
-			$("#message").val('');
+			$('#chatbox').append('<div class="row" style="padding:4px"><div class="pull-right rightmsg">'+message+'</div></div>');
+			$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
+			$("#message").val('');	
 
 		}); 		
 	}
 	}
+
+
+
+	$(document).ready(function(){
+	
+		newPost();
+	});
+		
+
+	function newPost(){
+		if($.active==0)
+		{
+			$.ajax({
+				type:'POST',
+				url:'newpost',
+				data:{pid:{{$postid}}},
+			})
+			.done(function(result){
+				$("#home-span").children('.badge').html(result);
+			
+			});
+			}
+			setTimeout(newPost,60000);
+
+			}
+	$(document).ajaxError(function(){
+		window.location.replace('home');
+	});
+		
+	function updateScroll(){
+    var element = document.getElementById("#chatbox");
+    element.scrollTop = element.scrollHeight;
+}
+
+	
 
 				
 @endsection

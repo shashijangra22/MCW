@@ -20,19 +20,19 @@ class ChatController extends Controller
     	$chat->save();
     	echo "done";
  	}
- 	public function pullMsg(Request $request,$mid)
+ 	public function pullMsg(Request $request)
  	{
- 		//$mid=$request->input('mid');
- 		while(1)
- 		{
-
- 		$chats=Chat::where('id','>',$mid)->get();
+ 		$mid=$request->input('mid');
+ 		$user=Auth::id();
+ 		$chats=Chat::where('id','>',$mid)->where('user_id','!=',$user)->get();
  		if($chats->count()>0)
+ 		{
  		return $chats;
- 		else
- 		sleep(1);
  	}
+ 		else 
+ 		return '0';
  	}
+ 	
 
 
 }

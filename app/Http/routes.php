@@ -37,5 +37,6 @@ Route::post('updatepic/{post}','UserController@updatePic');
 
 
 Route::post('sendmessage','ChatController@sendMessage');
-Route::post('pullMsg/{mid}','ChatController@pullMsg');
+Route::post('/pullMsg','ChatController@pullMsg');
 Route::post('savecomment','CommentController@savecomment');
+Route::post('/newpost','PostController@checkPost');

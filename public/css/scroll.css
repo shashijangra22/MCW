@@ -1,0 +1,62 @@
+.scrollbar
+{
+	overflow-y: scroll;
+	height:400px;
+	visibility: hidden;
+}
+.scrollbox-content,
+.scrollbar:hover{
+	visibility: visible;
+}
+.scrollbar::-webkit-scrollbar-track
+{
+	/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+	border-radius: 10px;
+	background-color: white;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: white;
+	/*visibility: hidden;*/
+}
+.scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/
+	background-color: #0084FF;
+}
+.rightmsg
+{
+	border-radius: 5px;
+	padding: 10px;
+	max-width: 45%;
+	color: white;
+	background: #0084FF;
+	word-wrap: break-word;
+}
+.leftmsg
+{
+	border-radius: 5px;
+	padding: 10px;
+	max-width: 45%;
+	background: #F1F0F0;
+	word-wrap: break-word;
+
+}
+
+
+@media(max-width:768px)
+{
+	#chat-panel{
+		width: 100%;
+		margin-left: 0px !important;
+	}
+}
+@media(min-width: 768px)
+{
+	#chat-panel{
+		width:350px;
+	}
+}

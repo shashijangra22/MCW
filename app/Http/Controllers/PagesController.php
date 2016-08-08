@@ -20,7 +20,7 @@ class PagesController extends Controller{
 	public function getHome(){
 		$check=Auth::check();
 		
-		return view('home')->with('check',$check);
+		return view('homemain')->with('check',$check);
 	}
 	public function getHome1()
 	{
@@ -38,9 +38,10 @@ class PagesController extends Controller{
 
 	public function getProfile(){
 		$user=Auth::user();
+		$comments=Comment::all();
 		$likes=Like::where('user_id',$user->id)->get();
 		$posts=Post::where('user_id',$user->id)->orderBy('created_at','desc')->paginate(5);
-		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes);
+		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('comments',$comments);
 
 	}
 public function getRandomProfile($user){
