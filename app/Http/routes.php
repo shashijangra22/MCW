@@ -40,3 +40,5 @@ Route::post('sendmessage','ChatController@sendMessage');
 Route::post('/pullMsg','ChatController@pullMsg');
 Route::post('savecomment','CommentController@savecomment');
 Route::post('/newpost','PostController@checkPost');
+Route::post('loadmore','PostController@loadmore');
+Route::post('showcomments','CommentController@showComments');

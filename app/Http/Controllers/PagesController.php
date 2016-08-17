@@ -27,13 +27,9 @@ class PagesController extends Controller{
 		$user=Auth::user();
 		$user_all=User::all();
 		$chat=Chat::all();
-		$comments=Comment::all();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
-		$posts=Post::orderBy('created_at','desc')->paginate(5);
-		return view('home1')->with('posts',$posts)->with('users',$user_all)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('comments',$comments);
-	}
-	public function test(){
-		echo 'hello';
+		$posts=Post::orderBy('created_at','desc')->take(5)->get();
+		return view('home1')->with('posts',$posts)->with('users',$user_all)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
 	}
 
 	public function getProfile(){
@@ -63,6 +59,8 @@ public function getRandomProfile($user){
 
 	}
 }
+
+
 
 }
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Chat;
 use Auth;
+use DB;
 
 
 class ChatController extends Controller
@@ -24,8 +25,9 @@ class ChatController extends Controller
  	{
  		$mid=$request->input('mid');
  		$user=Auth::id();
- 		$chats=Chat::where('id','>',$mid)->where('user_id','!=',$user)->get();
- 		if($chats->count()>0)
+ 		//$chats=Chat::where('id','>',$mid)->where('user_id','!=',$user)->get();
+ 		$chats=DB::table('chats')->join('users','chats.user_id','=','users.id')->where('chats.id','>',$mid)->where('chats.user_id','!=',$user)->get(array('chats.*','users.username'));
+ 		if(count($chats))
  		{
  		return $chats;
  	}

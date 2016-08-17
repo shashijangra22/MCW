@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-6 col-md-offset-3" id="main-feed">
 	<div>
 		<form id="post-form" role="form" action="#" enctype="multipart/form-data">
 		{{ csrf_field() }}
@@ -34,11 +34,15 @@
 	</div>
 	{{--*/$postflag=0/*--}}
 	{{--*/$postid=-1/*--}}
+	{{--*/$post_id=-1/*--}}
 	@foreach($posts as $post)
+
 	@if($postflag==0)
 	{{--*/$postid=$post->id/*--}}
 	{{--*/$postflag=1/*--}}
 	@endif
+	{{--*/$post_id=$post->id/*--}}
+
 	
 	<div class="row feed">
 		<div class="col-md-12">
@@ -79,15 +83,9 @@
 						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}likes" style="display:inline;">{{$post->likes()->count()}}</p></b> Likes</span>
 						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}comments" style="display:inline;">{{$post->comments()->count()}}</p></b> Comments</span>
 					</div>
+					<a id="{{$post->id}}show" data-flag="0" onclick="show_comments({{$post->id}})" href="#/">show comments</a>
 					<div id="{{$post->id}}commentbox">
-					@foreach($comments as $comment)
-						@if ($comment->post_id==$post->id)
-
-						<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto">
-							<img src="{{$comment->user->displaypic}}" class="img-circle profile-pic" width="12" height="12" />	<b>{{$comment->user->username}}</b> {{$comment->data}}
-						</div>
-						@endif
-					@endforeach
+						
 					</div>
 					<br>
 					<div class="row" style="margin:auto">
@@ -112,22 +110,18 @@
 		</div>
 	</div>
 @endforeach
+	<div id="loadmore"></div>
 
-
-
-
-
-
-
-		<div class="row text-center" id='posts'>
-			{!!str_replace('/?', '?', $posts->render());!!}
-		</div>
+<div id="button" class="text-center">
+	<button class="btn btn-info" id="loadmore-button"> loadmore</button>
 </div>
 
+
 		
-		<div class="panel panel-default" id="chat-panel" style="bottom: 0; right:0;position:fixed;  margin:-1px !important; border-top:none;">
-			<a data-toggle="collapse" href="#collapse1"><div style="background: #0084FF; color:white;" class="panel-heading text-center" id="big-chat" ><b>Chatbox</b><span class="badge">0</span></div></a>
-			<!-- <a data-toggle="collapse" href="#collapse1" id="small-chat" ><button class="btn btn-sm btn-info pull-right"><span class="glyphicon glyphicon-comment"></span></button></a> -->
+		
+		<div class="panel panel-default" id="chat-panel" style="bottom: 0; right:0;position:fixed;  margin:-1px !important; border-top:none; max-height:60%s; ">
+			<a data-toggle="collapse" id="big-chat" href="#collapse1"><div style="background: #0084FF; color:white;" class="panel-heading text-center"  ><b>Chatbox</b><span class="badge">0</span></div></a>
+			
 			<div id="collapse1" class="panel-collapse collapse">
 				<div class="scrollbar" id="scroll-chat">
 					<div class="panel-body scrollbox-content" id="chatbox" >
@@ -135,19 +129,28 @@
 						@foreach($chats as $chat)
 							@if((Auth::user()->id)==($chat->user->id))
 								<div class="row" style="padding:4px">
-									<div class="pull-right rightmsg">{{$chat->message}}</div>
+									<div class="pull-right rightmsg">{{$chat->message}}<p class="chattime">{{date("h:i",strtotime($chat->created_at))}}</p></div>
 								</div>
 							@else
 								<div class="row" style="padding:4px">
-									<div class="leftmsg pull-left">{{$chat->message}}</div>
+									<div class="leftmsg pull-left"><p class="chatinfo">{{$chat->user->username}} | {{date("h:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
 								</div>
 							@endif	
 							{{--*/$msgid=$chat->id/*--}}
 						@endforeach
 					</div>
 				</div>
-				<div class="panel-footer">
-					<input onkeydown = "if (event.keyCode == 13) sendMessage();" class="form-control" type="text" name="text" id="message" placeholder="Enter your message :)">
+				<div class="panel-footer" style="background:white;2">
+				<div class="row">
+					<div class="col-xs-10">
+						<input onkeydown = "if (event.keyCode == 13) sendMessage();" class="form-control" type="text" name="text" id="message" placeholder="Enter your message :)">
+					</div>
+					<div class="col-xs-2">
+						<button class="btn btn-danger pull-right" onclick="sendMessage();"><i class="fa fa-send"></i></button>
+					</div>
+
+				</div>
+					
 				</div>
 			</div>
 		</div>		
@@ -158,7 +161,7 @@
 @section('jscript')
 var x={{$msgid}};
 var postid={{$postid}};
-var xhr;
+var post_id={{$post_id}};
 
 $('#image').change(function() {
   $("#check").removeClass("hidden");
@@ -269,6 +272,7 @@ $('#mytext').change(function(){
 			type:"POST",
 			url:"pullMsg",
 			data:{mid:x},
+			dataType:'json'
 
 			
 
@@ -280,7 +284,12 @@ $('#mytext').change(function(){
 			
 			for(var key in result)
 			{
-				$('#chatbox').append('<div class="row" style="padding:4px;"><div class="leftmsg pull-left">'+result[key].message+'</div></div>');
+				var today= new Date(result[key].created_at);
+				var hour=today.getHours();
+				var minutes=today.getMinutes();
+
+
+				$('#chatbox').append('<div class="row" style="padding:4px;"><div class="leftmsg pull-left"><p class="chatinfo">'+result[key].username+' | '+hour+':'+minutes+'</p>'+result[key].message+'</div></div>');
 				x=result[key].id;
 				count=count+1;
 
@@ -292,6 +301,7 @@ $('#mytext').change(function(){
 	
 				$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
 			}
+
 			if($( "#collapse1" ).is( ":visible" ))
 			{
 				
@@ -315,8 +325,21 @@ $('#mytext').change(function(){
 
 		}
 
+		function checktime(i)
+		{
+
+			if(i < 10)
+			{
+				i='0'+i;
+
+			}
+			return i;
+		}
 	function sendMessage()
 	{
+		var today= new Date();
+		var hour=checktime(today.getHours());
+		var minutes=checktime(today.getMinutes());
 		
 		var message=$("#message").val().trim();
 		if(message.length>0)
@@ -327,7 +350,7 @@ $('#mytext').change(function(){
 			url:"sendmessage"
 		})
 		.done(function(result){
-			$('#chatbox').append('<div class="row" style="padding:4px"><div class="pull-right rightmsg">'+message+'</div></div>');
+			$('#chatbox').append('<div class="row" style="padding:4px"><div class="pull-right rightmsg">'+message+'<p class="chattime">'+hour+':'+minutes+'</p></div></div>');
 			$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
 			$("#message").val('');	
 
@@ -359,14 +382,83 @@ $('#mytext').change(function(){
 			setTimeout(newPost,60000);
 
 			}
-	$(document).ajaxError(function(){
-		window.location.replace('home');
-	});
+	
 		
-	function updateScroll(){
-    var element = document.getElementById("#chatbox");
-    element.scrollTop = element.scrollHeight;
+
+$(document).ready(function(){
+$(".scrollbar").css('height',$(window).height()*0.5);	
+});
+
+$("#loadmore-button").on("click",function(e){
+	e.preventDefault();
+	$.ajax({
+		type:'POST',
+		url:'loadmore',
+		data:{pid:post_id},
+		dataType:'json'
+		
+	})
+	.done(function(result){
+		for(var key in result)
+		{
+			
+			
+			$("#loadmore").append('<div class="row" ><div class=" panel panel-default"><div class><div class="panel-body">'+result[key].data+'</div></div></div>');
+			post_id=result[key].id;
+
+	
+		}
+
+	});
+
+	
+});
+
+function show_comments(pid)
+{
+var flag=$("#"+pid+"show").data("flag");
+
+if(flag==0)
+{
+$.ajax({
+	type:'POST',
+	url:'showcomments',
+	data:{pid:pid}
+})
+.done(function(result){
+		$('#'+pid+'commentbox').empty();
+		if(result.length==0)
+		{
+			$("#"+pid+"show").css("display",'none');
+			$('#'+pid+'commentbox').append('<div class="row text-center">no comments to show</div>');		
+		}
+		else
+		{
+	for(var key in result)
+	{
+		$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="img-circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');
+	}
+	
+	$("#"+pid+"show").data('flag',1);
+	$("#"+pid+"show").html("hide comments");
+	}
+
+
+});
 }
+else if(flag==1)
+{
+$('#'+pid+'commentbox').empty();
+$("#"+pid+"show").data('flag',0);
+$("#"+pid+"show").html("show comments");
+
+
+}
+
+}
+
+
+
 
 	
 

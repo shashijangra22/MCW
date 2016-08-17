@@ -157,8 +157,18 @@ $(".likebutton").on("click",function(event)
 	 	.done(function(result){
 	 		if(result==0)
 			{
+				if($('#'+pid+'show:visible').length==0 || $('#'+pid+'commentbox').is(':empty'))
+				{
+					$("#"+pid+"show").data('flag',1);
+					$("#"+pid+"show").html("hide comments");
+					$('#'+pid+'commentbox').empty();
+			}
 				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="{{Auth::user()->displaypic}}" class="img-circle profile-pic" width="12" height="12" />	<b>{{Auth::user()->username}}</b> '+comment+'</div>');
 				$("p[id="+pid+"comments]").html(++count);
+				
+				$('#'+pid+'show').css("display","block");
+				//$("#"+pid+"show").html("show previous comments");
+				
 				//window.location.replace('home'));
 			}
 			$('#'+pid).val('');

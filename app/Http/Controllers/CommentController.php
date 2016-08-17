@@ -10,6 +10,7 @@ use App\Like;
 use App\User;
 use App\Comment;
 use Auth;
+use DB;
 
 class CommentController extends Controller
 {
@@ -22,5 +23,11 @@ class CommentController extends Controller
         $comment->data=$request->data;
         $comment->save();
         return "0";
+    }
+    public function showComments(Request $request)
+    {
+        $pid=$request->pid;
+        $comments=DB::table('comments')->where('comments.post_id',$pid)->join('users','users.id','=','comments.user_id')->select('comments.*','users.username','users.displaypic')->get();
+        return $comments;
     }
 }

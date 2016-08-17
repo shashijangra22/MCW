@@ -68,4 +68,13 @@ class PostController extends Controller
         if($image!=NULL)
         File::delete($image);
     }
+
+    public function loadmore(Request $request)
+{
+    $pid=$request->pid;
+    $new=Post::where('id','<',$pid)->orderBy('created_at','desc')->take(1)->get();
+
+    return $new;
+
+}
 }

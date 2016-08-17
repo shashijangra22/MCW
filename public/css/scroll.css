@@ -1,7 +1,7 @@
 .scrollbar
 {
 	overflow-y: scroll;
-	height:400px;
+	height:70vh;
 	visibility: hidden;
 }
 .scrollbox-content,
@@ -30,17 +30,19 @@
 .rightmsg
 {
 	border-radius: 5px;
-	padding: 10px;
-	max-width: 45%;
+	padding: 8px;
+	max-width: 70%;
 	color: white;
 	background: #0084FF;
 	word-wrap: break-word;
+	font-size: 12px;
 }
 .leftmsg
 {
 	border-radius: 5px;
-	padding: 10px;
-	max-width: 45%;
+	font-size: 12px;
+	padding: 8px;
+	max-width: 70%;
 	background: #F1F0F0;
 	word-wrap: break-word;
 
@@ -53,10 +55,23 @@
 		width: 100%;
 		margin-left: 0px !important;
 	}
+	
 }
 @media(min-width: 768px)
 {
 	#chat-panel{
 		width:350px;
 	}
+}
+.chattime{
+	color:lightgrey;
+	margin: 0px;
+	text-align: right;
+	font-size: 10px;
+}
+.chatinfo{
+	color:rgba(0,0,0,.5);
+	margin: 0px;
+	font-size: 11px;
+
 }
