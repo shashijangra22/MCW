@@ -13,6 +13,7 @@ use App\User;
 use App\Comment;
 use Auth;
 use Image;
+use DB;
 
 class PostController extends Controller
 {
@@ -72,7 +73,18 @@ class PostController extends Controller
     public function loadmore(Request $request)
 {
     $pid=$request->pid;
-    $new=Post::where('id','<',$pid)->orderBy('created_at','desc')->take(1)->get();
+
+
+
+    $new=DB::table('posts')->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join){
+        $join->on('posts.user_id','=','likes.user_id');
+        $join->on('posts.id','=','likes.post_id');
+    })
+
+    ->leftJoin('comments',function($join){
+        $join->on('posts.id','=','comments.post_id');
+    })
+    ->where('posts.id','<',$pid)->orderby('created_at','desc')->take(5)->get(array('posts.*','users.username','users.displaypic','likes.id as like_id' ));
 
     return $new;
 

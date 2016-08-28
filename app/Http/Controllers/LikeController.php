@@ -21,6 +21,11 @@ class LikeController extends Controller
         if(Like::where('post_id',$postid)->where('user_id',$userid)->exists())
         {
             $existing_like=Like::where('post_id','=',$postid)->where('user_id','=',$userid)->first();
+            $post=Post::where('id','=',$postid)->first();
+            $likes=$post->likes;
+            --$likes;
+
+            Post::where('id','=',$postid)->update(['likes'=>$likes]);
             $existing_like->delete();
             return 'unlike';
 
@@ -29,10 +34,18 @@ class LikeController extends Controller
         }
     	else
         {
+
             $new_like=new Like;
             $new_like->post_id=$postid;
             $new_like->user_id=$userid;
             $new_like->save();
+            $post=Post::where('id','=',$postid)->first();
+            $likes=$post->likes;
+            $likes++;
+
+            Post::where('id','=',$postid)->update(['likes'=>$likes]);
+            //$likes=Post::where('id','=',$postid)->likes->get();
+            //Post::where('id','=',$postid)->update('likes',$likes);
             return 'like';
         }
 

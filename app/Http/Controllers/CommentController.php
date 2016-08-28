@@ -16,12 +16,17 @@ class CommentController extends Controller
 {
     public function savecomment(Request $request)
     {
+        $postid=$request->post_id;
     	$user_id=Auth::id();
         $comment=new Comment;
         $comment->user_id=$user_id;
-        $comment->post_id=$request->post_id;
+        $comment->post_id=$postid;
         $comment->data=$request->data;
         $comment->save();
+        $post=Post::where('id','=',$postid)->first();
+            $comments_count=$post->comments;
+            ++$comments_count;
+            Post::where('id','=',$postid)->update(['comments'=>$comments_count]);
         return "0";
     }
     public function showComments(Request $request)

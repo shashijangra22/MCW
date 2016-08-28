@@ -83,7 +83,7 @@
 						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}likes" style="display:inline;">{{$post->likes()->count()}}</p></b> Likes</span>
 						<span style="color: white;background:#0084FF" class="badge"><b><p id="{{$post->id}}comments" style="display:inline;">{{$post->comments()->count()}}</p></b> Comments</span>
 					</div>
-					<a id="{{$post->id}}show" data-flag="0" onclick="show_comments({{$post->id}})" href="#/">show comments</a>
+					<a id="{{$post->id}}show" class="show_comments" data-flag="0" data-id="{{$post->id}}" href="#/">show comments</a>
 					<div id="{{$post->id}}commentbox">
 						
 					</div>
@@ -98,10 +98,10 @@
 							@endif
 						</div>
 							<div class="col-xs-9 col-md-10">
-								<input onkeydown = "if (event.keyCode == 13) addComment('{{$post->id}}');" id="{{$post->id}}" type="text" class="form-control input-sm" placeholder="write a comment :)">
+								<input  data-id="{{$post->id}}" id="{{$post->id}}commentinput" type="text" class="form-control input-sm comment_input" placeholder="write a comment :)">
 							</div>
 							<div class="col-xs-1 pull-right">
-								<button onclick="addComment('{{$post->id}}');" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
+								<button data-id="{{$post->id}}" class="comment_button btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
 							</div>
 					</div>
 					</div>
@@ -402,9 +402,67 @@ $("#loadmore-button").on("click",function(e){
 		for(var key in result)
 		{
 			
+			var post=$("#prototype").clone(true);
+			post.css('display','block');
+			post.attr('id',result[key].id);
+			var temp=post.find('.protodisplaypic');
+			temp.attr('src',result[key].displaypic);
+			temp=post.find('.protousername');
+			temp.html(result[key].username);
+			temp=post.find('.prototimestamp');
+			temp.html(result[key].created_at);
+			if({{Auth::id()}}==result[key].user_id)
+			{
+				temp=post.find('.protodelete');
+
+				var button=$("#protodelbutton").clone(true);
+				button.css('display','block');
+				button.attr('id',"");
+				button.attr('value',result[key].id);
+				temp.append(button);
+			}
+			temp=post.find('.protodata');
+			temp.html(result[key].data);
+
+			if(result[key].path!=null)
+			{
+				temp=post.find('.protoimage');
+				temp.css('display','block');
+				temp.children('img').attr('src',result[key].path);
+			}
+
+			temp=post.find('#protolikes');
+			temp.attr('id',result[key].id+'likes');
+			temp.html(result[key].likes)
+
+			temp=post.find('#protocomments');
+			temp.attr('id',result[key].id+'comments');
+			temp.html(result[key].comments)
+			temp=post.find('#protoshow');
+			temp.attr('id',result[key].id+'show');
+			temp.attr('data-id',result[key].id);
+			temp=post.find('#protocommentbox');
+			temp.attr('id',result[key].id+'commentbox');
+			temp=post.find('#protocommentinput');
+			temp.attr('id',result[key].id+'commentinput');
+			temp.attr('data-id',result[key].id);
+			temp=post.find('.comment_button');
+			temp.attr('data-id',result[key].id);
+			temp=post.find('.likebutton');
+			temp.attr('value',result[key].id);
+			if(result[key].like_id!=null)
+			temp.children('i').addClass('fa fa-heart');
+			else
+			temp.children('i').addClass('fa fa-heart-o');
+
+
+
+
+
 			
-			$("#loadmore").append('<div class="row" ><div class=" panel panel-default"><div class><div class="panel-body">'+result[key].data+'</div></div></div>');
+			$("#loadmore").append(post);
 			post_id=result[key].id;
+
 
 	
 		}
@@ -414,9 +472,11 @@ $("#loadmore-button").on("click",function(e){
 	
 });
 
-function show_comments(pid)
-{
-var flag=$("#"+pid+"show").data("flag");
+$(".show_comments").on("click",function(e){
+	e.preventDefault();
+	var el=$(this);
+var flag=el.data("flag");
+var pid=el.data("id");
 
 if(flag==0)
 {
@@ -429,7 +489,7 @@ $.ajax({
 		$('#'+pid+'commentbox').empty();
 		if(result.length==0)
 		{
-			$("#"+pid+"show").css("display",'none');
+			el.css("display",'none');
 			$('#'+pid+'commentbox').append('<div class="row text-center">no comments to show</div>');		
 		}
 		else
@@ -439,23 +499,23 @@ $.ajax({
 		$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="img-circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');
 	}
 	
-	$("#"+pid+"show").data('flag',1);
-	$("#"+pid+"show").html("hide comments");
+	el.data('flag',1);
+	el.html("hide comments");
 	}
 
 
 });
 }
-else if(flag==1)
+else
 {
 $('#'+pid+'commentbox').empty();
-$("#"+pid+"show").data('flag',0);
-$("#"+pid+"show").html("show comments");
+el.data('flag',0);
+el.html("show comments");
 
 
 }
 
-}
+});
 
 
 

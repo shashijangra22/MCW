@@ -73,8 +73,75 @@
   </div>
 </div>
 
-<!-- Ajax Loader -->
 
+<!-- prototype -->
+
+<div class="row feed"  id="prototype" style="display:none;">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body" >
+					<div class="row" >
+						<div  class="col-xs-2 ">
+							<img src="" class="img-circle profile-pic protodisplaypic" width="35" height="35" />	
+						</div>
+						<div class="col-xs-7 col-xs-offset-1">
+							<div class="row protousername">
+							<!-- <a href="#" onclick="user_profile(event);"> -->
+							<!-- </a> --></div>
+							<div class="row prototimestamp"  style="font-size:10px">
+							</div>
+						</div>
+						<div class="col-xs-2 pull-right protodelete" >
+						<!-- append del button if required -->
+							
+						</div>
+					</div>
+					<hr>
+					<div class="row protodata" style="margin:auto">
+					</div>
+					<hr>  
+						<div class="row protoimage" style="overflow:hidden; margin:auto; display:none; ">
+							<!-- imagedata -->
+							<!-- <a class="pop" onclick="pop('');" href="#"> -->
+								<img class="thumbnail img-responsive " src=""/>
+							<!-- </a> -->
+						</div>
+					<div class="row" style="font-size: 13px;margin:auto">
+						<span style="color: white;background:#0084FF" class="badge protolikecount"><b><p id="protolikes" style="display:inline;"><!-- likes count --></p></b> Likes</span>
+						<span style="color: white;background:#0084FF" class="badge protocommentcount"><b><p id="protocomments" style="display:inline;"><!-- comments count --></p></b> Comments</span>
+					</div>
+					<a id="protoshow" class="show_comments" data-flag="0" data-id="" href="#/">show comments</a>
+					<div id="protocommentbox">
+						
+					</div>
+					<br>
+					<div class="row" style="margin:auto">
+					<div class="row">
+						<div class="col-xs-1 " style="padding-top:3px">	
+							
+							<a class="likebutton" href="#" value=""><i class="heart" style="font-size:22px"></i></a>
+						</div>
+							<div class="col-xs-9 col-md-10">
+								<input  data-id="" id="protocommentinput" type="text" class="form-control input-sm comment_input" placeholder="write a comment :)">
+							</div>
+							<div class="col-xs-1 pull-right">
+								<button  data-id="" class="comment_button btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-comment"></span></button>
+							</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button class="btn btn-sm btn-danger pull-right delButton" type="button" id="protodelbutton" value="" style="display:none;">
+									<span class="glyphicon glyphicon-trash"/>
+								</button>
+
+
+
+
+<!-- Ajax Loader -->
 <div id="loadingdiv" class="hidden" style="margin:auto; padding: 0px; display: block; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(102, 102, 102); z-index: 30001; opacity: 0.6;">
 <p style="position: absolute; top: 50%; left: 50%;">
 	<img src="img/ajax-loader.gif"/>
@@ -141,25 +208,25 @@ $(".likebutton").on("click",function(event)
 
 
 
-	function addComment(pid) 
-{
-
-
-	 var comment=$('#'+pid).val().trim();
-	 if (comment.length<=0) { return false;}
-	 var count=$("p[id="+pid+"comments]").html();
+	$(".comment_button").on("click",function(e){
+		e.preventDefault();
+		var el=$(this);
+		var pid=el.data('id');
+	 var comment=$('#'+pid+'commentinput').val().trim();
+	  if (comment.length<=0) { return false;}
+	  var count=$("p[id="+pid+"comments]").html();
 		
-	 $.ajax({
-	 		url: "savecomment",
-	 		type:"POST",
-	 		data:{post_id:pid,data:comment}
-	 		})
-	 	.done(function(result){
-	 		if(result==0)
-			{
-				if($('#'+pid+'show:visible').length==0 || $('#'+pid+'commentbox').is(':empty'))
-				{
-					$("#"+pid+"show").data('flag',1);
+	  $.ajax({
+	  		url: "savecomment",
+	  		type:"POST",
+	  		data:{post_id:pid,data:comment}
+	  		})
+	  	.done(function(result){
+	  		if(result==0)
+		 	{
+		 		if($('#'+pid+'show:visible').length==0 || $('#'+pid+'commentbox').is(':empty'))
+	 		{
+		 			$("#"+pid+"show").data('flag',1);
 					$("#"+pid+"show").html("hide comments");
 					$('#'+pid+'commentbox').empty();
 			}
@@ -173,7 +240,7 @@ $(".likebutton").on("click",function(event)
 			}
 			$('#'+pid).val('');
 			});
-}
+});
 
 
 
