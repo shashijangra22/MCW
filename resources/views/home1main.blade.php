@@ -14,8 +14,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <link href="css/basic-template.css" rel="stylesheet" />
-
 	<link rel="stylesheet" type="text/css" href="css/scroll.css">
 	<link rel="stylesheet" type="text/css" href="css/fileButton.css">	
 
@@ -40,12 +38,47 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-container">
 				<ul class="nav navbar-nav">
-					<li id="home" class="active"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home<p id="home-span" style="display:inline;"><span  class="badge"></span></p></a></li>
-					<li id="confessions"><a href="#"><i class="fa fa-heart"></i> Confessions</a></li>
-					<li id="chatroom"><a href="#"><i class="fa fa-chat"></i> Chatroom</a></li>
-					<li id="chakravyuh"><a href="#"><i class="fa fa-puzzle"></i> Chakravyuh</a></li>
+					<li id="home" class="active"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home <p id="home-span" style="display:inline;"><span  class="badge"></span></p></a></li>
+					<li id="confessions"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
+					<li id="chatroom"><a href="#"><i class="fa fa-comments"></i> Chatroom</a></li>
+					<li id="chakravyuh"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-bell"></i></a>
+						<div style="width: 300px;" class="panel panel-default dropdown-menu" role="menu">
+							<div class="scrollbar">
+								<div class="panel-body scrollbox-content">
+									<table class="table table-striped table-hover">
+									    <thead>
+									        <th style="text-align: center;">Notifications</th>
+									    </thead>
+									    <tbody>
+									    {{--*/$notifyflag=0/*--}}
+									    {{--*/$notifyid=-1/*--}}
+									      @foreach($notifications as $notification)
+
+									      	@if($notifyflag==0)
+												{{--*/$notifyid=$notification->id/*--}}
+												{{--*/$notifyflag=1/*--}}
+											@endif
+
+									      	@if ($notification->post->user->username==$user->username)
+										      	<tr>
+										      		@if ($notification->type==0)
+														<td>{{$notification->user->username}} liked your post.</td>
+													@else
+														<td>{{$notification->user->username}} commented on your post.</td>
+													@endif
+										      	</tr>
+									      	@endif
+									      @endforeach
+									    </tbody>
+									 </table>
+								</div>
+							</div>
+						</div>
+					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expands="false">{{$user->username}}
 						<img src="{{$user->displaypic}}" class="img-circle" width="18" height="18">
@@ -149,6 +182,9 @@
 </div>
 
 	<div class="container" style=" margin-top:70px">
+	<div class="row">
+		<div id="snackbar">New Post</div>
+	</div>
 		@yield('content')
 	</div>
 </body>
@@ -171,6 +207,38 @@ $.ajaxSetup({
 
 
 @yield('jscript')
+
+var notifyid={{$notifyid}};
+
+$(document).ready(function(){
+	newNotify();
+});
+
+function newNotify() {
+	if ($.active==0) 
+	{
+		$.ajax({
+			type:'POST',
+			url:'notify',
+			data:{notifyid:{{$notifyid}}},
+		})
+		.done(function(result){
+			$("#noti-span").children('.badge').html(result);
+			if (result>0)
+			{
+				
+			}
+		});
+	}
+	setTimeout(newNotify,5000);
+}
+
+function myFunction(value) {
+    var x = document.getElementById("snackbar");
+    x.innerHTML=value+" New Post(s)";
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
 $(".likebutton").on("click",function(event)
 {

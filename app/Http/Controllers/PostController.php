@@ -11,6 +11,7 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
+use App\Notification;
 use Auth;
 use Image;
 use DB;
@@ -65,6 +66,7 @@ class PostController extends Controller
         $image=$post->path;
         Like::where('post_id',$id)->delete();
         Comment::where('post_id',$id)->delete();
+        Notification::where('post_id',$id)->delete();
         $post->delete();
         if($image!=NULL)
         File::delete($image);

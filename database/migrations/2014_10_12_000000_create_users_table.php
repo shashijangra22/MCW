@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('year');
             $table->integer('gender');
             $table->string('username')->unique();
+            $table->integer('level');
             $table->string('email')->unique();
             $table->string('contact')->nullable();
             $table->date('dob')->nullable();

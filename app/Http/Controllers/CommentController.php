@@ -9,6 +9,7 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
+use App\Notification;
 use Auth;
 use DB;
 
@@ -24,9 +25,15 @@ class CommentController extends Controller
         $comment->data=$request->data;
         $comment->save();
         $post=Post::where('id','=',$postid)->first();
-            $comments_count=$post->comments;
-            ++$comments_count;
-            Post::where('id','=',$postid)->update(['comments'=>$comments_count]);
+        $post->comments++;
+        $post->save();
+
+        $noti=new Notification;
+            $noti->user_id=$user_id;
+            $noti->post_id=$postid;
+            $noti->type=1;
+            $noti->save();
+
         return "0";
     }
     public function showComments(Request $request)

@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="row">
-<div class="col-md-6 col-md-offset-3" id="main-feed">
-	<div>
+<div class="col-md-6 col-md-offset-1" id="main-feed">
 		<form id="post-form" role="form" action="#" enctype="multipart/form-data">
 		{{ csrf_field() }}
 			<div class="panel panel-default" id="panel">
@@ -30,8 +29,6 @@
 				</div>
 			</div>
 		</form>
-
-	</div>
 	{{--*/$postflag=0/*--}}
 	{{--*/$postid=-1/*--}}
 	{{--*/$post_id=-1/*--}}
@@ -113,12 +110,10 @@
 	<div id="loadmore"></div>
 
 <div id="button" class="text-center">
-	<button class="btn btn-info" id="loadmore-button"> loadmore</button>
+	<button class="btn btn-info" id="loadmore-button"> Loadmore</button>
 </div>
 
 
-		
-		
 		<div class="panel panel-default" id="chat-panel" style="bottom: 0; right:0;position:fixed;  margin:-1px !important; border-top:none; max-height:60%s; ">
 			<a data-toggle="collapse" id="big-chat" href="#collapse1"><div style="background: #0084FF; color:white;" class="panel-heading text-center"  ><b>Chatbox</b><span class="badge">0</span></div></a>
 			
@@ -153,9 +148,51 @@
 					
 				</div>
 			</div>
-		</div>		
+		</div>	
 	</div>
 
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-body" >
+			<div class="row text-center alert alert-danger" style="margin:auto">
+				<strong style="font-size: 16px">Upcoming Events</strong>
+			</div>
+			<br>
+			<table class="table table-striped">
+			    <thead>
+			      <tr>
+			        <th>Event Name</th>
+			        <th>Date</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+		      	<tr>
+		        	<td><a href="#">Songs Of India</a></td>
+		        	<td>7 October</td>
+		      	</tr>
+		      	<tr>
+		        	<td><a href="#">Dance With Props Competition</a></td>
+		        	<td>21 October</td>
+		      	</tr>
+		      	<tr>
+		        	<td><a href="#">Diwali Night</a></td>
+		        	<td>30 October</td>
+		      	</tr>
+		      	<tr>
+		        	<td><a href="#">Electronics Workshop</a></td>
+		        	<td>5 November</td>
+		      	</tr>
+		      	<tr>
+		        	<td><a href="#">Ice Cream Day :P</a></td>
+		        	<td>10 November</td>
+		      	</tr>
+			    </tbody>
+			  </table>
+			</div>
+		</div>
+	</div>
+
+</div>
 @endsection
 
 @section('jscript')
@@ -376,6 +413,10 @@ $('#mytext').change(function(){
 			})
 			.done(function(result){
 				$("#home-span").children('.badge').html(result);
+				if(result>0)
+				{
+					myFunction(result);
+				}
 			
 			});
 			}

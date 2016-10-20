@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Like;
 use App\Post;
 use App\User;
+use App\Notification;
 use Auth;
 
 
@@ -22,34 +23,28 @@ class LikeController extends Controller
         {
             $existing_like=Like::where('post_id','=',$postid)->where('user_id','=',$userid)->first();
             $post=Post::where('id','=',$postid)->first();
-            $likes=$post->likes;
-            --$likes;
-
-            Post::where('id','=',$postid)->update(['likes'=>$likes]);
+            $post->likes--;
+            $post->save();
             $existing_like->delete();
             return 'unlike';
-
-
-            
         }
     	else
         {
-
             $new_like=new Like;
             $new_like->post_id=$postid;
             $new_like->user_id=$userid;
             $new_like->save();
             $post=Post::where('id','=',$postid)->first();
-            $likes=$post->likes;
-            $likes++;
+            $post->likes++;
+            $post->save();
 
-            Post::where('id','=',$postid)->update(['likes'=>$likes]);
-            //$likes=Post::where('id','=',$postid)->likes->get();
-            //Post::where('id','=',$postid)->update('likes',$likes);
+            $noti=new Notification;
+            $noti->user_id=$userid;
+            $noti->post_id=$postid;
+            $noti->type=0;
+            $noti->save();
+
             return 'like';
-        }
-
-    	
-    
-}
+        }    
+    }
 }

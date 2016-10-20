@@ -17,9 +17,13 @@ Route::controllers([
 Route::get('settings','PagesController@settings');
 Route::post('likepost','LikeController@setlike');
 Route::post('savedata','PostController@store');
+Route::post('savedataC','ConfessionController@store');
 Route::get('/','PagesController@getHome');
 Route::get('index','PagesController@getHome');
 Route::get('home',['middleware' => 'auth','uses' => 'PagesController@getHome1']);
+Route::get('confessions',['middleware' => 'auth','uses' => 'PagesController@getConfessions']);
+Route::get('chakravyuh',['middleware' => 'auth','uses' => 'PagesController@getChakravyuh']);
+Route::get('profile',['middleware' => 'auth','uses' => 'PagesController@getProfile']);
 Route::get('login','PagesController@getHome');
 //Route::get('home','PagesController@getHome1');
 
@@ -31,14 +35,15 @@ Route::get('userprofile/{post}','PagesController@getRandomProfile');
 
 Route::post('updateprofile','UserController@updateProfile');
 
-
-Route::get('profile',['middleware' => 'auth','uses' => 'PagesController@getProfile']);
 Route::post('updatepic/{post}','UserController@updatePic');
 
 
 Route::post('sendmessage','ChatController@sendMessage');
 Route::post('/pullMsg','ChatController@pullMsg');
 Route::post('savecomment','CommentController@savecomment');
+Route::post('addQuestion','QuestionController@addQuestion');
+Route::post('checkAnswer','QuestionController@checkAnswer');
+Route::post('notify','NotificationController@notify');
 Route::post('/newpost','PostController@checkPost');
 Route::post('loadmore','PostController@loadmore');
 Route::post('showcomments','CommentController@showComments');
