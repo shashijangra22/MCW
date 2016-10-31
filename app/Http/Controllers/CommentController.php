@@ -9,7 +9,6 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
-use App\Notification;
 use Auth;
 use DB;
 
@@ -27,12 +26,6 @@ class CommentController extends Controller
         $post=Post::where('id','=',$postid)->first();
         $post->comments++;
         $post->save();
-
-        $noti=new Notification;
-            $noti->user_id=$user_id;
-            $noti->post_id=$postid;
-            $noti->type=1;
-            $noti->save();
 
         return "0";
     }

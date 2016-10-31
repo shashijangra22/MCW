@@ -8,7 +8,6 @@ use App\Http\Requests;
 use App\Like;
 use App\Post;
 use App\User;
-use App\Notification;
 use Auth;
 
 
@@ -37,12 +36,6 @@ class LikeController extends Controller
             $post=Post::where('id','=',$postid)->first();
             $post->likes++;
             $post->save();
-
-            $noti=new Notification;
-            $noti->user_id=$userid;
-            $noti->post_id=$postid;
-            $noti->type=0;
-            $noti->save();
 
             return 'like';
         }    

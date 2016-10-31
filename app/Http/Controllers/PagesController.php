@@ -6,14 +6,20 @@ use App\User;
 use App\Like;
 use App\Chat;
 use App\Comment;
+use App\Notice;
 use App\Question;
-use App\Notification;
-use App\Confession;
 use Request;
 use Auth;
 use Illuminate\Support\Facades\View;
 class PagesController extends Controller{
 
+	public function getNotices()
+	{
+		$user=Auth::user();
+		$notices=Notice::all();
+		$chats=Chat::all();
+		return view('notices')->with('user',$user)->with('notices',$notices)->with('chats',$chats);
+	}
 	public function settings()
 	{
 		$user=Auth::user();
@@ -28,21 +34,19 @@ class PagesController extends Controller{
 	public function getHome1()
 	{
 		$user=Auth::user();
-		$user_all=User::all();
 		$chat=Chat::all();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
-		$posts=Post::orderBy('created_at','desc')->take(5)->get();
-		$notifications=Notification::orderBy('created_at','desc')->get();
-		return view('home1')->with('posts',$posts)->with('users',$user_all)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('notifications',$notifications);
+		$posts=Post::where('type','0')->orderBy('created_at','desc')->take(5)->get();
+		return view('home1')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
 	}
 
 	public function getConfessions()
 	{
 		$user=Auth::user();
 		$chat=Chat::all();
-		$posts=Confession::orderBy('created_at','desc')->get();
-		$notifications=Notification::orderBy('created_at','desc')->get();
-		return view('confessions')->with('posts',$posts)->with('user',$user)->with('chats',$chat)->with('notifications',$notifications);
+		$likes=Like::where('user_id',$user->id)->get(['post_id']);
+		$posts=Post::where('type','1')->orderBy('created_at','desc')->get();
+		return view('confessions')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
 	}
 
 	public function getChakravyuh()
@@ -51,16 +55,16 @@ class PagesController extends Controller{
 		$players=User::orderBy('level','desc')->take(5)->get();
 		$questions=Question::all();
 		$chat=Chat::all();
-		$notifications=Notification::orderBy('created_at','desc')->get();
-		return view('chakravyuh')->with('questions',$questions)->with('players',$players)->with('user',$user)->with('chats',$chat)->with('notifications',$notifications);
+		return view('chakravyuh')->with('questions',$questions)->with('players',$players)->with('user',$user)->with('chats',$chat);
 	}
 
 	public function getProfile(){
 		$user=Auth::user();
 		$comments=Comment::all();
+		$chat=Chat::all();
 		$likes=Like::where('user_id',$user->id)->get();
 		$posts=Post::where('user_id',$user->id)->orderBy('created_at','desc')->paginate(5);
-		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('comments',$comments);
+		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('comments',$comments);
 
 	}
 public function getRandomProfile($user){

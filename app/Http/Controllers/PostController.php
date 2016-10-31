@@ -11,7 +11,6 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
-use App\Notification;
 use Auth;
 use Image;
 use DB;
@@ -24,7 +23,14 @@ class PostController extends Controller
     public function checkPost(Request $request)
     {
         $pid=$request->pid;                                                            
-         $new=Post::where('id','>',$pid)->get()->count();
+         $new_post=Post::where('id','>',$pid)->where('type','0')->get()->count();
+         $new_confession=Post::where('id','>',$pid)->where('type','1')->get()->count();
+          if($new_confession==0 && $new_post==0)
+          {
+             return 0;
+          }
+         $new=array('post'=>$new_post, 'confession'=>$new_confession);
+
          return $new;
     }
 
@@ -32,11 +38,19 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        
+        
+        if($request->type!=1 && $request->type!=0 )
+        return $type;    
+            
         $Text=$_POST["mytext"];
         $User=Auth::user();
         $post=new Post;
         $post->user_id=$User->id;
         $post->data=$Text;
+
+        $post->type=$request->type;
+
         if(Input::hasFile('image'))
         {
             $image=Input::file('image');
@@ -66,7 +80,6 @@ class PostController extends Controller
         $image=$post->path;
         Like::where('post_id',$id)->delete();
         Comment::where('post_id',$id)->delete();
-        Notification::where('post_id',$id)->delete();
         $post->delete();
         if($image!=NULL)
         File::delete($image);
@@ -78,7 +91,7 @@ class PostController extends Controller
 
 
 
-    $new=DB::table('posts')->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join){
+    $new=DB::table('posts')->where('type','0')->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join){
         $join->on('posts.user_id','=','likes.user_id');
         $join->on('posts.id','=','likes.post_id');
     })

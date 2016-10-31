@@ -18,7 +18,8 @@ class CreatePostsTable extends Migration
             $table->text('data');
             $table->string('path')->nullable();
             $table->integer('likes');
-            $table->integer('comments');            
+            $table->integer('comments');  
+            $table->integer('type');          
 
             $table->timestamps();
         });

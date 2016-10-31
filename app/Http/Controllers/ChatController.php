@@ -25,7 +25,6 @@ class ChatController extends Controller
  	{
  		$mid=$request->input('mid');
  		$user=Auth::id();
- 		//$chats=Chat::where('id','>',$mid)->where('user_id','!=',$user)->get();
  		$chats=DB::table('chats')->join('users','chats.user_id','=','users.id')->where('chats.id','>',$mid)->where('chats.user_id','!=',$user)->get(array('chats.*','users.username'));
  		if(count($chats))
  		{
