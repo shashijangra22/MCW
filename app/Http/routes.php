@@ -31,8 +31,7 @@ Route::get('logout','UserController@logoutUser');
 Route::delete('delete/{post}','PostController@destroy');
 Route::get('userprofile/{post}','PagesController@getRandomProfile');
 
-Route::post('updateprofile','UserController@updateProfile');
-
+Route::post('updateProfile','UserController@updateProfile');
 Route::post('updatepic/{post}','UserController@updatePic');
 
 

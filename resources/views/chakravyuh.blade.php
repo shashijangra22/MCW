@@ -3,7 +3,8 @@
 @section('content')
 <div class="row">
 <div class="col m12 s12 l6 offset-l1">
-		@if(count($questions)>0 && ($user->level)<2)
+	{{--*/$totalQ=count($questions)/*--}}
+		@if($totalQ>0)
 		<div class="card z-depth-4">
 				<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
 					<span class="card-title">Welcome Back :)</span>
@@ -34,7 +35,7 @@
 			</div>
 			@endif
 			
-			@if ($user->username=='srv')
+			@if ($user->username=='shashijangra')
 			<div class="card z-depth-4">
 			<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
 					<span class="card-title">Add a Question!</span>
@@ -88,6 +89,9 @@
 			      </tr>
 			      <tr>
 			      	<td>2. No user should leak answers in the chat or post. Though you can give hints ;)</td>
+			      	<tr>
+			      	<td>3. There will be {{$totalQ}} no. of questions on total.</td>
+			      </tr>
 			      </tr>
 			     </tbody>
 			  </table>
@@ -99,10 +103,11 @@
 
 @section('jscript')
 
+
 $(document).ready(function()
 {
-	$("#home").removeClass("active");
-	$("#chakravyuh").addClass("active");
+	$(".homeBtn").removeClass("active");
+	$(".chakravyuhBtn").addClass('active');
 });
 
 

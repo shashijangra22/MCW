@@ -62,8 +62,8 @@
 
 $(document).ready(function()
 {
-	$("#home").removeClass("active");
-	$("#notices").addClass("active");
+	$(".homeBtn").removeClass("active");
+	$(".noticesBtn").addClass("active");
 });
 
 $('#post').on("click",function(e){

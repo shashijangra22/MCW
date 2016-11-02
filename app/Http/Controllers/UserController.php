@@ -75,19 +75,18 @@ class UserController extends Controller
         return Redirect::to('');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateProfile()
+    public function updateProfile(Request $request)
     {
-        $fname=Input::get("fname");
-        $lname=Input::get("lname");
-        $dob=Input::get("dob");
-        $contact=Input::get("contact");
+        $fname=$request->fname;
+        $lname=$request->lname;
+        $username=$request->username;
         $user=Auth::user();
+        $usernames=User::where('username',$username);
+        if ($usernames->count()>0 && $user->username!=$username)
+        {
+            return "Username already exists!";
+        }
+
         if($fname!=NULL && !empty($fname))
         {
             $user->fname=$fname;
@@ -95,20 +94,12 @@ class UserController extends Controller
 
         if($lname!=NULL && !empty($lname))
         {
-                $user->lname=$lname;
-
-            }
-            if($contact!=NULL && !empty($contact))
-            {
-                $user->contact=$contact;
-            }
-
-
-
-                if($dob!=NULL && !empty($dob))
-                {
-                        $user->dob=$dob;
-                }
+            $user->lname=$lname;
+        }
+        if($username!=NULL && !empty($username))
+        {
+            $user->username=$username;
+        }
 
             $user->save();
             echo '0';
@@ -131,9 +122,7 @@ class UserController extends Controller
 
                 if(Input::hasFile('pic'))
                 {
-                $user=User::find($id);
-                
-                
+                   $user=User::find($id);
                    $ppath=$user->displaypic;
                    $pic=Input::file('pic');
                    $pic_name=time().$pic->getClientOriginalName();

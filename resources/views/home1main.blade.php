@@ -82,11 +82,11 @@
 	      <a style="font-size: 24px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
 	      <a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li id="home" class="active"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
-	          <li id="confessions"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
-	          <li id="chakravyuh"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
-	          <li id="notices"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
-	          <li><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">
+	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
+	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
+	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
+	          <li class="profileBtn"><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">
 	            <div class="chip white blue-text">
 	              {{$user->username}}
 	              <img src="{{$user->displaypic}}">
@@ -96,15 +96,17 @@
 	      	<ul id="slide-out" class="side-nav">
 	          <li><div class="userView primary-color">
 	            <!-- <img class="background" src="img/sample-1.jpg"> -->
-	            <a href=""><img class="circle" src="{{$user->displaypic}}"></a>
-	            <a href=""><span class="white-text name">{{$user->username}}</span></a>
-	            <a href=""><span class="white-text email">{{$user->email}}</span></a>
+	            <a href="#"><img class="circle" src="{{$user->displaypic}}"></a>
+	            <a href="#"><span class="name white-text">{{$user->username}}</span></a>
+	            <a href="#"><span class="email white-text">{{$user->email}}</span></a>
 	          </div></li>
-	          <li class="active"><a href="{{asset('home')}}"><i class="fa fa-home"></i>Home</a></li>
-	          <li><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i>confessions</a></li>
+	          <li class="homeBtn active"><a href="{{asset('home')}}">Home</a></li>
+	          <li class="confessionsBtn"><a href="{{asset('confessions')}}">Confessions</a></li>
+	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}">Chakravyuh</a></li>
+	          <li class="noticesBtn"><a href="{{asset('notices')}}">Notices</a></li>
 	          <li><div class="divider"></div></li>
-	          <li><a class="subheader">Subheader</a></li>
-	          <li><a class="waves-effect" href="#!">Settings</a></li>
+	          <li class="profileBtn"><a href="{{asset('profile')}}">My Profile</a></li>
+	          <li><a href="{{asset('logout')}}">Logout</a></li>
 	          </ul>
 	    	</div>
 	  </nav>
@@ -190,11 +192,7 @@
 <div id="chat-slide-out" class="side-nav">
     <div class="row card primary-color white-text" style="padding-top: 0px;margin: auto;text-align: center;height: 10%">
           <div class="card-content">
-          
-            <span class="card-title" style="padding: 0px">
-              Chatbox
-            </span>
-            
+            <a href="#"><span class="card-title white-text"><i class="fa fa-arrow-left"></i> Chatbox</span></a>
           </div>
 
         </div>
@@ -241,9 +239,11 @@
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   <script type="text/javascript" src="js/buttons.js"></script>
-  <script type="text/javascript" src="js/post.js"></script>
+  <!-- <script type="text/javascript" src="js/post.js"></script> -->
    <script type="text/javascript" src="js/chatbox.js"></script>
    <script type="text/javascript" src="js/myjs.js"></script>
+
+@yield('JSwithTags')
 
 
 <script type="text/javascript">

@@ -20,11 +20,6 @@ class PagesController extends Controller{
 		$chats=Chat::all();
 		return view('notices')->with('user',$user)->with('notices',$notices)->with('chats',$chats);
 	}
-	public function settings()
-	{
-		$user=Auth::user();
-		return view('settings')->with('user',$user);
-	}
 
 	public function getHome(){
 		$check=Auth::check();
@@ -60,11 +55,10 @@ class PagesController extends Controller{
 
 	public function getProfile(){
 		$user=Auth::user();
-		$comments=Comment::all();
 		$chat=Chat::all();
-		$likes=Like::where('user_id',$user->id)->get();
-		$posts=Post::where('user_id',$user->id)->orderBy('created_at','desc')->paginate(5);
-		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('comments',$comments);
+		$likes=Like::where('user_id',$user->id)->get(['post_id']);
+		$posts=Post::where('user_id',$user->id)->where('type','0')->orderBy('created_at','desc')->get();
+		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
 
 	}
 public function getRandomProfile($user){

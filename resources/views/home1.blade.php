@@ -218,16 +218,15 @@
 
 @endsection
 
+@section('JSwithTags')
+	<script type="text/javascript" src="js/post.js"></script>
+@endsection
+
 @section('jscript')
 
 	
 	var postid={{$postid}};
 var post_id={{$post_id}};
-	$(document).ready(function(){
-	$("#home").addClass('active');
-	$("#confessions").removeClass('active');
-	});
-
 
 	function user_profile(event)
 	{
@@ -238,16 +237,5 @@ var post_id={{$post_id}};
 		window.location.replace(url);
 	}
 	
-
-	
-
-
-
-
-
-
-
-	
-
-				
+			
 @endsection

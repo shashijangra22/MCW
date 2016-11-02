@@ -119,14 +119,22 @@
 
 @endsection
 
+@section('JSwithTags')
+	<script type="text/javascript" src="js/post.js"></script>
+@endsection
+
 @section('jscript')
+
+$(document).ready(function()
+{
+	$(".homeBtn").removeClass("active");
+	$(".confessionsBtn").addClass('active');
+});
+
+
+
 var postid={{$postid}};
 var post_id={{$post_id}};
-
-$(document).ready(function(){
-	$("#confessions").addClass('active');
-	$("#home").removeClass('active');
-	});
 
 	
 	
