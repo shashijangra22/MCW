@@ -1,3 +1,3 @@
 <?php
-header("Location: http://mycollegewall.azurewebsites.net/public/");
+header("Location: http://mycollegewall.com/MCW/");
 ?>
