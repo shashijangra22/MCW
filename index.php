@@ -1,3 +1,3 @@
 <?php
-header("Location: http://mycollegewall.com/MCW/");
+header("Location: http://localhost/MCW/public");
 ?>
