@@ -3,8 +3,9 @@
 @section('content')
 <div class="row">
 <div class="col m12 s12 l6 offset-l1">
-	{{--*/$totalQ=count($questions)/*--}}
-		@if($totalQ>0)
+	
+	<?php $totalQ = count($questions); ?>
+		@if($totalQ>0 && $user->level<$totalQ)
 		<div class="card z-depth-4">
 				<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
 					<span class="card-title">Welcome Back :)</span>

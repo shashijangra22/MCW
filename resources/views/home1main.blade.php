@@ -19,12 +19,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
 	<!-- For more icons -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/theme-orange.css">
+	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+	<!-- <link rel="stylesheet" href="css/theme-orange.css"> -->
 
 
 </head>
-<body style="background:url(img/2.jpg) no-repeat center fixed; background-size: cover; ">
+<body>
 
 <div class="spinner-wrapper white" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
 	<div class="preloader-wrapper big active" style="position: absolute;top: 45%;left: 45%">
@@ -73,35 +73,36 @@
 	<div class="navbar-fixed">
 	      <!-- Dropdown Structure -->
 	      <ul id="dropdown1" class="dropdown-content">
-	        <!-- <li><a href="#!">My Profile</a></li> -->
-	        <li class="divider"></li>
-	        <li class="pink lighten-5" ><a href="{{asset('logout')}}">Logout</a></li>
+	        <li><a href="{{asset('profile')}}">My Profile</a></li>
+	        <li><a href="{{asset('logout')}}">Logout</a></li>
 	      </ul>
-	  <nav class="primary-color">
-	    <div class="nav-wrapper container">
-	      <a style="font-size: 24px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
-	      <a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons">menu</i></a>
+	  <nav class="blue">
+	    <div class="nav-wrapper">
+	      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
+	      <a style="padding-right: 20px" href="#" data-activates="slide-out" class="button-collapse right"><i style="font-size: 24px" class="fa fa-bars"></i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li>
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
 	          <li class="profileBtn"><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">
-	            <div class="chip white blue-text">
+	            <div class="chip white">
 	              {{$user->username}}
 	              <img src="{{$user->displaypic}}">
 	            </div>
 	          </a></li>
 	      </ul>
 	      	<ul id="slide-out" class="side-nav">
-	          <li><div class="userView primary-color">
+	          <li><div class="userView">
 	            <!-- <img class="background" src="img/sample-1.jpg"> -->
 	            <a href="#"><img class="circle" src="{{$user->displaypic}}"></a>
-	            <a href="#"><span class="name white-text">{{$user->username}}</span></a>
-	            <a href="#"><span class="email white-text">{{$user->email}}</span></a>
+	            <a href="#"><span class="name">{{$user->username}}</span></a>
+	            <a href="#"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
 	          <li class="homeBtn active"><a href="{{asset('home')}}">Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}">Confessions</a></li>
+	          <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li>
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}">Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}">Notices</a></li>
 	          <li><div class="divider"></div></li>
@@ -178,27 +179,20 @@
 
 	        <button class="btn-floating right delButton pink accent-4" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
 
-
-
-
 <div class="container">
-	<div class="row">
-		<div id="snackbar">New Post</div>
-	</div>
-		@yield('content')
+	@yield('content')
 </div>
 
 
 <div id="chat-slide-out" class="side-nav">
-    <div class="row card primary-color white-text" style="padding-top: 0px;margin: auto;text-align: center;height: 10%">
-          <div class="card-content">
-            <a href="#"><span class="card-title white-text"><i class="fa fa-arrow-left"></i> Chatbox</span></a>
-          </div>
-
+    <div class="row card blue valign-wrapper" style="padding-top: 0px;margin: auto;height: 10%;">
+    	<div class="col s12 center-align">
+    		<a href="#" class="white-text card-title"><i class="fa fa-arrow-left"></i> Chatbox</a>
+    	</div>
         </div>
       <div id="scroll-chat" class="scrollbar" style="height: 80%">
         <div id="chatbox" class="scrollbox-content " style="padding-top: 5px;padding-left: 5px">
-        	{{--*/$msgid=-1/*--}}
+        	<?php $msgid=-1; ?>
         	@foreach($chats as $chat)
 				@if((Auth::user()->id)==($chat->user->id))
 					<div class="row">
@@ -209,7 +203,7 @@
 		              <div class="leftmsg left"><p class="chatinfo">{{$chat->user->username}} | {{date("h:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
 		            </div>
 				@endif	
-				{{--*/$msgid=$chat->id/*--}}
+				<?php $msgid=$chat->id; ?>
 			@endforeach
         </div>
       </div>
@@ -221,14 +215,14 @@
                 <input onkeydown = "if (event.keyCode == 13) sendMessage();" type="text" name="text" id="message" placeholder="Enter your message :)">
               </div>
               <div class="col s2 m2" style="padding-top: 12px">
-                <button class="btn-floating pink accent-4" onclick="sendMessage();"><i class="fa fa-send" style="font-size: 16px"></i></button>
+                <button class="btn-floating" onclick="sendMessage();"><i class="fa fa-send" style="font-size: 16px"></i></button>
               </div>
         </div>
   </div>
 
 
 <div class="fixed-action-btn" style="bottom: 10; right: 10;">
-    <a class="chat-button btn-floating btn-large red" data-activates="chat-slide-out">
+    <a class="chat-button btn-floating btn-large" data-activates="chat-slide-out">
       <i class="large material-icons">chat</i>
     </a>
 </div>
@@ -239,23 +233,24 @@
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   <script type="text/javascript" src="js/buttons.js"></script>
-  <!-- <script type="text/javascript" src="js/post.js"></script> -->
    <script type="text/javascript" src="js/chatbox.js"></script>
    <script type="text/javascript" src="js/myjs.js"></script>
+   <script src="https://use.fontawesome.com/13ed732878.js"></script>
 
 @yield('JSwithTags')
 
 
 <script type="text/javascript">
 var x={{$msgid}};
-
 var auth_id={{Auth::id()}};
 
 @yield('jscript')
 
-
-
-
+$(document).ready(function(){
+      $('.slider').slider({full_width: true});
+      $('.slider').height('230');
+      $('.slides').height('200');
+    });
 
 
 </script>

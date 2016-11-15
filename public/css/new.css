@@ -1,0 +1,15 @@
+.team{
+  max-width: 130px;
+  max-height: 130px;
+}
+.iconpadding{
+  padding-left: 5px;
+  padding-right: 5px;
+  color: black;
+}
+footer{
+  padding: 20px;
+  color: white;
+  text-align: center;
+  letter-spacing: 3px;
+}

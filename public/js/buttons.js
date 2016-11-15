@@ -6,7 +6,6 @@
 $(".delButton").on("click",function(event)
 {
 	event.preventDefault();
-	$("#loadingdiv").removeClass("hidden");
 	var el=$(this);
 	var id=$(this).val();
 	
@@ -20,10 +19,6 @@ $(".delButton").on("click",function(event)
 			el.parents(".feed").fadeOut("slow",function(){
 				this.remove();
 			});
-
-			$("#loadingdiv").addClass("hidden");
-
-
 			});
 
 				
@@ -50,7 +45,7 @@ $(".likebutton").on("click",function(event)
 			 {
 			 	var count=string.match(/\d/g);
 			 	count=++count;
-			 	$("p[id="+pid+"likes]").html(count+" likes");
+			 	$("p[id="+pid+"likes]").html(count+" Likes");
 			 	el.children('i').html('favorite');
 			}
 			else if(result=='unlike')
@@ -59,7 +54,7 @@ $(".likebutton").on("click",function(event)
 			 	count=--count;
 			 	if(count<0)
 					count=0;
-			 	$("p[id="+pid+"likes]").html(count+" likes")
+			 	$("p[id="+pid+"likes]").html(count+" Likes")
 
 			 	el.children('i').html('favorite_border');
 
@@ -91,7 +86,7 @@ $(".likebutton").on("click",function(event)
 		 	{
 		 		var count=string.match(/\d/g);
 			 	count=++count;
-			 	$("p[id="+pid+"comments]").html(count+" comments");
+			 	$("p[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
 			}
 			});
@@ -126,7 +121,6 @@ $(".likebutton").on("click",function(event)
 
  $(".commentscount").on("click",function(){
 	var pid=$(this).data('id');
-
 	$.ajax({
 	type:'POST',
 	url:'showcomments',
@@ -136,18 +130,47 @@ $(".likebutton").on("click",function(event)
 		$('#'+pid+'commentbox').empty();
 		if(result.length==0)
 		{
-			$('#'+pid+'commentbox').append('<div class="row text-center">no comments to show</div>');		
+			Materialize.toast('Oops! No Comments to show :P', 3000);
 		}
 		else
 		{
-	for(var key in result)
-	{
-		$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="img-circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');
-	}
+			for(var key in result)
+			{
+				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');	
+			}
+			$('#'+pid+'commentbox').show('normal');
 
-	}
+		}
+});
+
+});
 
 
+//SHOW Likes BUTTON
+//WORKS ON Likes BADGE
+
+ $(".likescount").on("click",function(){
+	var pid=$(this).data('id');
+	$.ajax({
+	type:'POST',
+	url:'showlikes',
+	data:{pid:pid}
+})
+.done(function(result){
+		$('#'+pid+'likesbox').empty();
+		if(result.length==0)
+		{
+			Materialize.toast('Oops! No Likes to show :P', 3000);
+		}
+		else
+		{
+			for(var key in result)
+			{
+				$('#'+pid+'likesbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b></div>');	
+			}
+			$('#'+pid+'commentbox').show('normal');
+
+		}
 });
 
 });

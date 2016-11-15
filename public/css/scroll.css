@@ -29,7 +29,7 @@
 	padding: 8px;
 	max-width: 70%;
 	color: white;
-	background: #880e4f;
+	background: #2196F3;
 	word-wrap: break-word;
 	/*font-size: 12px;*/
 }
@@ -51,7 +51,6 @@
 	#chat-slide-out{
 		width: 100%;
 	}
-	
 }
 @media(min-width: 768px)
 {

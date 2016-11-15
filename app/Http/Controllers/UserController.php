@@ -6,21 +6,36 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Session;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use File;
 use Auth;
-
 use App\Http\Requests;
 use App\User;
 
 class UserController extends Controller
 {
+    public function verifyUser($token)
+    {
+        $user=User::where('verifytoken',$token)->first();
+        if ($user->count()>0) 
+        {
+            $user->active=1;
+            $user->save();
+            echo "Your account has been activated ! Enjoy :) ";
+        }
+        else
+        {
+            echo "Invalid Token !";
+        }
+    }
+
     public function loginUser(Request $request)
     {
-        $Username=$_POST["username"];
-        $Password=$_POST["password"];
+        $Username=$_POST["usrname"];
+        $Password=$_POST["psswd"];
         if(isset($Username) && isset($Password) && !empty($Password) && !empty($Username))
         {
-            if(Auth::attempt(['username'=> $Username, 'password'=>$Password]))
+            if(Auth::attempt(['username'=> $Username, 'password'=>$Password, 'active'=>1]))
             {
                 if(Auth::check())
                 {
@@ -62,7 +77,17 @@ class UserController extends Controller
             $post->lname=$Lname;
             $post->username=$Username;
             $post->email=$Email;
+            $post->level=0;
+            $post->active=0;
+            $randomToken=str_random(20);
+            $post->verifytoken=$randomToken;
             $post->save();
+            // sendmail($Email);
+
+            Mail::send('emails.test',['name' => $Fname,'token' => $randomToken],function($message) use ($post)
+            {
+                $message->to($post->email,$post->fname)->subject('Welcome to MCW!');
+            });
 
             echo 0;
         }
@@ -86,7 +111,6 @@ class UserController extends Controller
         {
             return "Username already exists!";
         }
-
         if($fname!=NULL && !empty($fname))
         {
             $user->fname=$fname;
@@ -100,24 +124,11 @@ class UserController extends Controller
         {
             $user->username=$username;
         }
+		$user->save();
+		echo '0';
+	}
 
-            $user->save();
-            echo '0';
-        
-
-
-
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePic(Request $request,$id)
+	public function updatePic(Request $request,$id)
     {
 
                 if(Input::hasFile('pic'))

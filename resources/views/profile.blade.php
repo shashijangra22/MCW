@@ -140,16 +140,20 @@
 	      </div>
 	      <div class="row">
 	      	<div id="test1">
-	      		{{--*/$postflag=0/*--}}
-			{{--*/$postid=-1/*--}}
-			{{--*/$post_id=-1/*--}}
+				<?php 
+					$postflag=0;
+					$postid=-1;
+				 	$post_id=-1;
+				 ?>
 			@foreach($posts as $post)
 
 			@if($postflag==0)
-			{{--*/$postid=$post->id/*--}}
-			{{--*/$postflag=1/*--}}
+			<?php 
+				$postid=$post->id;
+				$postflag=1;
+			?>
 			@endif
-			{{--*/$post_id=$post->id/*--}}
+			<?php $post_id=$post->id; ?>
 			<div class="card sticky-action feed z-depth-4">
 				@if($post->path!=NULL)
 				<div class="card-image">

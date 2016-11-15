@@ -161,31 +161,22 @@ $(document).ready(function(){
 	});
 		
 
-	function newPost(){
-		
-
-		if($.active==0)
-		{
-			$.ajax({
-				type:'POST',
-				url:'newpost',
-				data:{pid:postid},
-			})
-			.done(function(result){
-				if(result!=0)
-				{
-					myFunction(result['post'],result['confession']);
-				}
-			
-			});
+function newPost()
+{
+	if($.active==0)
+	{
+		$.ajax({
+			type:'POST',
+			url:'newpost',
+			data:{pid:postid},
+		})
+		.done(function(result){
+			if(result!=0)
+			{
+				Materialize.toast(result['post']+" New Post(s), "+result['confession']+"New Confession(s)", 3000);
 			}
-			setTimeout(newPost,60000);
-
-	}
-	function myFunction(value1,value2) {
-    var x = document.getElementById("snackbar");
-    x.innerHTML=value1+" New Post(s), "+value2+"New Confession(s)";
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+		
+		});
+		}
+		setTimeout(newPost,60000);
 }
-

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Like;
 use App\Post;
 use App\User;
 use Auth;
-
+use DB;
 
 class LikeController extends Controller
 {
@@ -39,5 +38,12 @@ class LikeController extends Controller
 
             return 'like';
         }    
+    }
+
+    public function showLikes(Request $request)
+    {
+        $pid=$request->pid;
+        $likes=DB::table('likes')->where('likes.post_id',$pid)->join('users','users.id','=','likes.user_id')->select('likes.*','users.username','users.displaypic')->get();
+        return $likes;
     }
 }

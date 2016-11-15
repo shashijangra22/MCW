@@ -2,276 +2,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
 	<meta charset="utf-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Your description here">
     <meta name="author" content="Your Name">
-    <title> My College Wall </title>
+
+    <title>My College Wall</title>
     <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/new.css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <!-- For more icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<!-- For more icons -->
+	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
 
-	<!-- BootstrapValidator CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet"/>
-
-    <!-- Theme CSS -->
-    <link href="css/creative.css" rel="stylesheet">
 
 </head>
 <body>
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-container">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="">My College Wall</a>
-            </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-container">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#carousel">Login/Sign-up</i></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#about">About Us</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact Us</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+<div class="spinner-wrapper white" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
+	<div class="preloader-wrapper big active" style="position: absolute;top: 45%;left: 45%">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
-        <!-- /.container-fluid -->
-    </nav>
+      </div>
 
-    <div id="carousel" class="carousel slide" data-ride="carousel"  style="width:100%;">
-               <ol class="carousel-indicators">
-                    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel" data-slide-to="1"></li>
-                    <li data-target="#carousel" data-slide-to="2"></li>
-                </ol> 
-        <!-- Items -->
-        <div class="carousel-inner" >
-            <div class="item active fill">
-                <img class="img-responsive carousel-img" src="img/cllg6.jpg" alt="Slide 1"  style="width:100%; height:100%; background:rgba(0,0,0,0.3);" />
-            </div>
-            <div class="item fill">
-                <img class="img-responsive carousel-img" src="img/cllg4.jpg" alt="Slide 2" style="width:100%; height:100%; background:rgb(0,0,0,0.2);"/>
-            </div>
-            <div class="item fill">
-                <img class="img-responsive carousel-img" src="img/cllg3.jpg" alt="Slide 3" style="width:100%; height:100%;"/>
-            </div>
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
+      </div>
 
-        <div class="black-tint">
-            <div class="row " style="position:absolute; left:15px; right:15px; margin:0 auto; top:30%; ">
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    
-                    <form id="register-form" class="hidden" role="form">
-                        <div class="row ">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="fname" placeholder="First Name">
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="lname" placeholder="Last Name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="username" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="email" name="email" placeholder="E-mail">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="password" name="password" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="password" name="confirmpassword" placeholder="Confirm Password">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-xs-8 col-xs-offset-2">
-                                <div class="form-group">
-                                    <button class="btn btn-sm btn-primary" type="submit">Register <i id="RegisterLoader" class="hidden fa fa-refresh fa-spin fa-fw"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row hidden" id="RegisterErrorRow">
-                            <div class="col-xs-8 col-xs-offset-2" style="color:white">
-                                <div class="form-group" id="RegisterErrorBox"></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-xs-8 col-xs-offset-2" style="color:white;font-size:12px">
-                                <div class="form-group">
-                                    Have an Account ? <a href="#" onclick="show_login();">Login !</a>
-                                </div>
-                            </div>
-                        </div>          
-                    </form>
-
-                    <form id="login-form" role="form">
-                        <div class="row form-group">
-                            <div class="col-xs-8 col-xs-offset-2">
-                                <input class="form-control"  type="text" name="username" placeholder="Username">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-xs-8 col-xs-offset-2">
-                                <input class="form-control"  type="password" name="password" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-xs-8 col-xs-offset-2">
-                                <button id="login" name="login" class="btn btn-sm btn-primary" type="submit">Login <i id="LoginLoader" class="hidden fa fa-refresh fa-spin fa-fw"></i></button>
-                            </div>
-                        </div>
-                        <div id="LoginErrorRow" class="row form-group hidden">
-                            <div class="col-xs-8 col-xs-offset-2" style="color:white">
-                                <div id="LoginErrorBox" class="LoginErrorBox"></div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-xs-8 col-xs-offset-2" style="color:white;font-size:12px">
-                                Need an Account ? <a href="#" onclick="show_register();">Signup !</a>
-                            </div>
-                        </div>          
-                    </form>            
-                </div>
-            </div>
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
-        <a href="#carousel" class="left carousel-control" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-    <a href="#carousel" class="right carousel-control" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
     </div>
+</div>
 
-    <section id="about" >
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2 class="section-heading">About Us</h2>
-                    <hr>
-                </div>
-            </div>
-        </div>
-        <div class="container"  >
-            <div class="row">
-                <div class="col-md-3  text-center">
-                    <div class="team">
-                        <img src="img/saurav.jpg" class="img-circle ">
-                        <h4>Saurav</h4>
-                        <p >he does everything</p>
-                        <a href="https://www.facebook.com/saurav.gupta.180410"><i class="fa  fa-facebook padding_right color-black"></i></a>
-                        <a href="https://www.instagram.com/srv.1195/"><i class="fa  fa-instagram padding_right color-black"></i></a>
-                        <a href="https://twitter.com/Srv1195"><i class="fa fa-twitter padding_right color-black"></i></a>
+<div class="navbar-fixed">
+  <nav class="blue">
+    <div class="nav-wrapper">
+      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
+      <a style="padding-right: 20px" href="#" data-activates="slide-out" class="button-collapse right"><i style="font-size: 24px" class="fa fa-bars"></i></a>
+	</div>
+  </nav>
+</div>
 
-                    </div>
-                </div>
-                <div class="col-md-3  text-center">
-                    <div class="team">
-                        <img src="img/shashi.jpg" class="img-circle">
-                        <h4>Shashi</h4>
-                        <p >This Guy orders all the time. </p>
-                        <a href="https://www.facebook.com/shashijangra22"><i class="fa  fa-facebook padding_right color-black"></i></a>
-                        <a href="https://www.instagram.com/shashijangra/"><i class="fa  fa-instagram padding_right color-black"></i></a>
-                        <a href="https://twitter.com/shashijangra22"><i class="fa  fa-twitter padding_right color-black"></i></a>
+<div class="section valign-wrapper" style="background: url(img/5.jpg) no-repeat center fixed;background-size: cover;height: 95vh">
+	<div class="row container">
+		<div class="col l4 offset-l4 s12 m12">
+			<div id="LoginFormCard" class="card valign z-depth-5"">
+				<div class="card-content" style="text-align: center;padding: 10px">
+					<span class="card-title">Login</span>
+				</div>
+				<div class="card-action">
+					<div class="row" style="margin-bottom: 0px">
+					    <form id="LoginForm" role="form" class="col s12" style="text-align: center;">
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="usrname" type="text" name="usrname">
+					          <label for="usrname">Username</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="psswd" type="password" name="psswd">
+					          <label for="psswd">Password</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <button class="btn" id="LoginFormButton" name="LoginFormButton" type="submit">Login</button>
+						          <div id="loginSpinner" class="hide preloader-wrapper small">
+									    <div class="spinner-layer spinner-blue-only">
+										      <div class="circle-clipper left">
+										        <div class="circle"></div>
+										      </div>
+										     <div class="gap-patch">
+										        <div class="circle"></div>
+										      </div>
+										      <div class="circle-clipper right">
+										        <div class="circle"></div>
+										      </div>
+									    </div>
+								  </div>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					        	Dont Have an Account ?<a href="#" onclick="showRegisterForm()"> Sign up !</a>
+					        </div>
+					      </div>
+					    </form>
+					 </div>
+				</div>
+			</div>
+			<div id="RegisterFormCard" class="hide card valign z-depth-5">
+				<div class="card-content" style="text-align: center;padding: 10px">
+					<span class="card-title">Register</span>
+				</div>
+				<div class="card-action">
+					<div class="row" style="margin-bottom: 0px">
+					    <form id="RegisterForm" role="form" class="col s12" style="text-align: center;">
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s6">
+					          <input id="fname" type="text" name="fname">
+					          <label for="fname">First Name</label>
+					        </div>
+					        <div class="input-field col s6">
+					          <input id="lname" type="text" name="lname">
+					          <label for="lname">Last Name</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="username" type="text" name="username">
+					          <label for="username">Username</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="email" type="text" name="email">
+					          <label for="email">Email</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s6">
+					          <input id="password" type="password" name="password">
+					          <label for="password">Password</label>
+					        </div>
+					        <div class="input-field col s6">
+					          <input id="confirmpassword" type="password" name="confirmpassword">
+					          <label for="confirmpassword">Confirm Password</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <button class="btn" type="submit" id="RegisterFormButton" name="RegisterFormButton">Register</button>
+						          <div id="RegisterSpinner" class="hide preloader-wrapper small">
+									    <div class="spinner-layer spinner-blue-only">
+									      <div class="circle-clipper left">
+									        <div class="circle"></div>
+									      </div>
+									     <div class="gap-patch">
+									        <div class="circle"></div>
+									      </div>
+									      <div class="circle-clipper right">
+									        <div class="circle"></div>
+									      </div>
+									    </div>
+									</div>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					        	Already Signed Up ?<a href="#" onclick="showLoginForm()"> Log In !</a>
+					        </div>
+					      </div>
+					    </form>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-                    </div>
-                </div>
-                <div class="col-md-3  text-center">
-                    <div class="team">
-                        <img src="img/vishul.jpg" class="img-circle ">
-                        <h4>Vishul</h4>
-                        <p >Cries a lot.</p>
-                        <a href="https://www.facebook.com/vishul.saini"><i class="fa fa-facebook padding_right color-black" ></i></a>
-                        <a href="https://www.instagram.com/vishulsaini/"><i class="fa  fa-instagram padding_right color-black"></i></a>
-                        <a href="#"><i class="fa  fa-twitter padding_right color-black"></i></a>
+<div class="section" style="text-align: center;">
+	<h4>About Us</h4>
+	<div class="row container">
+		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
+			<img src="img/saurav.jpg" class="circle team">
+			<h5>Saurav</h5>
+			<h6>He Does Everything.</h6>
+			<a href="https://www.facebook.com/saurav.gupta.180410"><i class="fa fa-facebook iconpadding"></i></a>
+            <a href="https://www.instagram.com/srv.1195/"><i class="fa fa-instagram iconpadding"></i></a>
+            <a href="https://twitter.com/Srv1195"><i class="fa fa-twitter iconpadding"></i></a>
+		</div>
+		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
+			<img src="img/shashi.jpg" class="circle team" >
+			<h5>Shashi</h5>
+			<h6>This Guy Orders All The Time.</h6>
+			<a href="https://www.facebook.com/shashijangra22"><i class="fa fa-facebook iconpadding"></i></a>
+            <a href="https://www.instagram.com/shashijangra/"><i class="fa fa-instagram iconpadding"></i></a>
+            <a href="https://twitter.com/shashijangra22"><i class="fa fa-twitter iconpadding"></i></a>
+		</div>
+		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
+			<img src="img/vishul.jpg" class="circle team" >
+			<h5>Vishul</h5>
+			<h6>Cries A Lot.</h6>
+			<a href="https://www.facebook.com/vishul.saini"><i class="fa fa-facebook iconpadding" ></i></a>
+            <a href="https://www.instagram.com/vishulsaini/"><i class="fa fa-instagram iconpadding"></i></a>
+            <a href="#"><i class="fa fa-twitter iconpadding"></i></a>
+		</div>
+		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
+			<img src="img/aman.jpg" class="circle team" >
+			<h5>Aman</h5>
+			<h6>Says A Lot Does None.</h6>
+			<a href="https://www.facebook.com/amanyadav1396"><i class="fa fa-facebook iconpadding"></i></a>
+            <a href="https://www.instagram.com/amanyadav1396/"><i class="fa fa-instagram iconpadding"></i></a>
+            <a href="https://twitter.com/amanyadav1396"><i class="fa fa-twitter iconpadding"></i></a>
+		</div>
+	</div>
+</div>
 
-                    </div>
-                </div>
-                <div class="col-md-3  text-center">
-                    <div class="team">
-                        <img src="img/aman.jpg" class="img-circle ">
-                        <h4>Aman</h4>
-                        <p >Says a lot... Does none.</p>
-                        <a href="https://www.facebook.com/amanyadav1396"><i class="fa fa-facebook padding_right color-black"></i></a>
-                        <a href="https://www.instagram.com/amanyadav1396/"><i class="fa  fa-instagram padding_right color-black"></i></a>
-                        <a href="https://twitter.com/amanyadav1396"><i class="fa  fa-twitter padding_right color-black"></i></a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <h2 class="section-heading">Contact Us</h2>
-                    <hr class="primary">
-                    <p>Have any questions for us or need our assistance. Don't hesitate...leave a message.</p>
-                </div>
-                
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x"></i>
-                    <p><a href="mailto:admin@mycollegewall.com">admin@mycollegewall.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        Made with <i class="fa fa-heart"></i> in Canteen
-    </footer>
-
+<footer class="page-footer">
+    Made with <i class="fa fa-heart"></i> in Canteen
+</footer>
 </body>
 
-<!-- jQuery and Bootstrap JS -->
-<script src="js/jquery.min.js" type="text/javascript"></script>
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
-    
-<!-- BootstrapValidator -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" type="text/javascript"></script>
-
-<!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-<!-- Theme JavaScript -->
-    <script src="js/creative.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="https://use.fontawesome.com/13ed732878.js"></script>
 
 <script type="text/javascript">
+
 $.ajaxSetup(
     {
         headers: 
@@ -279,180 +254,91 @@ $.ajaxSetup(
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-function show_register()
-            {
-                $("#login-form").addClass("hidden");
-                $("#register-form").removeClass("hidden");
-            }
-            function show_login()
-            {
-                $("#login-form").removeClass("hidden");
-                $("#register-form").addClass("hidden");
-            }
 
-$("#login").on("click",function(event){
+	$(window).load(function() 
+	{
+		$(".spinner-wrapper").fadeOut("slow");
+	});
+
+	function showRegisterForm() {
+		$('#LoginFormCard').addClass('hide');
+		$('#RegisterFormCard').removeClass('hide');
+	}
+	function showLoginForm() {
+		$('#RegisterFormCard').addClass('hide');
+		$('#LoginFormCard').removeClass('hide');
+	}
+
+	$("#LoginFormButton").on("click",function(event){
             event.preventDefault();
-            $('#LoginLoader').removeClass('hidden');
+            $('#LoginFormButton').addClass('hide');
+            $('#loginSpinner').addClass('active');
+            $('#loginSpinner').removeClass('hide');
             $.ajax({
                 url: "login",
                 type: "POST",
-                data: $("#login-form").serialize()
+                data: $("#LoginForm").serialize()
             })
             .done(function(result)
             {
                 if(result=='0')
                 {
+                	Materialize.toast('Yeyy ! You are in.', 3000);
                     window.location.replace('home');
                 }
                 else if(result=='1')
                 {
-                    $("#LoginErrorBox").html('Incorrect Username/Password!');
-                    $('#LoginLoader').addClass('hidden');
-                    $('#LoginErrorRow').removeClass('hidden');
+                	Materialize.toast('No such active account !', 3000);
+                	$('#loginSpinner').removeClass('active');
+                	$('#loginSpinner').addClass('hide');
+                	$('#LoginFormButton').removeClass('hide');
                 }
                 else
                 {
-                    $("#LoginErrorBox").html('Both fields required!');
-                    $('#LoginLoader').addClass('hidden');
-                    $('#LoginErrorRow').removeClass('hidden');
+                	Materialize.toast('Both fields are required !', 3000);
+                	$('#loginSpinner').removeClass('active');
+                	$('#loginSpinner').addClass('hide');
+                	$('#LoginFormButton').removeClass('hide');
                 }
             });
         });
 
-    $(document).ready(function()
-    {
-            var validator = $("#register-form").bootstrapValidator({
-                live: 'enabled',
-                feedbackIcons: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                            fname : {
-                                message: "this field is required",
-                                validators : {
-                                    notEmpty : {
-                                        message : "this field is required"
-                                    },
-                                stringLength: { 
-                                    max: 20,
-                                    message: "this field cannot be larger than 20 characters"
-                                }
-                            }
-                        },
-                        
-                        lname : {
-                            message : "This field is required",
-                            validators : {
-                                notEmpty : {
-                                    message : "this field is required"
-                                },
-                                stringLength: { 
-                                    max: 20,
-                                    message: "this field cannot be larger than 20 characters"
-                            
-                                }
-                            }
-                        },
-
-                        username : {
-                            message : "This field is required",
-                            validators : {
-                                notEmpty : {
-                                    message : "this field is required"
-                                },
-                                stringLength: { 
-                                    max: 20,
-                                    message: "this field cannot be larger than 20 characters"
-                            
-                                }
-                            }
-                        },
-
-                        email :{
-                            message : "Email address is required",
-                            validators : {
-                                notEmpty : {
-                                    message : "Please provide an email address"
-                                }, 
-                                
-                                emailAddress: {
-                                    message: "invalid email address"
-                                }
-                            }
-                        },
-
-                        password: {
-                            validators: {
-                                notEmpty: {
-                                    message: "password is required"
-                                },
-
-                                stringLength: {
-                                    min: 8,
-                                    message : "password must be atleast 8 characters long"
-                                },
-
-                                different : {
-                                    field: "email",
-                                    message: "Email and password can't match"
-                                }
-                            }
-                        },
-
-                        confirmpassword:{
-                            validators: {
-                                notEmpty: {
-                                    message: "This field is required."
-                                },
-
-                                identical : {
-                                    field: "password",
-                                    message: "password and confirmation must match"
-                                }
-                            }
-
-                        }
-
-                }
-
-            });
-
-            validator.on('success.form.bv', function(event){
-                event.preventDefault();
-                $('#RegisterLoader').removeClass('hidden');
-                $.ajax({
-                    url: 'register',
-                    type: 'POST',
-                    data: $("#register-form").serialize()
-                })
-                .done(function(result) 
+		$("#RegisterFormButton").on("click",function(event){
+            event.preventDefault();
+            $('#RegisterFormButton').addClass('hide');
+            $('#RegisterSpinner').addClass('active');
+            $('#RegisterSpinner').removeClass('hide');
+            $.ajax({
+                url: "register",
+                type: "POST",
+                data: $("#RegisterForm").serialize()
+            })
+            .done(function(result)
+            {
+                if(result=='0')
                 {
-                    if(result=='0')
-                    {
-                        $("#RegisterErrorBox").html('Succesfully Registered :)');
-                        $('#RegisterLoader').addClass('hidden');
-                        $('#RegisterErrorRow').removeClass('hidden');
-                    }
-                    else if(result=='1')
-                    {
-                        $("#RegisterErrorBox").html('Username already exists!');
-                        $('#RegisterLoader').addClass('hidden');
-                        $('#RegisterErrorRow').removeClass('hidden');
-                    }
-                    else
-                    {
-                        $("#RegisterErrorBox").html('E-mail already exists!');
-                        $('#RegisterLoader').addClass('hidden');
-                        $('#RegisterErrorRow').removeClass('hidden');
-                    } 
-                });
-
+                    Materialize.toast('Success :) Check your Mailbox !', 3000);
+                    $('#RegisterSpinner').removeClass('active');
+                    $('#RegisterSpinner').addClass('hide');
+                    $('#RegisterFormButton').removeClass('hide');
+                }
+                else if(result=='1')
+                {
+                	Materialize.toast('Oopps ! Username already exists.', 3000);
+                	$('#RegisterSpinner').removeClass('active');
+                	$('#RegisterSpinner').addClass('hide');
+                	$('#RegisterFormButton').removeClass('hide');
+                }
+                else
+                {
+                	Materialize.toast('Oopps ! Email already exists.', 3000);
+                	$('#RegisterSpinner').removeClass('active');
+                	$('#RegisterSpinner').addClass('hide');
+                	$('#RegisterFormButton').removeClass('hide');
+                }
             });
-            
-
         });
+
 </script>
 
 </html>
@@ -462,6 +348,3 @@ $("#login").on("click",function(event){
 window.location.replace('home');
 </script>
 @endif
-
-
-
