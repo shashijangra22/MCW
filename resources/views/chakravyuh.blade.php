@@ -7,14 +7,14 @@
 	<?php $totalQ = count($questions); ?>
 		@if($totalQ>0 && $user->level<$totalQ)
 		<div class="card z-depth-4">
-				<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
-					<span class="card-title">Welcome Back :)</span>
-					<span class="card-title right">Level {{$user->level}}</span>
+				<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
+					<span class="card-title" style="font-size: 20px">Welcome Back :)</span>
+					<span class="card-title right" style="font-size: 20px">Level {{$user->level}}</span>
 				</div>
 				<div class="card-image">
 	              <img class="materialboxed" src="{{$questions[$user->level]->path}}">
 	            </div>
-				<div class="card-content">
+				<div class="card-content" style="padding-top: 5px;padding-bottom: 5px">
 					<p style="text-align: center;"><strong>Hint: {{$questions[$user->level]->data}}</strong></p>
 				</div>
 				<div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
@@ -30,16 +30,16 @@
 			</div>
 			@else
 				<div class="card z-depth-4">
-				<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
-					<span class="card-title">Oops ! Check back soon :P</span>
+				<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
+					<span class="card-title" style="font-size: 20px">Oops ! Check back soon :P</span>
 				</div>
 			</div>
 			@endif
 			
 			@if ($user->username=='shashijangra')
 			<div class="card z-depth-4">
-			<div class="card-content pink white-text" style="padding-top: 10px;padding-bottom: 10px">
-					<span class="card-title">Add a Question!</span>
+			<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
+					<span class="card-title" style="font-size: 20px">Add a Question!</span>
 				</div>
 				<div class="card-action">
 					<form id="post-form" role="form" action="#" enctype="multipart/form-data">
@@ -128,11 +128,11 @@ $('#post').on("click",function(e){
 		$("#post-form")[0].reset();
 			if(result=='0')
 			{
-				alert('q added')
+				Materialize.toast('Question Added !', 3000);
 			}
 			else
 			{
-				alert(result);
+				Materialize.toast(result, 3000);
 			}
 			});
 		
@@ -153,11 +153,12 @@ function checkAnswer()
 			$('#myAnswer').val('');
 			if (result==0)
 			{
+				Materialize.toast('Yeyy ! Correct Answer :)', 3000);
 				window.location.replace('chakravyuh');
 			}
 			else
 			{
-				alert('Wrong Answer');
+				Materialize.toast('Wrong Answer', 3000);
 			}
 		});
 	}
