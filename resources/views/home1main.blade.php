@@ -184,7 +184,7 @@
 </div>
 
 
-<div id="chat-slide-out" class="side-nav">
+<div id="chat-slide-out"  class="side-nav">
     <div class="row card blue valign-wrapper" style="padding-top: 0px;margin: auto;height: 10%;">
     	<div class="col s12 center-align">
     		<a href="#" class="white-text card-title"><i class="fa fa-arrow-left"></i> Chatbox</a>
@@ -251,6 +251,7 @@ $(document).ready(function(){
       $('.slider').height('230');
       $('.slides').height('200');
     });
+
 
 
 </script>

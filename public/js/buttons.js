@@ -66,6 +66,13 @@ $(".likebutton").on("click",function(event)
 
 
 //COMMENT BUTTON JS
+$('.comment_input').keypress(function (e) {
+  if (e.which == 13) {
+    //alert("hello");
+    var id=$(this).data('id');
+    $("#"+id+"commentbutton").click();
+      }
+});
 
 	$(".comment_button").on("click",function(e){
 		e.preventDefault();

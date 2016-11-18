@@ -241,6 +241,7 @@
 </body>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   <script src="https://use.fontawesome.com/13ed732878.js"></script>
@@ -254,6 +255,108 @@ $.ajaxSetup(
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+$(document).ready(function(){
+
+	jQuery.validator.addMethod("noSpace", function(value, element) { 
+  return value.indexOf(" ") < 0 && value != ""; 
+}, "No space please and don't leave it empty");
+
+
+$("#RegisterForm").validate({
+	
+	invalidHandler: function(event, validator) {
+    // 'this' refers to the form
+    var errors = validator.numberOfInvalids();
+
+    if (errors) {
+    	
+      Materialize.toast("you have "+errors+" error(s)", 3000);
+    } 
+  },
+  errorPlacement: function(error, element) {
+    
+      error.insertAfter("");
+     
+  },
+	rules:
+	{
+		fname:
+		{
+			required:true,
+			minlength:3,
+			noSpace:true,
+		},
+		lname:
+		{
+			required:true,
+			minlength:3,
+			noSpace:true,
+		},
+		username:
+		{
+			required:true,
+			minlength:3,
+			noSpace:true,
+
+
+		},
+		email:
+		{
+			required:true,
+			email:true,
+		},
+		password:
+		{
+			required:true,
+			minlength:8,
+		},
+		confirmpassword:
+		{
+			required:true,
+			equalTo:"#password"
+		},
+
+
+	},
+	submitHandler: function(event)
+	{
+            $('#RegisterFormButton').addClass('hide');
+            $('#RegisterSpinner').addClass('active');
+            $('#RegisterSpinner').removeClass('hide');
+            $.ajax({
+                url: "register",
+                type: "POST",
+                data: $("#RegisterForm").serialize()
+            })
+            .done(function(result)
+            {
+                if(result=='0')
+                {
+                    Materialize.toast('Success :) Check your Mailbox !', 3000);
+                    $('#RegisterSpinner').removeClass('active');
+                    $('#RegisterSpinner').addClass('hide');
+                    $('#RegisterFormButton').removeClass('hide');
+                }
+                else if(result=='1')
+                {
+                	Materialize.toast('Oopps ! Username already exists.', 3000);
+                	$('#RegisterSpinner').removeClass('active');
+                	$('#RegisterSpinner').addClass('hide');
+                	$('#RegisterFormButton').removeClass('hide');
+                }
+                else
+                {
+                	Materialize.toast('Oopps ! Email already exists.', 3000);
+                	$('#RegisterSpinner').removeClass('active');
+                	$('#RegisterSpinner').addClass('hide');
+                	$('#RegisterFormButton').removeClass('hide');
+                }
+            });
+	},
+	
+});
+});
+
 
 	$(window).load(function() 
 	{
@@ -303,41 +406,9 @@ $.ajaxSetup(
             });
         });
 
-		$("#RegisterFormButton").on("click",function(event){
-            event.preventDefault();
-            $('#RegisterFormButton').addClass('hide');
-            $('#RegisterSpinner').addClass('active');
-            $('#RegisterSpinner').removeClass('hide');
-            $.ajax({
-                url: "register",
-                type: "POST",
-                data: $("#RegisterForm").serialize()
-            })
-            .done(function(result)
-            {
-                if(result=='0')
-                {
-                    Materialize.toast('Success :) Check your Mailbox !', 3000);
-                    $('#RegisterSpinner').removeClass('active');
-                    $('#RegisterSpinner').addClass('hide');
-                    $('#RegisterFormButton').removeClass('hide');
-                }
-                else if(result=='1')
-                {
-                	Materialize.toast('Oopps ! Username already exists.', 3000);
-                	$('#RegisterSpinner').removeClass('active');
-                	$('#RegisterSpinner').addClass('hide');
-                	$('#RegisterFormButton').removeClass('hide');
-                }
-                else
-                {
-                	Materialize.toast('Oopps ! Email already exists.', 3000);
-                	$('#RegisterSpinner').removeClass('active');
-                	$('#RegisterSpinner').addClass('hide');
-                	$('#RegisterFormButton').removeClass('hide');
-                }
-            });
-        });
+		// $("#RegisterFormButton").on("click",function(event){
+  //           
+  //       });
 
 </script>
 

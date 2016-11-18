@@ -100,7 +100,7 @@
 		                <input style="margin-bottom: 10px" data-id="{{$post->id}}" id="{{$post->id}}commentinput" type="text" class="comment_input" placeholder="write a comment :)">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 10px">
-		                <button data-id="{{$post->id}}" class="comment_button btn-floating right" ><i class="fa fa-send" style="font-size: 16px"></i></button>
+		                <button data-id="{{$post->id}}" class="comment_button btn-floating right" id="{{$post->id}}commentbutton"><i class="fa fa-send" style="font-size: 16px"></i></button>
 		              </div>
 		            </div>
 	            </div>

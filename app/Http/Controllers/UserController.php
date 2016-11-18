@@ -86,6 +86,7 @@ class UserController extends Controller
 
             Mail::send('emails.test',['name' => $Fname,'token' => $randomToken],function($message) use ($post)
             {
+                $message->from('postmaster@mg.mycollegewall.com','MCW');
                 $message->to($post->email,$post->fname)->subject('Welcome to MCW!');
             });
 
