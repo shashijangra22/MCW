@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-<div class="col m6 offset-m3" id="main-feed">
+<div class="col s12 m6 offset-m3" id="main-feed">
 	<div class="card z-depth-4" style="margin-bottom: 10px">
         <div class="card-content pink white-text  " style="padding-top: 0px;padding-bottom: 0px">
           <span class="card-title" style="font-size: 20px">Welcome {{$user->username}} :)</span>
@@ -34,7 +34,8 @@
       </div>
 	<div class="row">
 		<div class="col s12">
-			<?php 
+			<?php
+				$counter=0;
 				$postflag=0;
 				$postid=-1;
 			 	$post_id=-1;
@@ -50,7 +51,7 @@
 			<?php $post_id=$post->id; ?>
 			<div class="card feed z-depth-4">
 	            <div class="card-content" style="padding-top: 0px;padding-bottom: 5px">
-		              <span class="card-title" style="font-size: 20px">#{{$post->id}} Confession</span>
+		              <span class="card-title" style="font-size: 20px">#{{++$counter}} Confession</span>
 		              <span style="display: inline;"><strong style="font-size: 10px">{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></span>
 	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px">
 	              	{!!nl2br($post->data)!!}
@@ -78,18 +79,16 @@
 		                <input style="margin-bottom: 10px" data-id="{{$post->id}}" id="{{$post->id}}commentinput" type="text" class="comment_input" placeholder="write a comment :)">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 10px">
-		                <button data-id="{{$post->id}}" class="comment_button btn-floating right" ><i class="fa fa-send" style="font-size: 16px"></i></button>
+		                <button data-id="{{$post->id}}" class="comment_button btn-floating right" id="{{$post->id}}commentbutton"><i class="fa fa-send" style="font-size: 16px"></i></button>
 		              </div>
 		            </div>
 	            </div>
 	        </div>
 	        @endforeach
 		</div>
-	</div>
-		
-			
-	</div>
-	</div>
+	</div>		
+</div>
+</div>
 
 @endsection
 
