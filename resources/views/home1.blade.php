@@ -73,13 +73,13 @@
 		               @endif
 		              </div>
 	            </div>
-	              <p style="text-align: justify;">
-	              		{!!nl2br($post->data)!!}
-	              </p>
-	              <p id="{{$post->id}}likes" class="chip likescount blue white-text" style="padding: 6px;display: inline;">{{$post->likes()->count()}} Likes</p>
+	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px">
+	              	{!!nl2br($post->data)!!}
+	              </blockquote>
+	              <p id="{{$post->id}}likes" data-id="{{$post->id}}" class="chip likescount blue white-text" style="padding: 6px;display: inline;">{{$post->likes()->count()}} Likes</p>
 	              <p href="#" id="{{$post->id}}comments" data-id="{{$post->id}}" class="chip commentscount blue white-text" style="padding: 6px;display:inline">{{$post->comments()->count()}} Comments</p>
 	              
-	              <div id="{{$post->id}}likesbox">
+	              <div id="{{$post->id}}likesbox" style="display: none;">
 					
 				  </div>
 	              <div id="{{$post->id}}commentbox" style="display: none">
