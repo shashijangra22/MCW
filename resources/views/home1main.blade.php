@@ -83,7 +83,7 @@
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
-	          <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li>
+	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
 	          <li class="profileBtn"><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">
@@ -95,14 +95,14 @@
 	      </ul>
 	      	<ul id="slide-out" class="side-nav">
 	          <li><div class="userView">
-	            <!-- <img class="background" src="img/sample-1.jpg"> -->
+	            <!-- <img class="background" src="img/5.jpg"> -->
 	            <a href="#"><img class="circle" src="{{$user->displaypic}}"></a>
 	            <a href="#"><span class="name">{{$user->username}}</span></a>
 	            <a href="#"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
 	          <li class="homeBtn active"><a href="{{asset('home')}}">Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}">Confessions</a></li>
-	          <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li>
+	          <!-- <li class="societiesBtn"><a disabled="true" href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}">Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}">Notices</a></li>
 	          <li><div class="divider"></div></li>
@@ -195,11 +195,11 @@
         	<?php $msgid=-1; ?>
         	@foreach($chats as $chat)
 				@if((Auth::user()->id)==($chat->user->id))
-					<div class="row">
+					<div class="row" style="margin-bottom:5px">
 		              <div class="right rightmsg ">{{$chat->message}}<p class="chattime">{{date("h:i",strtotime($chat->created_at))}}</p></div>
 		            </div>
 				@else
-					<div class="row">
+					<div class="row" style="margin-bottom:5px">
 		              <div class="leftmsg left"><p class="chatinfo">{{$chat->user->username}} | {{date("h:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
 		            </div>
 				@endif	
@@ -223,10 +223,9 @@
 
 <div class="fixed-action-btn" style="bottom: 10; right: 10;">
     <a class="chat-button btn-floating btn-large" data-activates="chat-slide-out">
-      <i class="large material-icons">chat</i>
+      <i class="material-icons">chat</i>
     </a>
 </div>
-	
 </body>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -252,7 +251,19 @@ $(document).ready(function(){
       $('.slides').height('200');
     });
 
+$(document).ready(function(){
+    $('#post').attr('disabled',true);
 
+    $('#mytext').keyup(function(){
+        if($(this).val().length !=0){
+            $('#post').attr('disabled', false);
+        }
+        else
+        {
+            $('#post').attr('disabled', true);        
+        }
+    })
+});
 
 </script>
 
