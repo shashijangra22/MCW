@@ -37,10 +37,10 @@ function pullMsg()
 				var minutes=today.getMinutes();
 
 
-				$('#chatbox').append('<div class="row"><div class="left leftmsg"><p class="chatinfo">'+result[key].username+' | '+hour+':'+minutes+'</p>'+result[key].message+'</div></div>');
+				$('#chatbox').append('<div class="row" style="margin-bottom:5px"><div class="left leftmsg"><p class="chatinfo">'+result[key].username+' | '+hour+':'+minutes+'</p>'+result[key].message+'</div></div>');
 				x=result[key].id;
 				count=count+1;
-
+				Materialize.toast("You have a message !", 500);
 
 
 
@@ -89,7 +89,7 @@ function pullMsg()
 			url:"sendmessage"
 		})
 		.done(function(result){
-			$('#chatbox').append('<div class="row"><div class="right rightmsg primary-color">'+message+'<p class="chattime">'+hour+':'+minutes+'</p></div></div>');
+			$('#chatbox').append('<div class="row" style="margin-bottom:5px"><div class="right rightmsg primary-color">'+message+'<p class="chattime">'+hour+':'+minutes+'</p></div></div>');
 			$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
 			$("#message").val('');	
 
