@@ -103,7 +103,7 @@ $('.comment_input').keypress(function (e) {
 
 	$(document).ready(function() {
           $('.button-collapse').sideNav({
-      menuWidth: '100%', // Default is 240
+      // menuWidth: '100%', // Default is 240
       edge: 'left', // Choose the horizontal origin
       closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     }
