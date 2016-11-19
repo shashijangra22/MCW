@@ -50,6 +50,7 @@ $("#loadmore-button").on("click",function(e){
 	e.preventDefault();
 	$('#loadmore-button').addClass('hide');
 	$('#loadmore-spinner').addClass('active');
+	$('#loadmore-spinner').removeClass('hide');
 	$.ajax({
 		type:'POST',
 		url:'loadmore',
@@ -60,7 +61,8 @@ $("#loadmore-button").on("click",function(e){
 	.done(function(result){
 		if(result.length==0)
 		{
-			$('#loadmore').append('<button class=" btn disabled center-align">no more post to show</button>');
+			Materialize.toast("No More posts to load :)", 2000);
+			$('#loadmore-button').remove();
 		}
 		for(var key in result)
 		{
@@ -136,15 +138,13 @@ $("#loadmore-button").on("click",function(e){
 			
 			$("#loadmore").append(post);
 			post_id=result[key].id;
-
-
-		$('#loadmore-button').removeClass('hide');
+			$('#loadmore-button').removeClass('hide');
 		}
 		$("ul.tabs").tabs();
 		$(".materialboxed").materialbox();
 		
-	$('#loadmore-spinner').removeClass('active');
-
+		$('#loadmore-spinner').addClass('hide');
+		$('#loadmore-spinner').removeClass('active');
 	});
 
 	
