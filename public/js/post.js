@@ -1,4 +1,5 @@
 $('#post').on("click",function(e){
+			
 			e.preventDefault();
 			$('#post').addClass('hide');
 			$('#postspinner').addClass('active');
@@ -47,6 +48,7 @@ auth_id
 
 
 $("#loadmore-button").on("click",function(e){
+	$(window).off('scroll');
 	e.preventDefault();
 	$('#loadmore-button').addClass('hide');
 	$('#loadmore-spinner').addClass('active');
@@ -164,7 +166,15 @@ $("#loadmore-button").on("click",function(e){
 		
 		$('#loadmore-spinner').addClass('hide');
 		$('#loadmore-spinner').removeClass('active');
+		$(window).on('scroll', function(){
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        $('#loadmore-button').click();
+   }
+});
+		
 	});
+
+	
 
 	
 });
