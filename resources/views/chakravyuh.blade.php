@@ -76,14 +76,6 @@
 				        	<td>{{$player->level}}</td>
 				      	</tr>
 				      @endforeach
-				      <tr>
-				        	<td>{{$user->username}}</td>
-				        	<td>{{$user->level}}</td>
-				      	</tr>
-				      	<tr>
-				        	<td>{{$user->username}}</td>
-				        	<td>{{$user->level}}</td>
-				      	</tr>
 				    </tbody>
 				  </table>
 				</div>
