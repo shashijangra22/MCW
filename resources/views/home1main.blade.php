@@ -5,11 +5,10 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Your description here">
-    <meta name="author" content="Your Name">
+    <meta name="description" content="Our College Own Social Network">
+    <meta name="author" content="Saurav-Shashi-Vishul-Aman">
 
     <title>My College Wall</title>
-    <link rel="shortcut icon" href="img/favicon.ico" />
 
 	<link rel="stylesheet" type="text/css" href="css/scroll.css">
 
@@ -17,11 +16,6 @@
 
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-
-	<!-- For more icons -->
-	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-	<!-- <link rel="stylesheet" href="css/theme-orange.css"> -->
-
 
 </head>
 <body>
@@ -73,8 +67,8 @@
 	<div class="navbar-fixed">
 	      <!-- Dropdown Structure -->
 	      <ul id="dropdown1" class="dropdown-content">
-	        <li><a href="{{asset('profile')}}">My Profile</a></li>
-	        <li><a href="{{asset('logout')}}">Logout</a></li>
+	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
+	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
@@ -100,14 +94,14 @@
 	            <a href="#"><span class="name">{{$user->username}}</span></a>
 	            <a href="#"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
-	          <li class="homeBtn active"><a href="{{asset('home')}}">Home</a></li>
-	          <li class="confessionsBtn"><a href="{{asset('confessions')}}">Confessions</a></li>
+	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;height: auto;" class="fa fa-home"></i> Home</a></li>
+	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;height: auto;" class="fa fa-heartbeat"></i> Confessions</a></li>
 	          <!-- <li class="societiesBtn"><a disabled="true" href="{{asset('societies')}}">Societies</a></li> -->
-	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}">Chakravyuh</a></li>
-	          <li class="noticesBtn"><a href="{{asset('notices')}}">Notices</a></li>
+	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i style="margin: 0px;height: auto;" class="fa fa-empire"></i> Chakravyuh</a></li>
+	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i style="margin: 0px;height: auto;" class="fa fa-info-circle"></i> Notices</a></li>
 	          <li><div class="divider"></div></li>
-	          <li class="profileBtn"><a href="{{asset('profile')}}">My Profile</a></li>
-	          <li><a href="{{asset('logout')}}">Logout</a></li>
+	          <li class="profileBtn"><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
+	          <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
 	          </ul>
 	    	</div>
 	  </nav>
@@ -174,7 +168,7 @@
 <div id="chat-slide-out"  class="side-nav">
     <div class="row card blue valign-wrapper" style="padding-top: 0px;margin: auto;height: 10%;">
     	<div class="col s12 center-align">
-    		<a href="#" class="white-text card-title"><i class="fa fa-arrow-left"></i> Chatbox</a>
+    		<span class="white-text card-title">Chatbox</span>
     	</div>
         </div>
       <div id="scroll-chat" class="scrollbar" style="height: 80%">
@@ -194,15 +188,15 @@
 			@endforeach
         </div>
       </div>
-        <div class="row" style="margin: auto;height: 10%">
-          <div class="col s2 m2" style=";padding-top: 12px;padding-left: 0px">
-                <img src="{{$user->displaypic}}" class="circle right" style="height: 30px;width: 30px">
+        <div class="row valign-wrapper" style="margin: auto;height: 10%">
+          <div class="col s2 m2" style="padding-top: 20px;padding-right: 0px">
+                <a style="padding: 0px" onclick="hideChatBox();"><i style="font-size: 32px" class="material-icons">reply</i></a>
               </div>
-              <div class="col s8 m8">
-                <input onkeydown = "if (event.keyCode == 13) sendMessage();" type="text" name="text" id="message" placeholder="Enter your message :)">
+              <div class="col s8 m8" style="padding-left: 0px;padding-right: 0px">
+                <input style="margin-bottom: 0px;" onkeydown = "if (event.keyCode == 13) sendMessage();" type="text" name="text" id="message" placeholder="Enter your message :)">
               </div>
-              <div class="col s2 m2" style="padding-top: 12px">
-                <button class="btn-floating" id="sendbutton" onclick="sendMessage();"><i class="fa fa-send" style="font-size: 16px"></i></button>
+              <div class="col s2 m2" style="padding-top: 20px">
+              	<a style="padding: 0px" id="sendbutton" onclick="sendMessage();"><i id="sendIcon" class="material-icons" style="font-size: 32px">send</i></a>
               </div>
         </div>
   </div>
@@ -251,6 +245,10 @@ $(document).ready(function(){
         }
     })
 });
+
+function hideChatBox() {
+	$('.button-collapse').sideNav('hide');
+}
 
 </script>
 
