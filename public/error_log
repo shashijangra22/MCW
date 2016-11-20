@@ -1,0 +1,2 @@
+[19-Nov-2016 16:38:58 UTC] PHP Warning:  require(/home/shashijangra22/public_html/bootstrap/../vendor/autoload.php): failed to open stream: No such file or directory in /home/shashijangra22/public_html/bootstrap/autoload.php on line 17
+[19-Nov-2016 16:38:58 UTC] PHP Fatal error:  require(): Failed opening required '/home/shashijangra22/public_html/bootstrap/../vendor/autoload.php' (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/shashijangra22/public_html/bootstrap/autoload.php on line 17

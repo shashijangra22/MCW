@@ -1,4 +1,3 @@
-
 //initialization
 
 $(document).ready(function(){
@@ -83,6 +82,11 @@ function pullMsg()
 		var message=$("#message").val().trim();
 		if(message.length>0)
 		{
+			$("#message").val('');
+			$("#message").attr('onkeydown','');
+			$("#sendbutton").prop('disabled',true);
+			$('#sendbutton').css('color', 'lightgrey');
+
 		$.ajax({
 			type:"POST",
 			data:{text:message},
@@ -91,7 +95,9 @@ function pullMsg()
 		.done(function(result){
 			$('#chatbox').append('<div class="row" style="margin-bottom:5px"><div class="right rightmsg primary-color">'+message+'<p class="chattime">'+hour+':'+minutes+'</p></div></div>');
 			$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
-			$("#message").val('');	
+			$("#message").attr('onkeydown','if (event.keyCode == 13) sendMessage();');
+			$("#sendbutton").prop('disabled',false);
+			$("#sendbutton").css('color', '');
 
 		}); 		
 	}

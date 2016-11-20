@@ -69,16 +69,18 @@
 		              </div>
 		              <div class="col s2 m1">
 		              @if ($post->user_id==$user->id || $user->username=='beerus')
-		                <button class="btn-floating right delButton" id="delButton" value="{{$post->id}}" ><i class="fa fa-trash" style="font-size: 16px"></i></button>
+
+		                <button class="btn-floating right delButton" id="delButton" value="{{$post->id}}" ><i id="{{$post->id}}delspinner" class="fa fa-trash" style="font-size: 16px"></i></button>
 		               @endif
 		              </div>
 	            </div>
 	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px">
 	              	{!!nl2br($post->data)!!}
 	              </blockquote>
-	              <p id="{{$post->id}}likes" data-id="{{$post->id}}" class="chip likescount blue white-text" style="padding: 6px;display: inline;">{{$post->likes()->count()}} Likes</p>
-	              <p href="#" id="{{$post->id}}comments" data-id="{{$post->id}}" class="chip commentscount blue white-text" style="padding: 6px;display:inline">{{$post->comments()->count()}} Comments</p>
-	              
+	              <a id="{{$post->id}}likes" data-id="{{$post->id}}" class="chip likescount blue white-text" style="padding: 6px;display: inline;cursor: pointer;">{{$post->likes()->count()}} Likes</a>
+	              <a id="{{$post->id}}comments" data-id="{{$post->id}}" class="chip commentscount blue white-text" style="padding: 6px;cursor: pointer;display:inline">{{$post->comments()->count()}} Comments</a>
+				  <i style="display: none;" id="{{$post->id}}spinner" class="fa fa-spinner fa-pulse"></i>	              
+
 	              <div id="{{$post->id}}likesbox" style="display: none;">
 					
 				  </div>
@@ -91,16 +93,16 @@
 		            <div class="row" style="padding-top: 0px;margin-bottom: auto;">
 		              <div class="col s2 m1" style="padding-top: 10px">
 		                @if($likes->contains('post_id',$post->id))
-						<a class="likebutton " href="#" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite</i></a>	
+						<a style="cursor: pointer" class="likebutton" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite</i></a>	
 						@else
-						<a class="likebutton" href="#" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite_border</i></a>
+						<a style="cursor: pointer" class="likebutton" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite_border</i></a>
 						@endif
 		              </div>
-		              <div class="col s8 m10">
+		              <div class="col s8 m10" style="padding-left: 0px;padding-right: 0px">
 		                <input style="margin-bottom: 10px" data-id="{{$post->id}}" id="{{$post->id}}commentinput" type="text" class="comment_input" placeholder="write a comment :)">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 10px">
-		                <button data-id="{{$post->id}}" class="comment_button btn-floating right" id="{{$post->id}}commentbutton"><i class="fa fa-send" style="font-size: 16px"></i></button>
+		                <a style="margin-right: 0px;cursor: pointer;" data-id="{{$post->id}}" class="comment_button right" id="{{$post->id}}commentbutton"><i style="font-size: 32px" class="material-icons">send</i></a>
 		              </div>
 		            </div>
 	            </div>

@@ -81,15 +81,12 @@ class PostController extends Controller
     public function loadmore(Request $request)
     {
         $pid=$request->pid;
-        $new=DB::table('posts')->where('type','0')->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join){
-            $join->on('posts.user_id','=','likes.user_id');
-            $join->on('posts.id','=','likes.post_id');
-        })
-
-        ->leftJoin('comments',function($join){
-            $join->on('posts.id','=','comments.post_id');
-        })
-        ->where('posts.id','<',$pid)->orderby('created_at','desc')->take(5)->get(array('posts.*','users.username','users.displaypic','likes.id as like_id' ));
+        $new=DB::table('posts')->where('posts.id','<',$pid)->where('type','0')->orderby('created_at','desc')->take(5)->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join)
+        {
+            $join->on('posts.id','=','likes.post_id')
+            ->where('likes.user_id',Auth::id());
+            })
+        ->get(array('posts.*','users.username','users.displaypic','likes.id as like_id' ));
 
         return $new;
 

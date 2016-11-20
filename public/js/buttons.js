@@ -8,7 +8,8 @@ $(".delButton").on("click",function(event)
 	event.preventDefault();
 	var el=$(this);
 	var id=$(this).val();
-	
+    $("#"+id+"delspinner").removeClass('fa-trash');
+	$("#"+id+"delspinner").addClass('fa-spinner fa-pulse');
 	$.ajax({
 	url:'delete/'+id,
 	type:'DELETE',
@@ -32,7 +33,7 @@ $(".likebutton").on("click",function(event)
 	 var el=$(this);
 	  el.css("pointer-events","none");
 	 var pid=$(this).attr('value');
-	 var string=$("p[id="+pid+"likes]").html();
+	 var string=$("a[id="+pid+"likes]").html();
 
   		 $.ajax({
 			url: "likepost",
@@ -45,7 +46,7 @@ $(".likebutton").on("click",function(event)
 			 {
 			 	var count=string.match(/\d/g);
 			 	count=++count;
-			 	$("p[id="+pid+"likes]").html(count+" Likes");
+			 	$("a[id="+pid+"likes]").html(count+" Likes");
 			 	el.children('i').html('favorite');
 			}
 			else if(result=='unlike')
@@ -54,7 +55,7 @@ $(".likebutton").on("click",function(event)
 			 	count=--count;
 			 	if(count<0)
 					count=0;
-			 	$("p[id="+pid+"likes]").html(count+" Likes")
+			 	$("a[id="+pid+"likes]").html(count+" Likes")
 
 			 	el.children('i').html('favorite_border');
 
@@ -78,10 +79,10 @@ $('.comment_input').keypress(function (e) {
 		e.preventDefault();
 		var el=$(this);
 		var pid=el.data('id');
-		var string=$("p[id="+pid+"comments]").html();
+		var string=$("a[id="+pid+"comments]").html();
 	 var comment=$('#'+pid+'commentinput').val().trim();
 	  if (comment.length<=0) { return false;}
-	  var count=$("p[id="+pid+"comments]").html();
+	  var count=$("a[id="+pid+"comments]").html();
 		
 	  $.ajax({
 	  		url: "savecomment",
@@ -93,7 +94,7 @@ $('.comment_input').keypress(function (e) {
 		 	{
 		 		var count=string.match(/\d/g);
 			 	count=++count;
-			 	$("p[id="+pid+"comments]").html(count+" Comments");
+			 	$("a[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
 			}
 			});
@@ -116,7 +117,7 @@ $('.comment_input').keypress(function (e) {
           $('.chat-button').sideNav({
       // menuWidth: '23%', // Default is 240
       edge: 'right', // Choose the horizontal origin
-      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      // closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     }
   );
         });
@@ -133,6 +134,7 @@ $('.comment_input').keypress(function (e) {
 		$('#'+pid+'commentbox').hide('normal');
 		return 0;
 	}
+	$('#'+pid+'spinner').show('fast');
 	$.ajax({
 	type:'POST',
 	url:'showcomments',
@@ -152,8 +154,8 @@ $('.comment_input').keypress(function (e) {
 				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');	
 			}
 			$('#'+pid+'commentbox').show('normal');
-
 		}
+		$('#'+pid+'spinner').hide('fast');
 });
 
 });
@@ -169,7 +171,7 @@ $('.comment_input').keypress(function (e) {
 		$('#'+pid+'likesbox').hide('normal');
 		return 0;
 	}
-
+	$('#'+pid+'spinner').show('fast');
 	$.ajax({
 	type:'POST',
 	url:'showlikes',
@@ -189,8 +191,8 @@ $('.comment_input').keypress(function (e) {
 				$('#'+pid+'likesbox').append('<p style="font-size:12px;display:inline"><b> '+result[key].username+',</b></p>');	
 			}
 			$('#'+pid+'likesbox').show('normal');
-
 		}
+		$('#'+pid+'spinner').hide('fast');
 });
 
 });

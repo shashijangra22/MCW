@@ -31,7 +31,7 @@ class PagesController extends Controller
 	public function getHome1()
 	{
 		$user=Auth::user();
-		$chat=Chat::all();
+		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		$notices=Notice::all();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('type','0')->orderBy('created_at','desc')->take(5)->get();
