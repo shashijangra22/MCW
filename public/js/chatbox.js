@@ -86,6 +86,7 @@ function pullMsg()
 			$("#message").val('');
 			$("#message").attr('onkeydown','');
 			$("#sendbutton").prop('disabled',true);
+			$('#sendbutton').css('color', 'lightgrey');
 
 		$.ajax({
 			type:"POST",
@@ -97,7 +98,7 @@ function pullMsg()
 			$('#scroll-chat')[0].scrollTop = $('#scroll-chat')[0].scrollHeight;
 			$("#message").attr('onkeydown','if (event.keyCode == 13) sendMessage();');
 			$("#sendbutton").prop('disabled',false);
-				
+			$("#sendbutton").css('color', '');
 
 		}); 		
 	}
