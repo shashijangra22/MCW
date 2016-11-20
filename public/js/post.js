@@ -127,7 +127,10 @@ $("#loadmore-button").on("click",function(e){
 			temp.attr('id',result[key].id+'likesbox');
 			temp=post.find('#protocommentinput');
 			temp.attr('id',result[key].id+'commentinput');
+			
 			temp.attr('data-id',result[key].id);
+			temp=post.find('#protospinner');
+			temp.attr('id',result[key].id+'spinner');
 			temp=post.find('.comment_button');
 			temp.attr("id",result[key].id+"commentbutton");
 			temp.attr('data-id',result[key].id);

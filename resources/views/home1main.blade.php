@@ -130,8 +130,9 @@
 	            </div>
 	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
 	              </blockquote>
-	              <p id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline" data-id=""></p>
-	              <p id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;display:inline"></p>
+	              <a id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
+	              <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;cursor: pointer;display:inline"></a>
+	              <i style="display: none;" id="protospinner" class="fa fa-spinner fa-pulse"></i>
 	              <div id="protolikesbox" style="display: none;">
 					
 				  </div>
@@ -152,7 +153,7 @@
 		              </div>
 		              
 		              <div class="col s2 m1" style="padding-top: 10px">
-		                <button data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></button>
+		                <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></a>
 		              </div>
 		            </div>
 	            </div>
