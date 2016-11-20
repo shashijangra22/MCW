@@ -82,7 +82,7 @@
 			</div>
 	</div>
 </div>
-<div class="section" style="text-align: justify;padding-top: 7px">
+<div class="section" style="text-align: justify;padding-top: 0px">
 	<h4 class="center-align">How to Play!</h4>
 	<hr>
 	<blockquote>

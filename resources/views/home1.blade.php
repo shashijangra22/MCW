@@ -91,12 +91,12 @@
 		            <div class="row" style="padding-top: 0px;margin-bottom: auto;">
 		              <div class="col s2 m1" style="padding-top: 10px">
 		                @if($likes->contains('post_id',$post->id))
-						<a style="cursor: pointer" class="likebutton" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite</i></a>	
+						<a style="cursor: pointer;margin-right: 0px;" class="likebutton left" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite</i></a>	
 						@else
-						<a style="cursor: pointer" class="likebutton" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite_border</i></a>
+						<a style="cursor: pointer;margin-right: 0px;" class="likebutton left" value="{{$post->id}}"><i class="material-icons" style="font-size:32px">favorite_border</i></a>
 						@endif
 		              </div>
-		              <div class="col s8 m10" style="padding-left: 0px;padding-right: 0px">
+		              <div class="col s8 m10">
 		                <input style="margin-bottom: 10px" data-id="{{$post->id}}" id="{{$post->id}}commentinput" type="text" class="comment_input" placeholder="write a comment :)">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 10px">
