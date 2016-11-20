@@ -51,7 +51,7 @@
 	                  <div class="fileUpload btn pink accent-4">Upload
 	                      <input type="file" accept="image/*" class="upload" name="image" id="image" />
 	                  </div>
-	               		<button name="post" id="post" class="right btn pink accent-4"><i class="material-icons">send</i></button>
+	               		<button name="addQBtn" id="addQBtn" class="right btn"><i class="material-icons">send</i></button>
            			</form>
 				</div>
 			</div>
@@ -76,14 +76,6 @@
 				        	<td>{{$player->level}}</td>
 				      	</tr>
 				      @endforeach
-				      <tr>
-				        	<td>{{$user->username}}</td>
-				        	<td>{{$user->level}}</td>
-				      	</tr>
-				      	<tr>
-				        	<td>{{$user->username}}</td>
-				        	<td>{{$user->level}}</td>
-				      	</tr>
 				    </tbody>
 				  </table>
 				</div>
@@ -130,7 +122,7 @@ $(document).ready(function()
 });
 
 
-$('#post').on("click",function(e){
+$('#addQBtn').on("click",function(e){
 			e.preventDefault();
 			var formData = new FormData($("#post-form")[0]);
 		$.ajax({
