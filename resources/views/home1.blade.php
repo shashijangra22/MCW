@@ -36,8 +36,8 @@
            </form>
          </div>
       </div>
-	<div class="row">
-		<div class="col s12">
+	<div class="row" style="margin-bottom: 10px">
+		<div class="col s12" id="loadmore">
 			<?php 
 				$postflag=0;
 				$postid=-1;
@@ -68,18 +68,18 @@
 		                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></p>
 		              </div>
 		              <div class="col s2 m1">
-		              @if ($post->user_id==$user->id)
+		              @if ($post->user_id==$user->id || $user->username=='beerus')
 		                <button class="btn-floating right delButton" id="delButton" value="{{$post->id}}" ><i class="fa fa-trash" style="font-size: 16px"></i></button>
 		               @endif
 		              </div>
 	            </div>
-	              <p style="text-align: justify;">
-	              		{!!nl2br($post->data)!!}
-	              </p>
-	              <p id="{{$post->id}}likes" class="chip likescount blue white-text" style="padding: 6px;display: inline;">{{$post->likes()->count()}} Likes</p>
+	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px">
+	              	{!!nl2br($post->data)!!}
+	              </blockquote>
+	              <p id="{{$post->id}}likes" data-id="{{$post->id}}" class="chip likescount blue white-text" style="padding: 6px;display: inline;">{{$post->likes()->count()}} Likes</p>
 	              <p href="#" id="{{$post->id}}comments" data-id="{{$post->id}}" class="chip commentscount blue white-text" style="padding: 6px;display:inline">{{$post->comments()->count()}} Comments</p>
 	              
-	              <div id="{{$post->id}}likesbox">
+	              <div id="{{$post->id}}likesbox" style="display: none;">
 					
 				  </div>
 	              <div id="{{$post->id}}commentbox" style="display: none">
@@ -108,11 +108,10 @@
 	        @endforeach
 		</div>
 	</div>
-	<div id="loadmore"></div>
-
-<div id="button" class="center-align">
-	<button class="btn accent-color " id="loadmore-button" style="margin:auto"> Loadmore</button>
-	<div id="loadmore-spinner" class="preloader-wrapper small " >
+	@if ($postid > 0)
+	<div class="row center-align" style="margin-bottom: 10px">
+		<a class="btn" id="loadmore-button">Load More</a>
+		<div id="loadmore-spinner" class="preloader-wrapper small hide">
 	    <div class="spinner-layer spinner-blue-only">
 	      <div class="circle-clipper left">
 	        <div class="circle"></div>
@@ -123,9 +122,10 @@
 	      </div>
 	    </div>
 	</div>
+	</div>
+	@endif
 </div>
-</div>
-<div class="col m12 s12 l6">
+<div class="col m12 s12 l6 hide-on-med-and-down">
 	<div class="card z-depth-4">
 		<div class="card-content blue white-text center-align" style="padding-top: 0px;padding-bottom: 0px"> 
 			<span class="card-title" style="font-size: 20px">Upcoming Events</span>
@@ -170,22 +170,12 @@
 	          </tr>
 	        </thead>
 	        <tbody>
+	        @foreach($notices as $notice)
 	          <tr>
-	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">Fee Submission</a></td>
-	            <td style="padding-bottom: 5px;">7 October</td>
+	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">{{$notice->head}}</a></td>
+	            <td style="padding-bottom: 5px;">{{date("j M | D h:i a",strtotime($notice->created_at))}}</td>
 	          </tr>
-	          <tr>
-	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">ID Card form</a></td>
-	            <td style="padding-bottom: 5px;">21 October</td>
-	          </tr>
-	          <tr>
-	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">Diwali Break</a></td>
-	            <td style="padding-bottom: 5px;">30 October</td>
-	          </tr>
-	          <tr>
-	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">Cricket Trials for Inter DU</a></td>
-	            <td style="padding-bottom: 5px;">5 November</td>
-	          </tr>
+	          @endforeach
 	        </tbody>
         	</table>
         	<br>
@@ -210,6 +200,4 @@
 	var postid={{$postid}};
 	var post_id={{$post_id}};
 
-	
-			
 @endsection

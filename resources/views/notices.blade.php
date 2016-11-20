@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 			
-	@if ($user->username=='srv')
+	@if ($user->username=='beerus')
 		<div class="col s12 l3">
 			<div class="card z-depth-4">
         <div class="card-content pink white-text  " style="padding-top: 5px;padding-bottom: 5px">
@@ -13,7 +13,10 @@
               <form id="post-form" role="form" action="#" enctype="multipart/form-data">
               	{{csrf_field()}}
                   <div class="input-field">
-                  <textarea name="mytext" id="mytext" class="materialize-textarea" placeholder="What are you upto?"></textarea>
+                	<input type="text" name="noticeHeader" id="noticeHeader" placeholder="Notice head goes here..">
+                	</div>
+                  <div class="input-field">
+                  <textarea name="mytext" id="mytext" class="materialize-textarea" placeholder="Notice body goes here..."></textarea>
                 </div>
                 <div class="row" style="margin: auto">
                   <div class="hide fileUpload btn pink accent-4">Upload
@@ -45,9 +48,9 @@
 
 <div class="col s12 l3">
 	<div class="card green white-text">
-		<div class="card-content">
-			<span class="card-title">Notice</span>
-			<p>{{$notice->data}}</p>
+		<div class="card-content" style="padding-top: 5px;padding-bottom: 10px;text-align: center;">
+			<span class="card-title" style="font-size: 20px"><strong>{{$notice->head}}</strong></span>
+			<p style="text-align: justify;">{{$notice->data}}</p>
 		</div>
 	</div>
 </div>
@@ -84,10 +87,11 @@ $('#post').on("click",function(e){
 		$("#post-form")[0].reset();
 			if(result=='0')
 			{
-				alert('notice added');
+				Materialize.toast("Notice added", 3000);
 			}
 			});
-		
+			$('#postspinner').removeClass('active');
+			$('#post').removeClass('hide');
 			
 		});
 

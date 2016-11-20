@@ -32,9 +32,10 @@ class PagesController extends Controller
 	{
 		$user=Auth::user();
 		$chat=Chat::all();
+		$notices=Notice::all();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('type','0')->orderBy('created_at','desc')->take(5)->get();
-		return view('home1')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
+		return view('home1')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('notices',$notices);
 	}
 
 	public function getConfessions()

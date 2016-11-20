@@ -103,7 +103,7 @@ $('.comment_input').keypress(function (e) {
 
 	$(document).ready(function() {
           $('.button-collapse').sideNav({
-      menuWidth: '100%', // Default is 240
+      // menuWidth: '100%', // Default is 240
       edge: 'left', // Choose the horizontal origin
       closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     }
@@ -128,6 +128,11 @@ $('.comment_input').keypress(function (e) {
 
  $(".commentscount").on("click",function(){
 	var pid=$(this).data('id');
+	if ($('#'+pid+'commentbox').is(':visible')) 
+	{
+		$('#'+pid+'commentbox').hide('normal');
+		return 0;
+	}
 	$.ajax({
 	type:'POST',
 	url:'showcomments',
@@ -141,6 +146,7 @@ $('.comment_input').keypress(function (e) {
 		}
 		else
 		{
+			$('#'+pid+'likesbox').hide('normal');
 			for(var key in result)
 			{
 				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');	
@@ -158,6 +164,12 @@ $('.comment_input').keypress(function (e) {
 
  $(".likescount").on("click",function(){
 	var pid=$(this).data('id');
+	if ($('#'+pid+'likesbox').is(':visible')) 
+	{
+		$('#'+pid+'likesbox').hide('normal');
+		return 0;
+	}
+
 	$.ajax({
 	type:'POST',
 	url:'showlikes',
@@ -171,11 +183,12 @@ $('.comment_input').keypress(function (e) {
 		}
 		else
 		{
+			$('#'+pid+'commentbox').hide('normal');
 			for(var key in result)
 			{
-				$('#'+pid+'likesbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b></div>');	
+				$('#'+pid+'likesbox').append('<p style="font-size:12px;display:inline"><b> '+result[key].username+',</b></p>');	
 			}
-			$('#'+pid+'commentbox').show('normal');
+			$('#'+pid+'likesbox').show('normal');
 
 		}
 });
