@@ -111,7 +111,7 @@
 		</div>
 	</div>
 	@if ($postid > 0)
-	<div class="row center-align" style="margin-bottom: 10px">
+	<div class="row center-align loadingrow" style="margin-bottom: 10px">
 		<a class="btn" id="loadmore-button">Load More</a>
 		<div id="loadmore-spinner" class="preloader-wrapper small hide">
 	    <div class="spinner-layer spinner-blue-only">
@@ -201,5 +201,18 @@
 	
 	var postid={{$postid}};
 	var post_id={{$post_id}};
+
+$(document).ready(function(){
+    
+  var options = [
+    {selector: '.loadingrow', offset: 0, callback: function() 
+	    {
+	      $('#loadmore-button').click();
+	    } 
+    },
+  ];
+  Materialize.scrollFire(options);
+});
+
 
 @endsection
