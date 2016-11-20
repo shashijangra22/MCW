@@ -59,6 +59,8 @@ $("#loadmore-button").on("click",function(e){
 		
 	})
 	.done(function(result){
+		var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+		var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 		if(result.length==0)
 		{
 			Materialize.toast("No More posts to load :)", 2000);
@@ -75,7 +77,19 @@ $("#loadmore-button").on("click",function(e){
 			temp=post.find('.protousername');
 			temp.html(result[key].username);
 			temp=post.find('.prototimestamp');
-			temp.html(result[key].created_at);
+			var d=new Date(result[key].created_at);
+			var hours=d.getHours()-12;
+
+			if(hours<0)
+				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+d.getHours()+":"+d.getMinutes()+" am";
+			else
+			{
+				if(hours==0)
+					hours=hours+12;
+				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
+			}
+			temp.html(date);
+
 			if(auth_id==result[key].user_id)
 			{
 				temp=post.find('.protodelete');
@@ -100,23 +114,22 @@ $("#loadmore-button").on("click",function(e){
 
 			temp=post.find('#protolikes');
 			temp.attr('id',result[key].id+'likes');
+			temp.attr('data-id',result[key].id);
 			temp.html(result[key].likes+' likes')
 
 			temp=post.find('#protocomments');
 			temp.attr('id',result[key].id+'comments');
 			temp.attr("data-id",result[key].id);
 			temp.html(result[key].comments+' comments')
-			temp=post.find('#protoshow');
-			temp.attr('id',result[key].id+'show');
-			temp.attr('data-id',result[key].id);
 			temp=post.find('#protocommentbox');
 			temp.attr('id',result[key].id+'commentbox');
-			temp=post.find('#protolikebox');
-			temp.attr('id',result[key].id+'likebox');
+			temp=post.find('#protolikesbox');
+			temp.attr('id',result[key].id+'likesbox');
 			temp=post.find('#protocommentinput');
 			temp.attr('id',result[key].id+'commentinput');
 			temp.attr('data-id',result[key].id);
 			temp=post.find('.comment_button');
+			temp.attr("id",result[key].id+"commentbutton");
 			temp.attr('data-id',result[key].id);
 			temp=post.find('.likebutton');
 			temp.attr('value',result[key].id);
@@ -124,12 +137,15 @@ $("#loadmore-button").on("click",function(e){
 			temp.children('i').html('favorite');
 			else
 			temp.children('i').html('favorite_border');
-			temp=post.find('.commentcount');
-			temp.children('a').html(result[key].comments+' comments');
-			temp.children('a').attr('href','#'+result[key].id+'commentbox');
+			temp=post.find('.commentscount');
+			temp.attr("data-id",result[key].id);
+			temp.attr("id",result[key].id+"comments");
+			temp.html(result[key].comments+' comments');
 			temp=post.find('.likecount');
-			temp.children('a').html(result[key].likes+' likes');
-			temp.children('a').attr('href','#'+result[key].id+'likebox');
+			temp.attr("data-id",result[key].id);
+			temp.attr("id",result[key].id+"likes");
+			temp.html(result[key].likes+' likes');
+			
 
 
 

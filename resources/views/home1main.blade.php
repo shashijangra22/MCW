@@ -116,12 +116,12 @@
 
 <!-- prototype -->
 
-<div class="card pink sticky-action feed" id="prototype" style="display: none;">
+<div class="card z-depth-4 feed" id="prototype" style="display: none;">
 				<div class="card-image protoimage" style="display: none;">
 	              <img class="materialboxed" src=""/>
 	            </div>
-	            <div class="card-content white-text" style="padding-top: 10px;padding-bottom: 10px">
-	              <div class="row" style="padding-top: 5px">
+	            <div class="card-content" style="padding-top: 10px;padding-bottom: 5px">
+	              <div class="row" style="padding-top: 5px; margin-bottom: 10px">
 		              <div class="col s2 m1 ">
 		                <img src="" class="circle left protodisplaypic" width="35" height="35">
 		              </div>
@@ -134,13 +134,20 @@
 		          
 		              </div>
 	            </div>
-	              <p style="text-align: justify;padding-bottom: 5px" class="protodata">
-	              </p>
-	              <p id="protolikes" class="chip pink lighten-5 activator likescount" style="padding: 6px;color:#c51162;display: inline"></p>
-	              <p id="protocomments" data-id="" class="chip white activator commentscount pink lighten-5" style="padding: 6px;color:#c51162;display:inline"></p>
+	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
+	              </blockquote>
+	              <p id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline" data-id=""></p>
+	              <p id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;display:inline"></p>
+	              <div id="protolikesbox" style="display: none;">
+					
+				  </div>
+	              <div id="protocommentbox" style="display: none">
+	              
+				  </div>
 
 	            </div>
-	            <div class="card-action pink lighten-5" style="padding-top: 5px;padding-bottom: 0px">
+	            
+	            <div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
 		            <div class="row" style="padding-top: 0px;margin-bottom: auto;">
 		              <div class="col s2 m1" style="padding-top: 12px">
 		                
@@ -149,35 +156,15 @@
 		              <div class="col s8 m10">
 		                <input  data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
 		              </div>
-		              <div class="col s2 m1" style="padding-top: 12px">
-		                <button data-id="" class="comment_button btn-floating right pink accent-4"><i class="fa fa-send" style="font-size: 16px"></i></button>
+		              
+		              <div class="col s2 m1" style="padding-top: 10px">
+		                <button data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></button>
 		              </div>
 		            </div>
 	            </div>
-	            <div class="card-reveal pink lighten-5" style="padding-top: 0px">
-			      
-			      <div class="row">
-				    <div class="col s8">
-				      <ul class="tabs">
-				        <li class="tab col s6 commentcount active pink"><a class=" white-text" href=""></a></li>
-				        <li class="tab col s6 likecount pink "><a href="" class="white-text"></a></li>
-				      </ul>
-				    </div>
-				    <div class="col s4">
-				    	<span class="card-title" style="padding-top: 10px"><i class="material-icons right">close</i></span>
-				    </div>
-				    <div id="" class="col s12 pink lighten-5" style="padding-top: 10px" id="protolikebox">
-					    
-				    </div>
-				    <div id="protocommentbox" class="col s12 " style="padding-top: 10px">
-					    	
-				
-				    </div>
-				  </div>
-			    </div>
 </div>
 
-	        <button class="btn-floating right delButton pink accent-4" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
+	        <button class="btn-floating right delButton" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
 
 <div class="container">
 	@yield('content')
@@ -215,7 +202,7 @@
                 <input onkeydown = "if (event.keyCode == 13) sendMessage();" type="text" name="text" id="message" placeholder="Enter your message :)">
               </div>
               <div class="col s2 m2" style="padding-top: 12px">
-                <button class="btn-floating" onclick="sendMessage();"><i class="fa fa-send" style="font-size: 16px"></i></button>
+                <button class="btn-floating" id="sendbutton" onclick="sendMessage();"><i class="fa fa-send" style="font-size: 16px"></i></button>
               </div>
         </div>
   </div>
