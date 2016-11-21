@@ -39,7 +39,7 @@
 		    					<p><strong>Name : </strong>{{$usr->fname}} {{$usr->lname}}</p>
 		    					<p><strong>Username : </strong>{{$usr->username}}</p>
 		    					<p><strong>Email : </strong>{{$usr->email}}</p>
-		    					<p><strong>Level : </strong>{{$usr->level}}</p>
+		    					<p><strong>Level : </strong>{{$usr->level->level}}</p>
 		    					<p><strong>Active : </strong>{{$usr->active}}</p>
 		    					<p><strong>Verify Token : </strong>{{$usr->verifytoken}}</p>
 		    					<p><strong>Date Created : </strong>{{$usr->created_at}}</p>

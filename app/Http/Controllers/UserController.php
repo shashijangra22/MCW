@@ -81,13 +81,10 @@ class UserController extends Controller
             $post->lname=$Lname;
             $post->username=$Username;
             $post->email=$Email;
-            $post->level=0;
             $post->active=0;
             $randomToken=str_random(20);
             $post->verifytoken=$randomToken;
             $post->save();
-            // sendmail($Email);
-
             Mail::send('emails.test',['name' => $Fname,'token' => $randomToken],function($message) use ($post)
             {
                 $message->from('admin@mycollegewall.com','MCW');
