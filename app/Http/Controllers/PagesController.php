@@ -15,6 +15,24 @@ use Illuminate\Support\Facades\View;
 
 class PagesController extends Controller
 {
+
+	public function showAdmin()
+	{
+		$user=Auth::user();
+		$posts=Post::all();
+		$users=User::all();
+		$chats=Chat::all();
+		$likes=Like::all();
+		$comments=Comment::all();
+		$questions=Question::all();
+		$notices=Notice::all();
+
+		if ($user->username=='beerus') {
+			return view('admin')->with('users',$users)->with('posts',$posts)->with('likes',$likes)->with('comments',$comments)->with('notices',$notices)->with('questions',$questions)->with('chats',$chats);
+		}
+		return back();
+	}
+
     public function getNotices()
 	{
 		$user=Auth::user();

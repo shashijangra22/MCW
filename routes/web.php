@@ -42,3 +42,4 @@ Route::post('showcomments','CommentController@showComments');
 Route::post('showlikes','LikeController@showLikes');
 Route::get('notices','PagesController@getNotices');
 Route::post('notices','NoticeController@addNotice');
+Route::get('admin','PagesController@showAdmin');
