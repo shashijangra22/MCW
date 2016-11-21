@@ -1,4 +1,4 @@
-<FilesMatch "^\.">
+<files .env>
     Order allow,deny
     Deny from all
-</FilesMatch>
+</files>
