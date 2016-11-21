@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->string('username')->unique();
-            $table->integer('level');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('displaypic')->default("profile_pic/default.png");

@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use App\Like;
 use App\Chat;
+use App\Level;
 use App\Comment;
 use App\Notice;
 use App\Question;
@@ -76,10 +77,11 @@ class PagesController extends Controller
 	public function getChakravyuh()
 	{
 		$user=Auth::user();
-		$players=User::orderBy('level','desc')->take(5)->get();
+		$player=Level::orderBy('level','desc')->orderBy('updated_at','ASC')->take(5)->get(array('levels.level','levels.user_id'));
+
 		$questions=Question::all();
 		$chat=Chat::all();
-		return view('chakravyuh')->with('questions',$questions)->with('players',$players)->with('user',$user)->with('chats',$chat);
+		return view('chakravyuh')->with('questions',$questions)->with('user',$user)->with('chats',$chat)->with('players',$player);
 	}
 
 	public function getProfile()

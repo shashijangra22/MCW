@@ -11,16 +11,20 @@ use File;
 use Auth;
 use App\Http\Requests;
 use App\User;
+use App\Level;
 
 class UserController extends Controller
 {
     public function verifyUser($token)
     {
         $user=User::where('verifytoken',$token)->first();
-        if ($user->count()>0) 
+        if ($user!=NULL) 
         {
             $user->active=1;
             $user->save();
+            $level=new Level;
+            $level->user_id=$user->id;
+            $level->save();
             echo "Your account has been activated ! Enjoy :) ";
         }
         else

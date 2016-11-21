@@ -5,17 +5,17 @@
 <div class="col m12 s12 l6 offset-l1">
 	
 	<?php $totalQ = count($questions); ?>
-		@if($totalQ>0 && $user->level<$totalQ)
+		@if($totalQ>0 && $user->level->level<$totalQ)
 		<div class="card" style="margin-bottom: 0px">
 				<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px">Welcome Back :)</span>
-					<span class="card-title right" style="font-size: 20px">Level {{$user->level}}</span>
+					<span class="card-title right" style="font-size: 20px">Level {{$user->level->level}}</span>
 				</div>
 				<div class="card-image">
-	              <img class="materialboxed" src="{{$questions[$user->level]->path}}">
+	              <img class="materialboxed" src="{{$questions[$user->level->level]->path}}">
 	            </div>
 				<div class="card-content" style="padding-top: 5px;padding-bottom: 5px">
-					<p style="text-align: center;"><strong>Hint: {{$questions[$user->level]->data}}</strong></p>
+					<p style="text-align: center;"><strong>Hint: {{$questions[$user->level->level]->data}}</strong></p>
 				</div>
 				<div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
 					<div class="row">
@@ -58,7 +58,7 @@
 
 			@endif		
 	</div>
-	<div class="col l4 m4 s12">
+<div class="col l4 m4 s12">
 		<div class="card">
 				<div class="card-content blue white-text center-align" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px;">Leaderboard</span>
@@ -72,7 +72,7 @@
 				    <tbody>
 				      @foreach($players as $player)
 				      	<tr>
-				        	<td>{{$player->username}}</td>
+				        	<td>{{$player->User->username}}</td>
 				        	<td>{{$player->level}}</td>
 				      	</tr>
 				      @endforeach
