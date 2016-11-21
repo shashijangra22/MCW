@@ -34,29 +34,7 @@
 					<span class="card-title" style="font-size: 20px">Stay Tuned ;) We'll be adding more Questions soon</span>
 				</div>
 			</div>
-			@endif
-			
-			@if ($user->username=='beerus')
-			<div class="card">
-			<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
-					<span class="card-title" style="font-size: 20px">Add a Question!</span>
-				</div>
-				<div class="card-action">
-					<form id="post-form" role="form" action="#" enctype="multipart/form-data">
-	              	{{csrf_field()}}
-	                  <div class="row" style="margin: auto;">
-	                  	<input placeholder="Question goes here..." type="text" id="qBox" name="qBox">
-	                  	<input placeholder="Answer goes here..." type="text" id="answerBox" name="answerBox">
-	                  </div>
-	                  <div class="fileUpload btn pink accent-4">Upload
-	                      <input type="file" accept="image/*" class="upload" name="image" id="image" />
-	                  </div>
-	               		<button name="addQBtn" id="addQBtn" class="right btn"><i class="material-icons">send</i></button>
-           			</form>
-				</div>
-			</div>
-
-			@endif		
+			@endif	
 	</div>
 	<div class="col l4 m4 s12">
 		<div class="card">
@@ -120,35 +98,6 @@ $(document).ready(function()
 	$(".homeBtn").removeClass("active");
 	$(".chakravyuhBtn").addClass('active');
 });
-
-
-$('#addQBtn').on("click",function(e){
-			e.preventDefault();
-			var formData = new FormData($("#post-form")[0]);
-		$.ajax({
-			url: "addQuestion",
-			type:"POST",
-			 
-			data:formData,
-			contentType: false,
-			processData: false
-			
-			})
-		.done(function(result){
-		$("#post-form")[0].reset();
-			if(result=='0')
-			{
-				Materialize.toast('Question Added !', 3000);
-			}
-			else
-			{
-				Materialize.toast(result, 3000);
-			}
-			});
-		
-			
-		});
-
 
 function checkAnswer()
 {
