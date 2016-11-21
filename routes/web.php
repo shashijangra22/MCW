@@ -15,11 +15,11 @@ Route::get('settings','PagesController@settings');
 Route::post('likepost','LikeController@setlike');
 Route::post('savedata','PostController@store');
 Route::get('/','PagesController@getHome');
-Route::get('home','PagesController@getHome1');
-Route::get('confessions','PagesController@getConfessions');
-Route::get('chakravyuh','PagesController@getChakravyuh');
-Route::get('profile','PagesController@getProfile');
-Route::get('societies','PagesController@getSocieties');
+Route::get('home','PagesController@getHome1')->middleware('auth');
+Route::get('confessions','PagesController@getConfessions')->middleware('auth');
+Route::get('chakravyuh','PagesController@getChakravyuh')->middleware('auth');
+Route::get('profile','PagesController@getProfile')->middleware('auth');
+Route::get('societies','PagesController@getSocieties')->middleware('auth');
 Route::get('login','PagesController@getHome');
 
 Route::post('login','UserController@loginUser');
