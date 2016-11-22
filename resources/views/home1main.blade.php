@@ -204,7 +204,7 @@
 
 
 <div class="fixed-action-btn" style="bottom: 10; right: 10;">
-    <a class="chat-button btn-floating btn-large" data-activates="chat-slide-out">
+    <a class="chat-button btn-floating btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Chatbox" data-activates="chat-slide-out">
       <i class="material-icons">chat</i>
     </a>
 </div>
