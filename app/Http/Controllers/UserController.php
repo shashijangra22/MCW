@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\UserRegistered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Session;
@@ -21,6 +22,7 @@ class UserController extends Controller
         if ($user!=NULL) 
         {
             $user->active=1;
+            $user->verifytoken=str_random(20);
             $user->save();
             $level=new Level;
             $level->user_id=$user->id;
@@ -35,8 +37,8 @@ class UserController extends Controller
 
     public function loginUser(Request $request)
     {
-        $Username=$_POST["usrname"];
-        $Password=$_POST["psswd"];
+        $Username=$request->usrname;
+        $Password=$request->psswd;
         if(isset($Username) && isset($Password) && !empty($Password) && !empty($Username))
         {
             if(Auth::attempt(['username'=> $Username, 'password'=>$Password, 'active'=>1]))
@@ -57,41 +59,32 @@ class UserController extends Controller
 
     public function registerUser(Request $request)
     {
-        $email=User::where('email',$_POST['email']);
-        $user=User::where('username',$_POST['username']);
+        $data=$request->all();
+        $user=User::where('username',$data['username']);
+        $email=User::where('email',$data['email']);
+
         if ($user->count()>0)
         {
-            echo 1;
+            return 1;
         }
         elseif($email->count()>0)
         {
-            echo 2;
+            return 2;
         }
 
         else
         {
-            $Fname=($_POST['fname']);
-            $Lname=($_POST['lname']);
-            $Email=($_POST['email']);
-            $Password=($_POST['password']);
-            $Username=($_POST['username']);
-            $post=new User;
-            $post->password=bcrypt($Password);
-            $post->fname=$Fname;
-            $post->lname=$Lname;
-            $post->username=$Username;
-            $post->email=$Email;
-            $post->active=0;
-            $randomToken=str_random(20);
-            $post->verifytoken=$randomToken;
-            $post->save();
-            Mail::send('emails.test',['name' => $Fname,'token' => $randomToken],function($message) use ($post)
-            {
-                $message->from('admin@mycollegewall.com','MCW');
-                $message->to($post->email,$post->fname)->subject('Welcome to MCW!');
-            });
-
-            echo 0;
+            $user=User::create([
+                'fname' => $data['fname'],
+                'lname' => $data['lname'],
+                'email' => $data['email'],
+                'verifytoken' => str_random(20),
+                'active' => 0,
+                'username' => $data['username'],
+                'password' => bcrypt($data['password']),
+            ]);
+            $user->notify(new UserRegistered($user)); //Notify user through mail
+            return 0;
         }
     }
 
