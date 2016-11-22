@@ -36,8 +36,6 @@
 	<div class="row">
 		<div class="col s12">
 			<?php
-				$counter=0;
-				$totalPosts=count($posts);
 				$postflag=0;
 				$postid=-1;
 			 	$post_id=-1;
@@ -53,7 +51,7 @@
 			<?php $post_id=$post->id; ?>
 			<div class="card feed z-depth-4">
 	            <div class="card-content" style="padding-top: 0px;padding-bottom: 5px">
-		              <span class="card-title" style="font-size: 20px">#{{$totalPosts-$counter++}} Confession</span>
+		              <span class="card-title" style="font-size: 20px">#{{$loop->remaining+1}} Confession</span>
 		              <span style="display: inline;"><strong style="font-size: 10px">{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></span>
 	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px">
 	              	{!!nl2br($post->data)!!}
