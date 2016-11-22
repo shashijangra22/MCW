@@ -1,1 +1,0 @@
-Hello {{ $name }} :) Thankyou for Registering at My College Wall. We are excited to see what you can contribute to it ;) Enjoy :D <a href="http://mycollegewall.com/public/verify/{{$token}}">Activate Your Account</a>
