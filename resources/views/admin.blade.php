@@ -41,8 +41,9 @@
 		    					<p><strong>Email : </strong>{{$usr->email}}</p>
 		    					<p><strong>Level : </strong>{{$usr->level->level}}</p>
 		    					<p><strong>Active : </strong>{{$usr->active}}</p>
-		    					<p><strong>Verify Token : </strong>{{$usr->verifytoken}}</p>
-		    					<p><strong>Date Created : </strong>{{$usr->created_at}}</p>
+		    					<p><strong>Token : </strong>{{$usr->verifytoken}}</p>
+		    					<p><strong>Created At : </strong>{{$usr->created_at}}</p>
+		    					<p><strong>Updated At : </strong>{{$usr->updated_at}}</p>
 		    				</div>
 		    			</div>
 		    		</div>
@@ -60,7 +61,7 @@
 		    						<span class="card-title right"><a style="cursor: pointer;" onclick="deletePost('{{$post->id}}');"><i class="fa fa-trash"></i></a></span>
 		    					<p><strong>Id : </strong>{{$post->id}}</p>
 		    					<p><strong>User : </strong>{{$post->user->username}}</p>
-		    					<p><strong>Data : </strong>{{$post->data}}</p>
+		    					<p class="truncate"><strong>Data : </strong>{{$post->data}}</p>
 		    					<p><strong>Path : </strong>{{$post->path}}</p>
 		    					<p><strong>Type : </strong>{{$post->type}}</p>
 		    					<p><strong>Likes : </strong>{{$post->likes}}</p>
