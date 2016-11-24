@@ -16,6 +16,14 @@ use App\Level;
 
 class UserController extends Controller
 {
+
+    public function markallread()
+    {
+        $user=Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return 0;
+    }
+
     public function verifyUser($token)
     {
         $user=User::where('verifytoken',$token)->first();

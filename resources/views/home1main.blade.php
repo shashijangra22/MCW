@@ -70,6 +70,24 @@
 	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
 	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
+	      <ul id="dropdown2" class="dropdown-content">
+	      <?php $notifications=$user->notifications->take(5); ?>
+	      @if (count($notifications))
+	        @foreach ($notifications as $notification)
+				<?php 
+	        		$usrid=$notification->data['user_id'];
+	        		$name=App\User::find($usrid)->username; 
+	        	?>	        
+	        	@if ($notification->type == 'App\Notifications\PostLiked')
+	        		<li><a href="#!"> {{ $name }} liked your Post.</a></li>
+	        	@else
+	        		<li><a href="#!"> {{ $name }} commented on your Post.</a></li>
+	        	@endif
+	        @endforeach
+	      @else
+	        <li><a href="#!">No Notifications to show !</a></li>
+	      @endif
+	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
 	      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
@@ -80,7 +98,8 @@
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
-	          <li class="profileBtn"><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">
+	          <li class="notifyBtn"><a id="notifyBtn" class="dropdown-button" data-alignment="right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i class="fa fa-bell"></i></a></li>
+	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown1">
 	            <div class="chip white">
 	              {{$user->username}}
 	              <img src="{{$user->displaypic}}">
@@ -246,6 +265,8 @@ $(document).ready(function(){
         }
     })
 });
+
+
 
 function hideChatBox() {
 	$('.button-collapse').sideNav('hide');

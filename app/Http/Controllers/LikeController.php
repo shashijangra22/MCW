@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\PostLiked;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Like;
@@ -35,7 +36,8 @@ class LikeController extends Controller
             $post=Post::where('id','=',$postid)->first();
             $post->likes++;
             $post->save();
-
+            if ($post->user_id!=$new_like->user_id)
+                $post->user->notify(new PostLiked ($new_like));
             return 'like';
         }    
     }

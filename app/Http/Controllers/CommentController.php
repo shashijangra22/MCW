@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\PostCommented;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Post;
@@ -25,7 +26,8 @@ class CommentController extends Controller
         $post=Post::where('id','=',$postid)->first();
         $post->comments++;
         $post->save();
-
+        if ($post->user_id!=$comment->user_id)
+                $post->user->notify(new PostCommented($comment));
         return "0";
     }
     public function showComments(Request $request)

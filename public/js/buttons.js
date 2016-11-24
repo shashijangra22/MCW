@@ -1,4 +1,22 @@
 
+//LIKE BUTTON JS
+$("#notifyBtn").on("click",function(event)
+{
+	event.preventDefault();
+  		 $.ajax({
+			url: "markallread",
+			type:"POST",
+			})
+		.done(function(result){
+
+			 if(result==0)
+			 {
+			 	Materialize.toast('All Read !', 3000);
+			}
+			});
+});
+
+
 
 //DETELE BUTTON JS
 
