@@ -51,11 +51,17 @@
 	#chat-slide-out{
 		width: 100%;
 	}
+	.brand-logo{
+		padding-left: 50px !important;
+	}
 }
 @media(min-width: 768px)
 {
 	#chat-slide-out{
 		width:23%;
+	}
+	.brand-logo{
+		padding-left: 20px !important;
 	}
 }
 .chattime{

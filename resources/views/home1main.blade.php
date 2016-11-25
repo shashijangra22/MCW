@@ -70,35 +70,79 @@
 	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
 	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
-	      <ul id="dropdown2" class="dropdown-content">
-	      <?php $notifications=$user->notifications->take(5); ?>
-	      @if (count($notifications))
-	        @foreach ($notifications as $notification)
-				<?php 
-	        		$usrid=$notification->data['user_id'];
-	        		$name=App\User::find($usrid)->username; 
-	        	?>	        
-	        	@if ($notification->type == 'App\Notifications\PostLiked')
-	        		<li><a href="#!"> {{ $name }} liked your Post.</a></li>
-	        	@else
-	        		<li><a href="#!"> {{ $name }} commented on your Post.</a></li>
-	        	@endif
-	        @endforeach
-	      @else
-	        <li><a href="#!">No Notifications to show !</a></li>
-	      @endif
+	      <?php 
+	      	$notifications=$user->notifications->take(5);
+	      	$unread=$user->unreadNotifications->count();
+	      	$lastNotifyTime=0;
+	      ?>
+	      <ul style="width: 100vw;" id="dropdown2" class="dropdown-content">
+			    @if (count($notifications))
+			        @foreach ($notifications as $notification)
+						<?php 
+			        		$usrid=$notification->data['user_id'];
+			        		$name=App\User::find($usrid)->username;
+			        		if ($loop->index==0) {
+			        			$lastNotifyTime=$notification->created_at;	
+			        		}
+			        	?>	        
+			        	@if ($notification->type == 'App\Notifications\PostLiked')
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} liked your Post.
+			        			@if ($notification->read_at==null)
+					        		<span class="new badge blue"></span>
+				        		@endif
+			        		</a></li>
+			        	@else
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
+			        			@if ($notification->read_at==null)
+					        		<span class="new badge blue"></span>
+				        		@endif
+			        		</a></li>
+			        	@endif
+			        @endforeach
+			      @else
+		        	<li><a href="#!">No more Notifications to show !</a></li>
+		      	@endif
+	      </ul>
+	      <ul id="dropdown3" class="dropdown-content">
+			    @if (count($notifications))
+			        @foreach ($notifications as $notification)
+						<?php 
+			        		$usrid=$notification->data['user_id'];
+			        		$name=App\User::find($usrid)->username;
+			        		if ($loop->index==0) {
+			        			$lastNotifyTime=$notification->created_at;	
+			        		}
+			        	?>	        
+			        	@if ($notification->type == 'App\Notifications\PostLiked')
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} liked your Post.
+			        			@if ($notification->read_at==null)
+					        		<span class="new badge blue"></span>
+				        		@endif
+			        		</a></li>
+			        	@else
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
+			        			@if ($notification->read_at==null)
+					        		<span class="new badge blue"></span>
+				        		@endif
+			        		</a></li>
+			        	@endif
+			        @endforeach
+			      @else
+		        	<li><a href="#!">No more Notifications to show !</a></li>
+		      	@endif
 	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
 	      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
-	      <a style="padding-right: 20px" href="#" data-activates="slide-out" class="button-collapse right"><i style="font-size: 24px" class="fa fa-bars"></i></a>
+	      <a style="padding-left: 20px" href="#" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
+	      <a style="padding-right: 20px" class="notifyBtn dropdown-button right button-collapse" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i style="font-size: 20px" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
-	          <li class="notifyBtn"><a id="notifyBtn" class="dropdown-button" data-alignment="right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i class="fa fa-bell"></i></a></li>
+	          <li><a class="notifyBtn dropdown-button" data-alignment="right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown3"><i class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a></li>
 	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown1">
 	            <div class="chip white">
 	              {{$user->username}}
@@ -223,7 +267,7 @@
 
 
 <div class="fixed-action-btn" style="bottom: 10; right: 10;">
-    <a class="chat-button btn-floating btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Chatbox" data-activates="chat-slide-out">
+    <a class="chat-button btn-floating btn-large" data-activates="chat-slide-out">
       <i class="material-icons">chat</i>
     </a>
 </div>
@@ -243,7 +287,7 @@
 <script type="text/javascript">
 var x={{$msgid}};
 var auth_id={{Auth::id()}};
-
+var lastNotifyTime="{{$lastNotifyTime}}";
 @yield('jscript')
 
 $(document).ready(function(){

@@ -1,19 +1,32 @@
+//Notifications JS
 
-//LIKE BUTTON JS
-$("#notifyBtn").on("click",function(event)
-{
+$(".viewStoryBtn").on("click",function(event){
 	event.preventDefault();
-  		 $.ajax({
-			url: "markallread",
-			type:"POST",
-			})
-		.done(function(result){
+	Materialize.toast('Coming soon :p',3000);
+	// var nid=$(this).data('id');
+ //  		 $.ajax({
+	// 		url: "markthisread",
+	// 		type:"POST",
+	// 		data:{nid:nid},
+	// 		})
+	// 	.done(function(result){
 
-			 if(result==0)
-			 {
-			 	Materialize.toast('All Read !', 3000);
-			}
-			});
+	// 		 if(result==0)
+	// 		 {
+	// 		 	Materialize.toast('Marked as read!',3000);
+	// 		}
+	// 		});
+});
+
+
+
+
+//Notify BUTTON JS
+$(".notifyBtn").on("click",function(event)
+{
+	if (!$('.fa-bell').html()) { return false;}
+	event.preventDefault();
+	$('.fa-bell').html('');
 });
 
 

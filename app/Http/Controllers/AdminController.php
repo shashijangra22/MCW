@@ -11,6 +11,7 @@ use App\Chat;
 use App\Comment;
 use App\Notice;
 use App\Question;
+use App\Level;
 use File;
 use Auth;
 use DB;
@@ -22,11 +23,20 @@ class AdminController extends Controller
     	$uid=$request->uid;
     	$state=$request->state;
     	$user=User::find($uid);
-    	if ($user->active!=1) 
+        if ($user->active==0) 
+        {
+            $level=new Level;
+            $level->user_id=$uid;
+            $level->save();
+            $user->active=1;
+            $user->save();
+            return 'User Activated!';
+        }
+    	elseif ($user->active==2) 
     	{
 	    	$user->active=1;
 	    	$user->save();
-	    	return 'User Activated!';
+	    	return 'User Unblocked!';
     	}
     	else
     	{

@@ -13,16 +13,46 @@ use Auth;
 use App\Http\Requests;
 use App\User;
 use App\Level;
+use DB;
 
 class UserController extends Controller
 {
 
-    public function markallread()
+    public function newnotify(Request $request)
     {
+        $lastNotifyTime=$request->lastNotifyTime;
         $user=Auth::user();
-        $user->unreadNotifications->markAsRead();
+        $unread=$user->unreadNotifications->where('created_at','>',$lastNotifyTime);
+        if($unread->count())
+        {
+            foreach ($unread as $temp) {
+                $x=User::find($temp->data['user_id'])->username;
+                if ($temp->type=='App\Notifications\PostLiked') {
+                    $y=0;
+                }
+                else
+                {
+                    $y=1;
+                }
+                $temp['username']=$x;
+                $temp['category']=$y;
+            }
+
+          return $unread;
+        }
         return 0;
     }
+
+    // public function markthisread(Request $request)
+    // {
+    //     $user=Auth::user();
+    //     $x=$user->unreadNotifications->find($request->nid);
+    //     if ($x) {
+    //         $x->markAsRead();
+    //         return 0;
+    //     }
+    //     return 1;
+    // }
 
     public function verifyUser($token)
     {
