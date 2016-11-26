@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\View;
 
 class PagesController extends Controller
 {
-
 	public function showAdmin()
 	{
 		$user=Auth::user();
@@ -79,8 +78,8 @@ class PagesController extends Controller
 		$player=Level::orderBy('level','desc')->orderBy('updated_at','ASC')->take(5)->get(array('levels.level','levels.user_id'));
 
 		$questions=Question::all();
-		$chat=Chat::all();
-		return view('chakravyuh')->with('questions',$questions)->with('user',$user)->with('chats',$chat)->with('players',$player);
+		$chats=Chat::all();
+		return view('chakravyuh')->with('questions',$questions)->with('user',$user)->with('chats',$chats)->with('players',$player);
 	}
 
 	public function getProfile()
