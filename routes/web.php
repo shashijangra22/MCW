@@ -47,5 +47,5 @@ Route::post('toggleuser','AdminController@toggleuser');
 Route::post('deletepost','AdminController@deletepost');
 Route::post('deletecomment','AdminController@deletecomment');
 Route::post('deletechat','AdminController@deletechat');
-Route::post('markthisread','UserController@markthisread');
+Route::post('getpost','PostController@getpost');
 Route::post('newnotify','UserController@newnotify');
