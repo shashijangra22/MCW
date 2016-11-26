@@ -202,6 +202,12 @@
 	var postid={{$postid}};
 	var post_id={{$post_id}};
 
+$(document).ready(function(){
+      $('.slider').slider({full_width: true});
+      $('.slider').height('230');
+      $('.slides').height('200');
+    });
+
 
 $(window).on('scroll', function(){
    if($(window).scrollTop() + $(window).height() == $(document).height()) {
