@@ -16,20 +16,6 @@ use DB;
 
 class PostController extends Controller
 {
-    public function checkPost(Request $request)
-    {
-        $pid=$request->pid;                                                            
-         $new_post=Post::where('id','>',$pid)->where('type','0')->get()->count();
-         $new_confession=Post::where('id','>',$pid)->where('type','1')->get()->count();
-          if($new_confession==0 && $new_post==0)
-          {
-             return 0;
-          }
-         $new=array('post'=>$new_post, 'confession'=>$new_confession);
-
-         return $new;
-    }
-
     public function store(Request $request)
     {
         
@@ -82,6 +68,28 @@ class PostController extends Controller
     {
         $pid=$request->pid;
         $new=DB::table('posts')->where('posts.id','<',$pid)->where('type','0')->orderby('created_at','desc')->take(5)->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join)
+        {
+            $join->on('posts.id','=','likes.post_id')
+            ->where('likes.user_id',Auth::id());
+            })
+        ->get(array('posts.*','users.username','users.displaypic','likes.id as like_id' ));
+
+        return $new;
+
+    }
+    public function getpost(Request $request)
+    {
+        $user=Auth::user();
+        $x=$user->unreadNotifications->find($request->nid);
+        if ($x!=null) {
+            $x->markAsRead();
+        }
+        $pid=$request->pid;
+        $temp=Post::find($pid);
+        if ($temp==null) {
+            return 0;
+        }
+        $new=DB::table('posts')->where('posts.id','=',$pid)->where('type','0')->join('users','posts.user_id','=','users.id')->leftJoin('likes',function($join)
         {
             $join->on('posts.id','=','likes.post_id')
             ->where('likes.user_id',Auth::id());
