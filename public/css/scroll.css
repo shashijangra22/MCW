@@ -51,8 +51,8 @@
 	#chat-slide-out{
 		width: 100%;
 	}
-	.brand-logo{
-		padding-left: 50px !important;
+	#dropdown2{
+		width: 100vw !important;
 	}
 }
 @media(min-width: 768px)
