@@ -75,7 +75,7 @@
 	      	$unread=$user->unreadNotifications->count();
 	      	$lastNotifyTime=0;
 	      ?>
-	      <ul style="width: 100vw;" id="dropdown2" class="dropdown-content">
+	      <ul id="dropdown2" class="dropdown-content">
 			    @if (count($notifications))
 			        @foreach ($notifications as $notification)
 						<?php 
@@ -86,41 +86,13 @@
 			        		}
 			        	?>	        
 			        	@if ($notification->type == 'App\Notifications\PostLiked')
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} liked your Post.
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} liked your Post.
 			        			@if ($notification->read_at==null)
 					        		<span class="new badge blue"></span>
 				        		@endif
 			        		</a></li>
 			        	@else
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
-			        			@if ($notification->read_at==null)
-					        		<span class="new badge blue"></span>
-				        		@endif
-			        		</a></li>
-			        	@endif
-			        @endforeach
-			      @else
-		        	<li><a href="#!">No more Notifications to show !</a></li>
-		      	@endif
-	      </ul>
-	      <ul id="dropdown3" class="dropdown-content">
-			    @if (count($notifications))
-			        @foreach ($notifications as $notification)
-						<?php 
-			        		$usrid=$notification->data['user_id'];
-			        		$name=App\User::find($usrid)->username;
-			        		if ($loop->index==0) {
-			        			$lastNotifyTime=$notification->created_at;	
-			        		}
-			        	?>	        
-			        	@if ($notification->type == 'App\Notifications\PostLiked')
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} liked your Post.
-			        			@if ($notification->read_at==null)
-					        		<span class="new badge blue"></span>
-				        		@endif
-			        		</a></li>
-			        	@else
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
+			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
 			        			@if ($notification->read_at==null)
 					        		<span class="new badge blue"></span>
 				        		@endif
@@ -133,16 +105,15 @@
 	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
-	      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
+	      <a style="font-size: 24px;" href="{{asset('home')}}" class="brand-logo">My College Wall</a>
 	      <a style="padding-left: 20px" href="#" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
-	      <a style="padding-right: 20px" class="notifyBtn dropdown-button right button-collapse" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i style="font-size: 20px" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
+	      <a style="padding-right: 20px" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
-	          <li><a class="notifyBtn dropdown-button" data-alignment="right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown3"><i class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a></li>
 	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown1">
 	            <div class="chip white">
 	              {{$user->username}}
@@ -222,12 +193,23 @@
 	            </div>
 </div>
 
-	        <button class="btn-floating right delButton" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
+<button class="btn-floating right delButton" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
 
-<div class="container">
+<div id="maindiv" class="container">
 	@yield('content')
 </div>
 
+<div id="viewstory" class="container">
+	<div class="row">
+		<div class="col m12 s12 l6 offset-l3">
+			<div class="row" style="margin-bottom: 10px">
+				<div class="col s12" id="loadpost">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div id="chat-slide-out"  class="side-nav">
     <div class="row card blue valign-wrapper" style="padding-top: 0px;margin: auto;height: 10%;">
@@ -287,14 +269,12 @@
 <script type="text/javascript">
 var x={{$msgid}};
 var auth_id={{Auth::id()}};
+var auth_displaypic="{{$user->displaypic}}";
+var auth_username="{{$user->username}}";
 var lastNotifyTime="{{$lastNotifyTime}}";
+
 @yield('jscript')
 
-$(document).ready(function(){
-      $('.slider').slider({full_width: true});
-      $('.slider').height('230');
-      $('.slides').height('200');
-    });
 
 $(document).ready(function(){
     $('#post').attr('disabled',true);
@@ -311,10 +291,10 @@ $(document).ready(function(){
 });
 
 
-
 function hideChatBox() {
 	$('.button-collapse').sideNav('hide');
 }
+
 
 </script>
 </html>
