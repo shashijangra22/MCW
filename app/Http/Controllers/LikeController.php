@@ -36,7 +36,7 @@ class LikeController extends Controller
             $post=Post::where('id','=',$postid)->first();
             $post->likes++;
             $post->save();
-            if ($post->user_id!=$new_like->user_id)
+            if ($post->user_id!=$new_like->user_id && $post->type==0)
                 $post->user->notify(new PostLiked ($new_like));
             return 'like';
         }    
