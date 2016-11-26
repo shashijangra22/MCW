@@ -36,7 +36,6 @@ Route::post('/pullMsg','ChatController@pullMsg');
 Route::post('savecomment','CommentController@savecomment');
 Route::post('addQuestion','QuestionController@addQuestion');
 Route::post('checkAnswer','QuestionController@checkAnswer');
-Route::post('/newpost','PostController@checkPost');
 Route::post('loadmore','PostController@loadmore');
 Route::post('showcomments','CommentController@showComments');
 Route::post('showlikes','LikeController@showLikes');
