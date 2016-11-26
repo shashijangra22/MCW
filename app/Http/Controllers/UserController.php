@@ -43,17 +43,6 @@ class UserController extends Controller
         return 0;
     }
 
-    // public function markthisread(Request $request)
-    // {
-    //     $user=Auth::user();
-    //     $x=$user->unreadNotifications->find($request->nid);
-    //     if ($x) {
-    //         $x->markAsRead();
-    //         return 0;
-    //     }
-    //     return 1;
-    // }
-
     public function verifyUser($token)
     {
         $user=User::where('verifytoken',$token)->first();
