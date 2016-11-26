@@ -1,30 +1,7 @@
-//Notifications JS
-
-$(".viewStoryBtn").on("click",function(event){
-	event.preventDefault();
-	Materialize.toast('Coming soon :p',3000);
-	// var nid=$(this).data('id');
- //  		 $.ajax({
-	// 		url: "markthisread",
-	// 		type:"POST",
-	// 		data:{nid:nid},
-	// 		})
-	// 	.done(function(result){
-
-	// 		 if(result==0)
-	// 		 {
-	// 		 	Materialize.toast('Marked as read!',3000);
-	// 		}
-	// 		});
-});
-
-
-
 
 //Notify BUTTON JS
 $(".notifyBtn").on("click",function(event)
 {
-	if (!$('.fa-bell').html()) { return false;}
 	event.preventDefault();
 	$('.fa-bell').html('');
 });
@@ -76,14 +53,16 @@ $(".likebutton").on("click",function(event)
 			 if(result=='like')
 			 {
 			 	var count=string.match(/\d/g);
-			 	count=++count;
+			 	count=Number(count.join(''));
+			 	count++;
 			 	$("a[id="+pid+"likes]").html(count+" Likes");
 			 	el.children('i').html('favorite');
 			}
 			else if(result=='unlike')
 			{
 				var count=string.match(/\d/g);
-			 	count=--count;
+			 	count=Number(count.join(''));
+			 	count--;
 			 	if(count<0)
 					count=0;
 			 	$("a[id="+pid+"likes]").html(count+" Likes")
@@ -113,7 +92,6 @@ $('.comment_input').keypress(function (e) {
 		var string=$("a[id="+pid+"comments]").html();
 	 var comment=$('#'+pid+'commentinput').val().trim();
 	  if (comment.length<=0) { return false;}
-	  var count=$("a[id="+pid+"comments]").html();
 		
 	  $.ajax({
 	  		url: "savecomment",
@@ -124,9 +102,12 @@ $('.comment_input').keypress(function (e) {
 	  		if(result==0)
 		 	{
 		 		var count=string.match(/\d/g);
-			 	count=++count;
+			 	count=Number(count.join(''));
+			 	count++;
 			 	$("a[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
+			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+auth_displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+auth_username+'</b> '+comment+'</div>');
+
 			}
 			});
 });
@@ -184,8 +165,8 @@ $('.comment_input').keypress(function (e) {
 			{
 				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');	
 			}
-			$('#'+pid+'commentbox').show('normal');
 		}
+		$('#'+pid+'commentbox').show('normal');
 		$('#'+pid+'spinner').hide('fast');
 });
 
@@ -221,9 +202,129 @@ $('.comment_input').keypress(function (e) {
 			{
 				$('#'+pid+'likesbox').append('<p style="font-size:12px;display:inline"><b> '+result[key].username+',</b></p>');	
 			}
-			$('#'+pid+'likesbox').show('normal');
 		}
+		$('#'+pid+'likesbox').show('normal');
 		$('#'+pid+'spinner').hide('fast');
 });
 
+});
+
+
+// load a post on notification click
+
+$(".viewStoryBtn").on("click",function(e)
+{
+	e.preventDefault();
+	var nid=$(this).data('id');
+	var pid=$(this).data('pid');
+	$.ajax({
+		type:'POST',
+		url:'getpost',
+		data:{nid:nid,pid:pid},
+		dataType:'json'
+		
+	})
+	.done(function(result)
+	{
+		if (result==0) 
+		{
+			Materialize.toast('Oops ! That post does not exist anymore !',2000);
+		}
+		else
+		{
+			$('#maindiv').hide('normal');
+			$('#maindiv').empty();
+			$("#loadpost").empty();
+			var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+			var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+			
+			for(var key in result)
+			{
+				
+				var post=$("#prototype").clone(true);
+				post.css('display','block');
+				post.attr('id',result[key].id);
+				var temp=post.find('.protodisplaypic');
+				temp.attr('src',result[key].displaypic);
+				temp=post.find('.protousername');
+				temp.html(result[key].username);
+				temp=post.find('.prototimestamp');
+				var d=new Date(result[key].created_at);
+				var hours=d.getHours()-12;
+
+				if(hours<0)
+					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+d.getHours()+":"+d.getMinutes()+" am";
+				else
+				{
+					if(hours==0)
+						hours=hours+12;
+					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
+				}
+				temp.html(date);
+
+				if(auth_id==result[key].user_id)
+				{
+					temp=post.find('.protodelete');
+					var button=$("#protodelbutton").clone(true);
+					button.css('display','block');
+					button.attr('id',"");
+					button.attr('value',result[key].id);
+					temp.append(button);
+					
+
+					
+				}
+				temp=post.find('.protodata');
+				temp.html(result[key].data);
+
+				if(result[key].path!=null)
+				{
+					temp=post.find('.protoimage');
+					temp.css('display','block');
+					temp.children('div').children('img').attr('src',result[key].path);
+				}
+
+				temp=post.find('#protolikes');
+				temp.attr('id',result[key].id+'likes');
+				temp.attr('data-id',result[key].id);
+				temp.html(result[key].likes+' likes')
+
+				temp=post.find('#protocomments');
+				temp.attr('id',result[key].id+'comments');
+				temp.attr("data-id",result[key].id);
+				temp.html(result[key].comments+' comments')
+				temp=post.find('#protocommentbox');
+				temp.attr('id',result[key].id+'commentbox');
+				temp=post.find('#protolikesbox');
+				temp.attr('id',result[key].id+'likesbox');
+				temp=post.find('#protocommentinput');
+				temp.attr('id',result[key].id+'commentinput');
+				
+				temp.attr('data-id',result[key].id);
+				temp=post.find('#protospinner');
+				temp.attr('id',result[key].id+'spinner');
+				temp=post.find('.comment_button');
+				temp.attr("id",result[key].id+"commentbutton");
+				temp.attr('data-id',result[key].id);
+				temp=post.find('.likebutton');
+				temp.attr('value',result[key].id);
+				if(result[key].like_id!=null)
+				temp.children('i').html('favorite');
+				else
+				temp.children('i').html('favorite_border');
+				temp=post.find('.commentscount');
+				temp.attr("data-id",result[key].id);
+				temp.attr("id",result[key].id+"comments");
+				temp.html(result[key].comments+' comments');
+				temp=post.find('.likecount');
+				temp.attr("data-id",result[key].id);
+				temp.attr("id",result[key].id+"likes");
+				temp.html(result[key].likes+' likes');
+				
+				$("#loadpost").append(post);
+			}
+			$(".materialboxed").materialbox();
+			
+		}
+	});
 });
