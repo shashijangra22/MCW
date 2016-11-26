@@ -161,7 +161,6 @@ $("#loadmore-button").on("click",function(e){
 			post_id=result[key].id;
 			$('#loadmore-button').removeClass('hide');
 		}
-		$("ul.tabs").tabs();
 		$(".materialboxed").materialbox();
 		
 		$('#loadmore-spinner').addClass('hide');
@@ -178,74 +177,3 @@ $("#loadmore-button").on("click",function(e){
 
 	
 });
-
-// CHECK NEW POST
-// using 1 global variable
-// postid
-
-
-$(document).ready(function(){
-	
-		newPost();
-		newNotify();
-	});
-		
-
-function newPost()
-{
-	if($.active==0)
-	{
-		$.ajax({
-			type:'POST',
-			url:'newpost',
-			data:{pid:postid},
-		})
-		.done(function(result){
-			if(result!=0)
-			{
-				Materialize.toast(result['post']+" New Post(s), "+result['confession']+"New Confession(s)", 3000);
-			}
-		
-		});
-		}
-		setTimeout(newPost,60000);
-}
-
-function newNotify()
-{
-	if($.active==0)
-	{
-		$.ajax({
-			type:'POST',
-			url:'newnotify',
-			data:{lastNotifyTime:lastNotifyTime},
-		})
-		.done(function(result)
-		{
-			if(result!=0)
-			{
-				var temp=0;
-				for (var key in result)
-				{
-					lastNotifyTime=result[key].created_at;
-					temp=temp+1;
-					if (result[key].category==0) {
-						$('#dropdown3').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-id="'+result[key].id+'">'+result[key].username + ' liked your Post.<span class="new badge blue"></span></a></li>');
-						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-id="'+result[key].id+'">'+result[key].username + ' liked your Post.<span class="new badge blue"></span></a></li>');
-					}
-					else
-					{
-						$('#dropdown3').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-id="'+result[key].id+'">'+result[key].username + ' commented on your Post.<span class="new badge blue"></span></a></li>');
-						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-id="'+result[key].id+'">'+result[key].username + ' commented on your Post.<span class="new badge blue"></span></a></li>');	
-					}
-				}
-				var prev=$('.fa-bell').html().trim();
-				var all=Number(prev)+Number(temp);
-				$('.fa-bell').html(' '+all);
-				Materialize.toast('You Have unread notifications',3000);
-			}
-		
-		});
-		}
-		setTimeout(newNotify,10000);
-}
