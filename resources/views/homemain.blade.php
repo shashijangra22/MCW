@@ -10,7 +10,6 @@
     <meta name="author" content="Your Name">
 
     <title>My College Wall</title>
-    <link rel="shortcut icon" href="img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="css/new.css">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
