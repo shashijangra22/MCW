@@ -26,7 +26,7 @@ class CommentController extends Controller
         $post=Post::where('id','=',$postid)->first();
         $post->comments++;
         $post->save();
-        if ($post->user_id!=$comment->user_id)
+        if ($post->user_id!=$comment->user_id && $post->type==0)
                 $post->user->notify(new PostCommented($comment));
         return "0";
     }
