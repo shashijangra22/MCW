@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Like;
 use App\Post;
 use App\User;
+use App\Activity;
 use Auth;
 use DB;
 
@@ -38,6 +39,14 @@ class LikeController extends Controller
             $post->save();
             if ($post->user_id!=$new_like->user_id && $post->type==0)
                 $post->user->notify(new PostLiked ($new_like));
+            
+            if ($post->type==0) {
+                $activity=new Activity;
+                $activity->user_id=$userid;
+                $activity->post_id=$postid;
+                $activity->type=1;
+                $activity->save();
+            }
             return 'like';
         }    
     }
