@@ -214,7 +214,8 @@ $('.comment_input').keypress(function (e) {
 
 $(".viewStoryBtn").on("click",function(e)
 {
-	e.preventDefault();
+	e.preventDefault()
+	$('#loadpost').empty();
 	var nid=$(this).data('id');
 	var pid=$(this).data('pid');
 	$.ajax({
@@ -232,9 +233,6 @@ $(".viewStoryBtn").on("click",function(e)
 		}
 		else
 		{
-			$('#maindiv').hide('normal');
-			$('#maindiv').empty();
-			$("#loadpost").empty();
 			var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 			var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 			
@@ -322,6 +320,7 @@ $(".viewStoryBtn").on("click",function(e)
 				temp.html(result[key].likes+' likes');
 				
 				$("#loadpost").append(post);
+				$('#modal1').modal('open');
 			}
 			$(".materialboxed").materialbox();
 			
