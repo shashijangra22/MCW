@@ -15,8 +15,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
       <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 </head>
 <body>
 
@@ -67,11 +66,11 @@
 	<div class="navbar-fixed">
 	      <!-- Dropdown Structure -->
 	      <ul id="dropdown1" class="dropdown-content">
-	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
-	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
+	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;" class="fa fa-user"></i> My Profile</a></li>
+	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
 	      <?php 
-	      	$notifications=$user->notifications->take(5);
+	      	$notifications=$user->unreadNotifications->take(5);
 	      	$unread=$user->unreadNotifications->count();
 	      	$lastNotifyTime=0;
 	      ?>
@@ -106,11 +105,12 @@
 	  <nav class="blue">
 	    <div class="nav-wrapper">
 	      <a style="font-size: 24px;" href="{{asset('home')}}" class="brand-logo">My College Wall</a>
-	      <a style="padding-left: 20px" href="#" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
+	      <a href="#" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
 	      <a style="padding-right: 20px" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="activityBtn"><a href="{{asset('activity')}}"><i class="fa fa-users"></i> Activity Log</a></li>
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
@@ -128,14 +128,15 @@
 	            <a href="#"><span class="name">{{$user->username}}</span></a>
 	            <a href="#"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
-	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;height: auto;" class="fa fa-home"></i> Home</a></li>
-	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;height: auto;" class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;" class="fa fa-home"></i> Home</a></li>
+	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;" class="fa fa-heartbeat"></i> Confessions</a></li>
 	          <!-- <li class="societiesBtn"><a disabled="true" href="{{asset('societies')}}">Societies</a></li> -->
-	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i style="margin: 0px;height: auto;" class="fa fa-empire"></i> Chakravyuh</a></li>
-	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i style="margin: 0px;height: auto;" class="fa fa-info-circle"></i> Notices</a></li>
+	          <li class="activityBtn"><a href="{{asset('activity')}}"><i style="margin: 0px;" class="fa fa-users"></i> Activity Log</a></li>
+	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i style="margin: 0px;" class="fa fa-empire"></i> Chakravyuh</a></li>
+	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i style="margin: 0px;" class="fa fa-info-circle"></i> Notices</a></li>
 	          <li><div class="divider"></div></li>
-	          <li class="profileBtn"><a href="{{asset('profile')}}"><i style="margin: 0px;height: auto;" class="fa fa-user"></i> My Profile</a></li>
-	          <li><a href="{{asset('logout')}}"><i style="margin: 0px;height: auto;" class="fa fa-reply"></i> Logout</a></li>
+	          <li class="profileBtn"><a href="{{asset('profile')}}"><i style="margin: 0px;" class="fa fa-user"></i> My Profile</a></li>
+	          <li><a href="{{asset('logout')}}"><i style="margin: 0px;" class="fa fa-reply"></i> Logout</a></li>
 	          </ul>
 	    	</div>
 	  </nav>
@@ -199,15 +200,11 @@
 	@yield('content')
 </div>
 
-<div id="viewstory" class="container">
-	<div class="row">
-		<div class="col m12 s12 l6 offset-l3">
-			<div class="row" style="margin-bottom: 10px">
-				<div class="col s12" id="loadpost">
 
-				</div>
-			</div>
-		</div>
+  <!-- Modal Structure -->
+<div id="modal1" class="modal" style="max-height: 100%">
+	<div class="modal-content" id="loadpost">
+
 	</div>
 </div>
 
@@ -257,7 +254,7 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
   <script type="text/javascript" src="js/buttons.js"></script>
    <script type="text/javascript" src="js/chatbox.js"></script>
    <script type="text/javascript" src="js/myjs.js"></script>
@@ -277,6 +274,7 @@ var lastNotifyTime="{{$lastNotifyTime}}";
 
 
 $(document).ready(function(){
+	$('.modal').modal();
     $('#post').attr('disabled',true);
 
     $('#mytext').keyup(function(){
