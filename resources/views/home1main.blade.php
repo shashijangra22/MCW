@@ -203,7 +203,7 @@
 
   <!-- Modal Structure -->
 <div id="modal1" class="modal" style="max-height: 100%">
-	<div class="modal-content" id="loadpost">
+	<div class="modal-content" id="loadpost" style="padding-left: 10px;padding-right: 10px;padding-bottom: 0px;padding-top: 5px">
 
 	</div>
 </div>

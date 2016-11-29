@@ -49,7 +49,7 @@
 }
 
 
-@media(max-width:768px)
+@media(max-width:992px)
 {
 	#chat-slide-out{
 		width: 100%;
@@ -57,8 +57,11 @@
 	#dropdown2{
 		width: 100vw !important;
 	}
+	.modal {
+	    width: 95% !important;
+	}
 }
-@media(min-width: 768px)
+@media(min-width: 992px)
 {
 	#chat-slide-out{
 		width:23%;
