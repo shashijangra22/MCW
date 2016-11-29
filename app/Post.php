@@ -18,4 +18,8 @@ class Post extends Model
     {
     	return $this->hasMany(Comment::class);
     }
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
