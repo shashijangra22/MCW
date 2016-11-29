@@ -9,6 +9,7 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
+use App\Activity;
 use Auth;
 use DB;
 
@@ -28,6 +29,13 @@ class CommentController extends Controller
         $post->save();
         if ($post->user_id!=$comment->user_id && $post->type==0)
                 $post->user->notify(new PostCommented($comment));
+        if ($post->type==0) {
+                $activity=new Activity;
+                $activity->user_id=$user_id;
+                $activity->post_id=$postid;
+                $activity->type=2;
+                $activity->save();
+            }
         return "0";
     }
     public function showComments(Request $request)
