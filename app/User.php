@@ -30,6 +30,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Level::class);
     }
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 
     /**
      * The attributes that are mass assignable.
