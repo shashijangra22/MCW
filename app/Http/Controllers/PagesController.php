@@ -11,11 +11,21 @@ use App\Level;
 use App\Comment;
 use App\Notice;
 use App\Question;
+use App\Activity;
 use Auth;
 use Illuminate\Support\Facades\View;
 
 class PagesController extends Controller
 {
+
+	public function getActivity()
+	{
+		$user=Auth::user();
+		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
+		$activities=Activity::orderBy('created_at', 'DESC')->where('user_id','!=',$user->id)->get();
+		return view('activity')->with('user',$user)->with('chats',$chats)->with('activities',$activities);
+	}
+
 	public function showAdmin()
 	{
 		$user=Auth::user();
@@ -37,7 +47,7 @@ class PagesController extends Controller
 	{
 		$user=Auth::user();
 		$notices=Notice::all();
-		$chats=Chat::all();
+		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		return view('notices')->with('user',$user)->with('notices',$notices)->with('chats',$chats);
 	}
 
@@ -59,7 +69,7 @@ class PagesController extends Controller
 	public function getConfessions()
 	{
 		$user=Auth::user();
-		$chat=Chat::all();
+		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('type','1')->orderBy('created_at','desc')->get();
 		return view('confessions')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
@@ -68,7 +78,7 @@ class PagesController extends Controller
 	public function getSocieties()
 	{
 		$user=Auth::user();
-		$chat=Chat::all();
+		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		return view('societies')->with('user',$user)->with('chats',$chat);
 	}
 
@@ -78,14 +88,14 @@ class PagesController extends Controller
 		$player=Level::orderBy('level','desc')->orderBy('updated_at','ASC')->take(5)->get(array('levels.level','levels.user_id'));
 
 		$questions=Question::all();
-		$chats=Chat::all();
+		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		return view('chakravyuh')->with('questions',$questions)->with('user',$user)->with('chats',$chats)->with('players',$player);
 	}
 
 	public function getProfile()
 	{
 		$user=Auth::user();
-		$chat=Chat::all();
+		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('user_id',$user->id)->where('type','0')->orderBy('created_at','desc')->get();
 		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat);
