@@ -48,3 +48,4 @@ Route::post('deletecomment','AdminController@deletecomment');
 Route::post('deletechat','AdminController@deletechat');
 Route::post('getpost','PostController@getpost');
 Route::post('newnotify','UserController@newnotify');
+Route::get('activity','PagesController@getActivity');
