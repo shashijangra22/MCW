@@ -10,6 +10,7 @@ use App\Post;
 use App\Like;
 use App\User;
 use App\Comment;
+use App\Activity;
 use Auth;
 use Image;
 use DB;
@@ -30,6 +31,12 @@ class PostController extends Controller
         $post->data=$Text;
         $post->type=$request->type;
 
+        if ($request->type==0) {
+                $activity=new Activity;
+                $activity->user_id=$User->id;
+                $activity->type=0;            
+        }
+
         if(Input::hasFile('image'))
         {
             $image=Input::file('image');
@@ -37,7 +44,9 @@ class PostController extends Controller
             $image->move('uploads',$image_name);
             $post->path='uploads/'.$image_name;
         
-            $post->save(); 
+            $post->save();
+            $activity->post_id=$post->id;
+            $activity->save();
             $image=Image::make($post->path)->resize(null,504,function ($constraint) 
                 {
                     $constraint->aspectRatio();
@@ -49,6 +58,10 @@ class PostController extends Controller
         else
         {
         	$post->save();
+            if ($request->type==0) {
+                $activity->post_id=$post->id;
+                $activity->save();
+            }
         	echo '0';
         }
     }
@@ -59,6 +72,7 @@ class PostController extends Controller
         $image=$post->path;
         Like::where('post_id',$id)->delete();
         Comment::where('post_id',$id)->delete();
+        Activity::where('post_id',$id)->delete();
         $post->delete();
         if($image!=NULL)
         File::delete($image);
@@ -80,9 +94,12 @@ class PostController extends Controller
     public function getpost(Request $request)
     {
         $user=Auth::user();
-        $x=$user->unreadNotifications->find($request->nid);
-        if ($x!=null) {
-            $x->markAsRead();
+        $nid=$request->nid;
+        if ($nid!=1) {
+            $x=$user->unreadNotifications->find($request->nid);
+            if ($x!=null) {
+                $x->markAsRead();
+            }
         }
         $pid=$request->pid;
         $temp=Post::find($pid);
