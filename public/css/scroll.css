@@ -1,3 +1,6 @@
+#sidenav-overlay{
+  		z-index: 990 !important;
+  	}
 .scrollbar
 {
 	overflow-y: scroll;
