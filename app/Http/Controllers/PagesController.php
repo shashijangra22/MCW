@@ -96,12 +96,12 @@ class PagesController extends Controller
 	{
 		$user=Auth::user();
 		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
-		$likes=Like::where('user_id',$user->id)->orderBy('created_at','desc')->get(['post_id']);
+		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('user_id',$user->id)->where('type','0')->orderBy('created_at','desc')->get();
 		$myActivities=Activity::where('user_id',$user->id)->orderBy('created_at', 'DESC')->take(10)->get();
 		$likedposts=[];
 		foreach ($likes as $like) {
-			if ($like->post->user->id != $user->id && $like->post->type===0)
+			if ($like->post->user->id != $user->id && $like->post->type!=1)
 				$likedposts=array_prepend($likedposts,$like->post);
 		}
 		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('likedposts',$likedposts)->with('myActivities',$myActivities);
