@@ -129,25 +129,24 @@ class UserController extends Controller
         $username=$request->username;
         $user=Auth::user();
         $usernames=User::where('username',$username);
-        if ($usernames->count()>0 && $user->username!=$username)
-        {
-            return "Username already exists!";
-        }
         if($fname!=NULL && !empty($fname))
         {
             $user->fname=$fname;
         }
-
         if($lname!=NULL && !empty($lname))
         {
             $user->lname=$lname;
+        }
+        if ($usernames->count()>0 && $user->username!=$username)
+        {
+            return "Username already exists!";
         }
         if($username!=NULL && !empty($username))
         {
             $user->username=$username;
         }
 		$user->save();
-		echo '0';
+		return 'Successfully edited :)';
 	}
 
 	public function updatePic(Request $request,$id)
@@ -167,10 +166,10 @@ class UserController extends Controller
                 }
                     $user->displaypic=$cpath; 
                     $user->save();
-                    echo '0';
+                    return 'Success :) Refresh the page to see changes!';
                 }
                 else
-                    echo "not able to upload";
+                    echo "Not able to upload !";
 
             
     }

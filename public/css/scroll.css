@@ -60,6 +60,10 @@
 	.modal {
 	    width: 95% !important;
 	}
+	#test1,#test2{
+		max-height: 75vh;
+		overflow-y: scroll;
+	}
 }
 @media(min-width: 992px)
 {

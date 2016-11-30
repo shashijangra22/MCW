@@ -218,6 +218,14 @@ $(".viewStoryBtn").on("click",function(e)
 	$('#loadpost').empty();
 	var nid=$(this).data('id');
 	var pid=$(this).data('pid');
+	if ($('#'+pid+'likes').offset()) 
+	{
+		$('html,body').animate({
+        scrollTop: $('#'+pid+'likes').offset().top-$('#'+pid+'likes').parent().parent().height()},
+        'slow');
+		Materialize.toast('Its already on the page ;)',2000);
+		return false;
+	}
 	$.ajax({
 		type:'POST',
 		url:'getpost',

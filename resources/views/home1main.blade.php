@@ -146,52 +146,52 @@
 <!-- prototype -->
 
 <div class="card z-depth-4 feed" id="prototype" style="display: none;">
-				<div class="card-image protoimage" style="display: none;">
-	              <img class="materialboxed" src=""/>
-	            </div>
-	            <div class="card-content" style="padding-top: 10px;padding-bottom: 5px">
-	              <div class="row" style="padding-top: 5px; margin-bottom: 10px">
-		              <div class="col s2 m1 ">
-		                <img src="" class="circle left protodisplaypic" width="35" height="35">
-		              </div>
-		              <div class="col s8 m10">
-		                <p>By <strong class="protousername"></strong></p>
-		                <p style="font-size: 10px"><strong class="prototimestamp"></strong></p>
-		              </div>
-		              <div class="col s2 m1 protodelete">
-		                
-		          
-		              </div>
-	            </div>
-	              <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
-	              </blockquote>
-	              <a id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
-	              <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;cursor: pointer;display:inline"></a>
-	              <i style="display: none;" id="protospinner" class="fa fa-spinner fa-pulse"></i>
-	              <div id="protolikesbox" style="display: none;">
-					
-				  </div>
-	              <div id="protocommentbox" style="display: none">
-	              
-				  </div>
+	<div class="card-image protoimage" style="display: none;">
+      <img class="materialboxed" src=""/>
+    </div>
+    <div class="card-content" style="padding-top: 10px;padding-bottom: 5px">
+      <div class="row" style="padding-top: 5px; margin-bottom: 10px">
+          <div class="col s2 m1 ">
+            <img src="" class="circle left protodisplaypic" width="35" height="35">
+          </div>
+          <div class="col s8 m10">
+            <p>By <strong class="protousername"></strong></p>
+            <p style="font-size: 10px"><strong class="prototimestamp"></strong></p>
+          </div>
+          <div class="col s2 m1 protodelete">
+            
+      
+          </div>
+    </div>
+      <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
+      </blockquote>
+      <a id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
+      <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;cursor: pointer;display:inline"></a>
+      <i style="display: none;" id="protospinner" class="fa fa-spinner fa-pulse"></i>
+      <div id="protolikesbox" style="display: none;">
+		
+	  </div>
+      <div id="protocommentbox" style="display: none">
+      
+	  </div>
 
-	            </div>
-	            
-	            <div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
-		            <div class="row" style="padding-top: 0px;margin-bottom: auto;">
-		              <div class="col s2 m1" style="padding-top: 12px">
-		                
-						<a class="likebutton" href="#" value=""><i class="material-icons" style="font-size:32px"></i></a>
-		              </div>
-		              <div class="col s8 m10">
-		                <input  data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
-		              </div>
-		              
-		              <div class="col s2 m1" style="padding-top: 10px">
-		                <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></a>
-		              </div>
-		            </div>
-	            </div>
+    </div>
+    
+    <div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
+        <div class="row" style="padding-top: 0px;margin-bottom: auto;">
+          <div class="col s2 m1" style="padding-top: 12px">
+            
+			<a class="likebutton" href="#" value=""><i class="material-icons" style="font-size:32px"></i></a>
+          </div>
+          <div class="col s8 m10">
+            <input  data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
+          </div>
+          
+          <div class="col s2 m1" style="padding-top: 10px">
+            <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></a>
+          </div>
+        </div>
+    </div>
 </div>
 
 <button class="btn-floating right delButton" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
@@ -202,9 +202,8 @@
 
 
   <!-- Modal Structure -->
-<div id="modal1" class="modal" style="max-height: 100%">
+<div id="modal1" class="modal" style="max-height: 80%">
 	<div class="modal-content" id="loadpost" style="padding-left: 10px;padding-right: 10px;padding-bottom: 0px;padding-top: 5px">
-
 	</div>
 </div>
 

@@ -21,6 +21,7 @@ Route::get('chakravyuh','PagesController@getChakravyuh')->middleware('auth');
 Route::get('profile','PagesController@getProfile')->middleware('auth');
 Route::get('societies','PagesController@getSocieties')->middleware('auth');
 Route::get('login','PagesController@getHome');
+Route::get('activity','PagesController@getActivity')->middleware('auth');
 
 Route::post('login','UserController@loginUser');
 Route::post('register','UserController@registerUser');
@@ -48,4 +49,3 @@ Route::post('deletecomment','AdminController@deletecomment');
 Route::post('deletechat','AdminController@deletechat');
 Route::post('getpost','PostController@getpost');
 Route::post('newnotify','UserController@newnotify');
-Route::get('activity','PagesController@getActivity');
