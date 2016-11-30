@@ -101,7 +101,7 @@ class PagesController extends Controller
 		$myActivities=Activity::where('user_id',$user->id)->orderBy('created_at', 'DESC')->take(10)->get();
 		$likedposts=[];
 		foreach ($likes as $like) {
-			if ($like->post->user->id != $user->id)
+			if ($like->post->user->id != $user->id && $like->post->type===0)
 				$likedposts=array_prepend($likedposts,$like->post);
 		}
 		return view('profile')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('likedposts',$likedposts)->with('myActivities',$myActivities);
