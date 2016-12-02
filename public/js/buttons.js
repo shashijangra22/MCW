@@ -247,6 +247,7 @@ $(".viewStoryBtn").on("click",function(e)
         scrollTop: $('#'+pid+'likes').offset().top-$('#'+pid+'likes').parent().parent().height()},
         'slow');
 		Materialize.toast('Its already on the page ;)',2000);
+		$(".spinner-wrapper").fadeOut("slow");
 		return false;
 	}
 	$.ajax({
