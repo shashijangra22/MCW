@@ -1,6 +1,7 @@
 /node_modules
 /public/storage
 /public/uploads
+/public/profile_pic
 /storage/*.key
 /vendor
 /.idea

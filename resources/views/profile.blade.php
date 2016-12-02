@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="row" style="margin-bottom: 0px">
-	<div class="col m12 s12 l3">
+	<div class="col m12 s12 l3 offset-l1" style="padding-left: 0px;padding-right: 0px">
 		<div class="card">
 			<div class="card-content" style="text-align: center;">
-					<a style="cursor: pointer;" onclick="upload();"><img src="{{$user->displaypic}}" id="profile-pic" class="circle responsive-img profile-pic"></a>
+					<a style="cursor: pointer;" onclick="upload();"><img src="{{$user->displaypic}}" id="profile-pic" class="z-depth-4 circle responsive-img profile-pic"></a>
 			     	<form id="pic-form" role="form" enctype="multipart/form-data" action="#">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="file" accept="image/*" class="hide" name="pic" id="pic"/>
@@ -33,12 +33,13 @@
 		    </li>
 	  	</ul>
 	</div>
-	<div class="col m12 s12 l6">
+	<div class="col m12 s12 l7">
 		<div class="row" style="margin-bottom: 0px">
 		    <div class="col s12">
 		      <ul class="tabs">
-		        <li class="tab col s6"><a href="#test1">My Posts</a></li>
-		        <li class="tab col s6"><a href="#test2">My Liked Posts</a></li>
+		        <li class="tab col s4"><a href="#test1">My Posts</a></li>
+		        <li class="tab col s4"><a href="#test2">My Likes</a></li>
+		        <li class="tab col s4"><a href="#test3">My Activity</a></li>
 		      </ul>
 		    </div>
 		    <div class="col s12" id="test1">
@@ -158,10 +159,8 @@
 		        </div>
 		        @endforeach
 		    </div>
-	 	</div>   
-	</div>
-	<div class="col m12 s12 l3">
-		<div class="card">
+		    <div id="test3" class="col s12">
+		    	<div class="card">
 			<div class="card-content">
 				<span class="card-title">Recent activity</span>
 				@foreach ($myActivities as $activity)
@@ -185,6 +184,8 @@
 				@endforeach
 			</div>
 		</div>
+		    </div>
+	 	</div>   
 	</div>
 </div>
 @endsection
@@ -211,12 +212,11 @@ $('#editBtn').on("click",function(e){
 		.done(function(result){
 				Materialize.toast(result,3000);
 			});
-		
-			
 		});
 
   $('#pic').change(function(e) 
 	{
+			$('.spinner-wrapper').fadeIn('slow');
 			e.preventDefault();
 			var id={{$user->id}};
 			var formData = new FormData($("#pic-form")[0]);
@@ -232,6 +232,7 @@ $('#editBtn').on("click",function(e){
 			})
 		.done(function(result){
 			Materialize.toast(result,3000);
+			$('.spinner-wrapper').fadeOut('slow');
 			});
 		});
 

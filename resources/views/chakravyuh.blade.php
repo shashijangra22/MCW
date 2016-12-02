@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="row" style="margin-bottom: 0px">
-<div class="col m12 s12 l6 offset-l1">
+<div class="col m12 s12 l6 offset-l1" style="padding-left: 0px;padding-right: 0px">
 	
 	<?php $totalQ = count($questions); ?>
 		@if($totalQ>0 && $user->level->level<$totalQ)
-		<div class="card" style="margin-bottom: 0px">
+		<div class="card z-depth-4" style="margin-bottom: 0px">
 				<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px">Welcome Back :)</span>
 					<span class="card-title right" style="font-size: 20px">Level {{$user->level->level}}</span>
@@ -17,26 +17,37 @@
 				<div class="card-content" style="padding-top: 5px;padding-bottom: 5px">
 					<p style="text-align: center;"><strong>Hint: {{$questions[$user->level->level]->data}}</strong></p>
 				</div>
-				<div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
-					<div class="row">
+				<div class="card-action" style="padding: 0px 10px 10px 10px;">
+					<div class="row" style="margin-bottom: 0px;">
 		              <div class="col s10 m11">
-		                <input onkeydown="if (event.keyCode == 13) checkAnswer();" placeholder="Enter your answer here..." type="text" id="myAnswer" name="myAnswer">
+		                <input style="margin-bottom: 0px" onkeydown="if (event.keyCode == 13) checkAnswer();" placeholder="Enter your answer here..." type="text" id="myAnswer" name="myAnswer">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 12px">
-		                <button onclick="checkAnswer();" class="btn-floating right"><i class="material-icons">send</i></button>
+		                <a id="answerbutton" onclick="checkAnswer();" style="margin-right: 0px;cursor: pointer;" class="right"><i style="font-size: 32px" class="material-icons">send</i></a>
+		                <div id="qspinner" class="hide preloader-wrapper small right">
+						    <div class="spinner-layer spinner-blue-only">
+						      <div class="circle-clipper left">
+						        <div class="circle"></div>
+						      </div><div class="gap-patch">
+						        <div class="circle"></div>
+						      </div><div class="circle-clipper right">
+						        <div class="circle"></div>
+						      </div>
+						    </div>
+						  </div>
 		              </div>
 		            </div>
 				</div>
 			</div>
 			@else
-				<div class="card">
+				<div class="card z-depth-4">
 				<div class="card-content blue white-text" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px">Stay Tuned ;) We'll be adding more Questions soon</span>
 				</div>
 			</div>
 			@endif	
 	</div>
-<div class="col l4 m4 s12">
+<div class="col l4 m4 s12" style="padding-left: 0px;padding-right: 0px">
 		<div class="card">
 				<div class="card-content blue white-text center-align" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px;">Leaderboard</span>
@@ -104,6 +115,10 @@ function checkAnswer()
 	var answer=$('#myAnswer').val().trim();
 	if(answer.length>0)
 	{
+		$('#answerbutton').addClass('hide');
+		$('#qspinner').addClass('active');
+		$('#qspinner').removeClass('hide');
+		$('#myAnswer').prop('disabled',true);
 		$.ajax({
 			type:"POST",
 			data:{answer:answer},
@@ -119,7 +134,15 @@ function checkAnswer()
 			{
 				Materialize.toast('Wrong Answer', 3000);
 			}
+			$('#qspinner').addClass('hide');
+			$('#qspinner').removeClass('active');
+			$('#answerbutton').removeClass('hide');
+			$('#myAnswer').prop('disabled',false);
 		});
+	}
+	else
+	{
+		Materialize.toast('Blank Answer! Seriosuly? 😒','2000');
 	}
 }
 

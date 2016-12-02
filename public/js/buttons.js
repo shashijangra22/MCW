@@ -2,7 +2,6 @@
 //Notify BUTTON JS
 $(".notifyBtn").on("click",function(event)
 {
-	event.preventDefault();
 	$('.fa-bell').html('');
 });
 
@@ -79,9 +78,8 @@ $(".likebutton").on("click",function(event)
 //COMMENT BUTTON JS
 $('.comment_input').keypress(function (e) {
   if (e.which == 13) {
-    //alert("hello");
     var id=$(this).data('id');
-    $("#"+id+"commentbutton").click();
+	    $("#"+id+"commentbutton").click();
       }
 });
 
@@ -90,9 +88,16 @@ $('.comment_input').keypress(function (e) {
 		var el=$(this);
 		var pid=el.data('id');
 		var string=$("a[id="+pid+"comments]").html();
-	 var comment=$('#'+pid+'commentinput').val().trim();
-	  if (comment.length<=0) { return false;}
-		
+		var comment=$('#'+pid+'commentinput').val().trim();
+		if (comment.length<=0) 
+		{
+			Materialize.toast('An empty comment! Really? 🤔',2000);
+			return false;
+		}
+		$('#'+pid+'commentinput').prop('disabled',true);
+		$('#'+pid+'commentbutton').addClass('hide');
+		$('#'+pid+'commentspinner').removeClass('hide');
+		$('#'+pid+'commentspinner').addClass('active');
 	  $.ajax({
 	  		url: "savecomment",
 	  		type:"POST",
@@ -107,8 +112,11 @@ $('.comment_input').keypress(function (e) {
 			 	$("a[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
 			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+auth_displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+auth_username+'</b> '+comment+'</div>');
-
+				$('#'+pid+'commentspinner').addClass('hide');
+				$('#'+pid+'commentspinner').removeClass('active');
+				$('#'+pid+'commentbutton').removeClass('hide');
 			}
+				$('#'+pid+'commentinput').prop('disabled',false);
 			});
 });
 
@@ -146,7 +154,7 @@ $('.comment_input').keypress(function (e) {
 		$('#'+pid+'commentbox').hide('normal');
 		return 0;
 	}
-	$('#'+pid+'spinner').show('fast');
+	$('#'+pid+'spinner').show();
 	$.ajax({
 	type:'POST',
 	url:'showcomments',
@@ -161,13 +169,27 @@ $('.comment_input').keypress(function (e) {
 		else
 		{
 			$('#'+pid+'likesbox').hide('normal');
+
+			var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+			
 			for(var key in result)
 			{
-				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+'</div>');	
+				var d=new Date(result[key].created_at);
+				var hours=d.getHours()%12;
+				if (hours==0) {hours=12;}
+				var minutes=d.getMinutes();
+				if (d.getMinutes()<10) { minutes='0'+minutes;}
+				if(hours<10)
+					var date=d.getDate()+" "+month[d.getMonth()]+" | 0"+hours+":"+minutes+" am";
+				else
+				{
+					var date=d.getDate()+" "+month[d.getMonth()]+" | "+hours+":"+minutes+" pm";
+				}
+				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+' <p class="right" style="display:inline;font-size:8px">'+date+'</p></div>');	
 			}
 		}
 		$('#'+pid+'commentbox').show('normal');
-		$('#'+pid+'spinner').hide('fast');
+		$('#'+pid+'spinner').hide();
 });
 
 });
@@ -183,7 +205,7 @@ $('.comment_input').keypress(function (e) {
 		$('#'+pid+'likesbox').hide('normal');
 		return 0;
 	}
-	$('#'+pid+'spinner').show('fast');
+	$('#'+pid+'spinner').show();
 	$.ajax({
 	type:'POST',
 	url:'showlikes',
@@ -204,7 +226,7 @@ $('.comment_input').keypress(function (e) {
 			}
 		}
 		$('#'+pid+'likesbox').show('normal');
-		$('#'+pid+'spinner').hide('fast');
+		$('#'+pid+'spinner').hide();
 });
 
 });
@@ -214,7 +236,8 @@ $('.comment_input').keypress(function (e) {
 
 $(".viewStoryBtn").on("click",function(e)
 {
-	e.preventDefault()
+	e.preventDefault();
+	$(".spinner-wrapper").fadeIn("slow");
 	$('#loadpost').empty();
 	var nid=$(this).data('id');
 	var pid=$(this).data('pid');
@@ -256,14 +279,13 @@ $(".viewStoryBtn").on("click",function(e)
 				temp.html(result[key].username);
 				temp=post.find('.prototimestamp');
 				var d=new Date(result[key].created_at);
-				var hours=d.getHours()-12;
+				var hours=d.getHours()%12;
+				if (hours==0) {hours=12;}
 
-				if(hours<0)
-					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+d.getHours()+":"+d.getMinutes()+" am";
+				if(hours<10)
+					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+hours+":"+d.getMinutes()+" am";
 				else
 				{
-					if(hours==0)
-						hours=hours+12;
 					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
 				}
 				temp.html(date);
@@ -309,6 +331,8 @@ $(".viewStoryBtn").on("click",function(e)
 				temp.attr('data-id',result[key].id);
 				temp=post.find('#protospinner');
 				temp.attr('id',result[key].id+'spinner');
+				temp=post.find('#protocommentspinner');
+				temp.attr('id',result[key].id+'commentspinner');
 				temp=post.find('.comment_button');
 				temp.attr("id",result[key].id+"commentbutton");
 				temp.attr('data-id',result[key].id);
@@ -334,4 +358,5 @@ $(".viewStoryBtn").on("click",function(e)
 			
 		}
 	});
+	$(".spinner-wrapper").fadeOut("slow");
 });

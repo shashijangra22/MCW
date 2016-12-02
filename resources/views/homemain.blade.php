@@ -6,26 +6,23 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Your description here">
-    <meta name="author" content="Your Name">
+    <meta name="description" content="Our College Own Social Network">
+    <meta name="author" content="Saurav-Shashi-Vishul-Aman">
 
     <title>My College Wall</title>
     <link rel="stylesheet" type="text/css" href="css/new.css">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 
       <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-
-	<!-- For more icons -->
-	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 
 </head>
 <body>
 
-<div class="spinner-wrapper white" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
-	<div class="preloader-wrapper big active" style="position: absolute;top: 45%;left: 45%">
+<div class="spinner-wrapper white valign-wrapper" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
+	<div class="preloader-wrapper active" style="margin: auto;">
       <div class="spinner-layer spinner-blue">
         <div class="circle-clipper left">
           <div class="circle"></div>
@@ -71,8 +68,7 @@
 <div class="navbar-fixed">
   <nav class="blue">
     <div class="nav-wrapper">
-      <a style="font-size: 24px;padding-left: 20px" href="{{asset('home')}}" class="brand-logo left">My College Wall</a>
-      <a style="padding-right: 20px" href="#" data-activates="slide-out" class="button-collapse right"><i style="font-size: 24px" class="fa fa-bars"></i></a>
+      <a style="font-size: 24px;" href="{{asset('home')}}" class="brand-logo center">My College Wall</a>
 	</div>
   </nav>
 </div>
@@ -81,10 +77,10 @@
 	<div class="row container">
 		<div class="col l4 offset-l4 s12 m12">
 			<div id="LoginFormCard" class="card valign z-depth-5"">
-				<div class="card-content" style="text-align: center;padding: 10px">
-					<span class="card-title">Login</span>
+				<div class="card-content" style="text-align: center;padding: 0px">
+					<span style="font-size: 20px" class="card-title">Login</span>
 				</div>
-				<div class="card-action">
+				<div class="card-action" style="padding: 0px 15px 15px 15px;">
 					<div class="row" style="margin-bottom: 0px">
 					    <form id="LoginForm" role="form" class="col s12" style="text-align: center;">
 					      <div class="row" style="margin-bottom: 0px;">
@@ -101,7 +97,7 @@
 					      </div>
 					      <div class="row" style="margin-bottom: 0px;">
 					        <div class="input-field col s12">
-					          <button class="btn" id="LoginFormButton" name="LoginFormButton" type="submit">Login</button>
+					          <button class="btn waves-effect waves-light" id="LoginFormButton" name="LoginFormButton" type="submit">Login</button>
 						          <div id="loginSpinner" class="hide preloader-wrapper small">
 									    <div class="spinner-layer spinner-blue-only">
 										      <div class="circle-clipper left">
@@ -117,20 +113,16 @@
 								  </div>
 					        </div>
 					      </div>
-					      <div class="row" style="margin-bottom: 0px;">
-					        <div class="input-field col s12">
-					        	Dont Have an Account ?<a href="#" onclick="showRegisterForm()"> Sign up !</a>
-					        </div>
-					      </div>
+					      <p style="text-align: center;">Need an account ?<a style="cursor: pointer;margin-right: 0px" onclick="showRegisterForm()"> Sign Up !</a></p>
 					    </form>
 					 </div>
 				</div>
 			</div>
 			<div id="RegisterFormCard" class="hide card valign z-depth-5">
-				<div class="card-content" style="text-align: center;padding: 10px">
-					<span class="card-title">Register</span>
+				<div class="card-content" style="text-align: center;padding: 0px">
+					<span style="font-size: 20px" class="card-title">Register</span>
 				</div>
-				<div class="card-action">
+				<div class="card-action" style="padding: 0px 15px 15px 15px;">
 					<div class="row" style="margin-bottom: 0px">
 					    <form id="RegisterForm" role="form" class="col s12" style="text-align: center;">
 					      <div class="row" style="margin-bottom: 0px;">
@@ -145,13 +137,13 @@
 					      </div>
 					      <div class="row" style="margin-bottom: 0px;">
 					        <div class="input-field col s12">
-					          <input id="username" type="text" name="username">
+					          <input id="username" type="text" name="username" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Be Creative ! Be Anonymous ;)">
 					          <label for="username">Username</label>
 					        </div>
 					      </div>
 					      <div class="row" style="margin-bottom: 0px;">
 					        <div class="input-field col s12">
-					          <input id="email" type="text" name="email">
+					          <input id="email" type="text" name="email" class="tooltipped" data-position="top" data-delay="50" data-tooltip="We will verify this :)">
 					          <label for="email">Email</label>
 					        </div>
 					      </div>
@@ -167,7 +159,7 @@
 					      </div>
 					      <div class="row" style="margin-bottom: 0px;">
 					        <div class="input-field col s12">
-					          <button class="btn" type="submit" id="RegisterFormButton" name="RegisterFormButton">Register</button>
+					          <button class="btn waves-effect waves-light"  type="submit" id="RegisterFormButton" name="RegisterFormButton">Register</button>
 						          <div id="RegisterSpinner" class="hide preloader-wrapper small">
 									    <div class="spinner-layer spinner-blue-only">
 									      <div class="circle-clipper left">
@@ -183,11 +175,7 @@
 									</div>
 					        </div>
 					      </div>
-					      <div class="row" style="margin-bottom: 0px;">
-					        <div class="input-field col s12">
-					        	Already Signed Up ?<a href="#" onclick="showLoginForm()"> Log In !</a>
-					        </div>
-					      </div>
+					      <p style="text-align: center;">Already Signed Up ?<a style="cursor: pointer;margin-right: 0px" onclick="showLoginForm()"> Log In !</a></p>
 					    </form>
 					 </div>
 				</div>
@@ -202,34 +190,34 @@
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/saurav.jpg" class="circle team">
 			<h5>Saurav</h5>
-			<h6>He Does Everything.</h6>
 			<a href="https://www.facebook.com/saurav.gupta.180410"><i class="fa fa-facebook iconpadding"></i></a>
             <a href="https://www.instagram.com/srv.1195/"><i class="fa fa-instagram iconpadding"></i></a>
             <a href="https://twitter.com/Srv1195"><i class="fa fa-twitter iconpadding"></i></a>
+			<h6>He Does Everything.</h6>
 		</div>
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/shashi.jpg" class="circle team" >
 			<h5>Shashi</h5>
-			<h6>This Guy Orders All The Time.</h6>
 			<a href="https://www.facebook.com/shashijangra22"><i class="fa fa-facebook iconpadding"></i></a>
             <a href="https://www.instagram.com/shashijangra/"><i class="fa fa-instagram iconpadding"></i></a>
             <a href="https://twitter.com/shashijangra22"><i class="fa fa-twitter iconpadding"></i></a>
+			<h6>This Guy Orders All The Time.</h6>
 		</div>
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/vishul.jpg" class="circle team" >
 			<h5>Vishul</h5>
-			<h6>Cries A Lot.</h6>
 			<a href="https://www.facebook.com/vishul.saini"><i class="fa fa-facebook iconpadding" ></i></a>
             <a href="https://www.instagram.com/vishulsaini/"><i class="fa fa-instagram iconpadding"></i></a>
             <a href="#"><i class="fa fa-twitter iconpadding"></i></a>
+			<h6>Cries A Lot.</h6>
 		</div>
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/aman.jpg" class="circle team" >
 			<h5>Aman</h5>
-			<h6>Says A Lot Does None.</h6>
 			<a href="https://www.facebook.com/amanyadav1396"><i class="fa fa-facebook iconpadding"></i></a>
             <a href="https://www.instagram.com/amanyadav1396/"><i class="fa fa-instagram iconpadding"></i></a>
             <a href="https://twitter.com/amanyadav1396"><i class="fa fa-twitter iconpadding"></i></a>
+			<h6>Says A Lot Does None.</h6>
 		</div>
 	</div>
 </div>
@@ -242,8 +230,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-  <script src="https://use.fontawesome.com/13ed732878.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
 <script type="text/javascript">
 
@@ -404,10 +391,6 @@ $("#RegisterForm").validate({
                 }
             });
         });
-
-		// $("#RegisterFormButton").on("click",function(event){
-  //           
-  //       });
 
 </script>
 

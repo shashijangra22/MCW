@@ -80,14 +80,13 @@ $("#loadmore-button").on("click",function(e){
 			temp.html(result[key].username);
 			temp=post.find('.prototimestamp');
 			var d=new Date(result[key].created_at);
-			var hours=d.getHours()-12;
+			var hours=d.getHours()%12;
+			if (hours==0) {hours=12;}
 
-			if(hours<0)
-				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+d.getHours()+":"+d.getMinutes()+" am";
+			if(hours<10)
+				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+hours+":"+d.getMinutes()+" am";
 			else
 			{
-				if(hours==0)
-					hours=hours+12;
 				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
 			}
 			temp.html(date);
@@ -133,6 +132,8 @@ $("#loadmore-button").on("click",function(e){
 			temp.attr('data-id',result[key].id);
 			temp=post.find('#protospinner');
 			temp.attr('id',result[key].id+'spinner');
+			temp=post.find('#protocommentspinner');
+			temp.attr('id',result[key].id+'commentspinner');
 			temp=post.find('.comment_button');
 			temp.attr("id",result[key].id+"commentbutton");
 			temp.attr('data-id',result[key].id);

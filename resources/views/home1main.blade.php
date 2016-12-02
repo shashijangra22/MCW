@@ -13,14 +13,15 @@
 	<link rel="stylesheet" type="text/css" href="css/scroll.css">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 </head>
 <body>
 
-<div class="spinner-wrapper white" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
-	<div class="preloader-wrapper big active" style="position: absolute;top: 45%;left: 45%">
+<div class="spinner-wrapper white valign-wrapper" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
+	<div class="preloader-wrapper active" style="margin: auto;">
       <div class="spinner-layer spinner-blue">
         <div class="circle-clipper left">
           <div class="circle"></div>
@@ -149,24 +150,21 @@
 	<div class="card-image protoimage" style="display: none;">
       <img class="materialboxed" src=""/>
     </div>
-    <div class="card-content" style="padding-top: 10px;padding-bottom: 5px">
-      <div class="row" style="padding-top: 5px; margin-bottom: 10px">
-          <div class="col s2 m1 ">
+    <div class="card-content" style="padding: 10px 10px 5px 10px;">
+      <div class="row" style="margin-bottom: 10px">
+          <div class="col s2 m1">
             <img src="" class="circle left protodisplaypic" width="35" height="35">
           </div>
           <div class="col s8 m10">
             <p>By <strong class="protousername"></strong></p>
             <p style="font-size: 10px"><strong class="prototimestamp"></strong></p>
           </div>
-          <div class="col s2 m1 protodelete">
-            
-      
-          </div>
-    </div>
-      <blockquote style="text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
+          <div class="col s2 m1 protodelete"></div>
+      </div>
+      <blockquote style="font-size: 12px;text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
       </blockquote>
-      <a id="protolikes" class="chip likescount blue white-text" style="padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
-      <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="padding: 6px;cursor: pointer;display:inline"></a>
+      <a id="protolikes" class="chip likescount blue white-text" style="font-size: 12px;margin-right: 0px;padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
+      <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="font-size: 12px;padding: 6px;cursor: pointer;display:inline"></a>
       <i style="display: none;" id="protospinner" class="fa fa-spinner fa-pulse"></i>
       <div id="protolikesbox" style="display: none;">
 		
@@ -177,24 +175,33 @@
 
     </div>
     
-    <div class="card-action" style="padding-top: 0px;padding-bottom: 0px">
+    <div class="card-action" style="padding: 0px 10px 0px 10px;">
         <div class="row" style="padding-top: 0px;margin-bottom: auto;">
-          <div class="col s2 m1" style="padding-top: 12px">
-            
-			<a class="likebutton" href="#" value=""><i class="material-icons" style="font-size:32px"></i></a>
+          <div class="col s2 m1" style="padding-top: 10px">
+      			<a style="cursor: pointer;margin-right: 0px" class="likebutton left" value=""><i class="material-icons" style="font-size:32px"></i></a>
           </div>
           <div class="col s8 m10">
-            <input  data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
+            <input  style="margin-bottom: 10px" data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
           </div>
-          
           <div class="col s2 m1" style="padding-top: 10px">
-            <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button btn-floating right " id="protocommentbutton"><i class="fa fa-send" style="font-size: 16px"></i></a>
+            <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button right" id="protocommentbutton"><i style="font-size: 32px" class="material-icons">send</i></a>
+            <div id="protocommentspinner" class="hide preloader-wrapper small right">
+                <div class="spinner-layer spinner-red-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
     </div>
 </div>
 
-<button class="btn-floating right delButton" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
+<button class="btn-floating right delButton waves-effect waves-light" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
 
 <div id="maindiv" class="container">
 	@yield('content')
@@ -257,7 +264,6 @@
   <script type="text/javascript" src="js/buttons.js"></script>
    <script type="text/javascript" src="js/chatbox.js"></script>
    <script type="text/javascript" src="js/myjs.js"></script>
-   <script src="https://use.fontawesome.com/13ed732878.js"></script>
 
 @yield('JSwithTags')
 
