@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row" style="margin-bottom: 0px">
-	<div class="col s12 m12 l6 offset-l3" style="padding-left: 0px;padding-right: 0px">
+	<div class="col s12 m12 l6 offset-l3" style="padding-left: 5px;padding-right: 5px">
 		<div class="row">
 		    <div class="col s12">
 		      <ul class="tabs">

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 
-<div class="col s12 m12 l6 offset-l3" id="main-feed" style="padding-left: 0px;padding-right: 0px">
+<div class="col s12 m12 l6 offset-l3" id="main-feed" style="padding-left: 5px;padding-right: 5px">
 	<div class="card z-depth-5" style="margin-bottom: 5px">
         <div class="card-content pink white-text " style="text-align: center;padding-top: 0px;padding-bottom: 0px">
           <span class="card-title" style="font-size: 20px">Welcome {{$user->username}} :)</span>

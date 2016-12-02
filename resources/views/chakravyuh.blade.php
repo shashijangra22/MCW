@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row" style="margin-bottom: 0px">
-<div class="col m12 s12 l6 offset-l1" style="padding-left: 0px;padding-right: 0px">
+<div class="col m12 s12 l6 offset-l1" style="padding-left: 5px;padding-right: 5px">
 	
 	<?php $totalQ = count($questions); ?>
 		@if($totalQ>0 && $user->level->level<$totalQ)

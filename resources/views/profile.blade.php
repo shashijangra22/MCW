@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row" style="margin-bottom: 0px">
-	<div class="col m12 s12 l3 offset-l1" style="padding-left: 0px;padding-right: 0px">
+	<div class="col m12 s12 l3 offset-l1" style="padding-left: 5px;padding-right: 5px">
 		<div class="card">
 			<div class="card-content" style="text-align: center;">
 					<a style="cursor: pointer;" onclick="upload();"><img src="{{$user->displaypic}}" id="profile-pic" class="z-depth-4 circle responsive-img profile-pic"></a>
