@@ -17,6 +17,12 @@ use DB;
 
 class UserController extends Controller
 {
+    public function markallread()
+    {
+        $user=Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return 0;
+    }
 
     public function newnotify(Request $request)
     {
@@ -54,11 +60,11 @@ class UserController extends Controller
             $level=new Level;
             $level->user_id=$user->id;
             $level->save();
-            echo "Your account has been activated ! Enjoy :) ";
+            return "Your account has been activated ! Enjoy :) ";
         }
         else
         {
-            echo "Invalid Token !";
+            return "Invalid Token !";
         }
     }
 
@@ -72,16 +78,16 @@ class UserController extends Controller
             {
                 if(Auth::check())
                 {
-                    echo 0;
+                    return 0;
                 }
             }
             else
             {
-                echo 1;
+                return 1;
             }
         }
         else
-            echo 2;
+            return 2;
     }
 
     public function registerUser(Request $request)
@@ -169,7 +175,7 @@ class UserController extends Controller
                     return 'Success :) Refresh the page to see changes!';
                 }
                 else
-                    echo "Not able to upload !";
+                    return "Not able to upload !";
 
             
     }

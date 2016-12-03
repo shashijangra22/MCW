@@ -21,6 +21,6 @@ class NoticeController extends Controller
         $notice->data=$request->mytext;
         $notice->head=$request->noticeHeader;
         $notice->save();
-        return "0";
+        return 0;
 	}
 }

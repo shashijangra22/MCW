@@ -18,7 +18,7 @@ class ChatController extends Controller
     	$chat->message=$message;
     	$chat->user_id=$user;
     	$chat->save();
-    	echo "done";
+    	return 0;
  	}
 
  	public function pullMsg(Request $request)
@@ -31,6 +31,6 @@ class ChatController extends Controller
  			return $chats;
  		}
  		else 
- 			return '0';
+ 			return 0;
  	}
 }

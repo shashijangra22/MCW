@@ -53,7 +53,7 @@ class PostController extends Controller
                 });
             $image->orientate();
             $image->save($post->path);
-            echo '0';
+            return 0;
         }
         else
         {
@@ -62,7 +62,7 @@ class PostController extends Controller
                 $activity->post_id=$post->id;
                 $activity->save();
             }
-        	echo '0';
+        	return 0;
         }
     }
 
@@ -94,13 +94,6 @@ class PostController extends Controller
     public function getpost(Request $request)
     {
         $user=Auth::user();
-        $nid=$request->nid;
-        if ($nid!=1) {
-            $x=$user->unreadNotifications->find($request->nid);
-            if ($x!=null) {
-                $x->markAsRead();
-            }
-        }
         $pid=$request->pid;
         $temp=Post::find($pid);
         if ($temp==null) {

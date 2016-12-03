@@ -36,7 +36,7 @@ class CommentController extends Controller
                 $activity->type=2;
                 $activity->save();
             }
-        return "0";
+        return 0;
     }
     public function showComments(Request $request)
     {

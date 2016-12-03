@@ -26,7 +26,7 @@ class LikeController extends Controller
             $post->likes--;
             $post->save();
             $existing_like->delete();
-            return 'unlike';
+            return 1;
         }
     	else
         {
@@ -47,7 +47,7 @@ class LikeController extends Controller
                 $activity->type=1;
                 $activity->save();
             }
-            return 'like';
+            return 0;
         }    
     }
 
