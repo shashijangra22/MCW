@@ -44,11 +44,11 @@ function newNotify()
 					lastNotifyTime=result[key].created_at;
 					temp=temp+1;
 					if (result[key].category==0) {
-						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'" data-id="'+result[key].id+'">'+result[key].username + ' liked your Post.<span class="new badge blue"></span></a></li>');
+						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' liked your Post.<span class="new badge blue"></span></a></li>');
 					}
 					else
 					{
-						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'" data-id="'+result[key].id+'">'+result[key].username + ' commented on your Post.<span class="new badge blue"></span></a></li>');	
+						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' commented on your Post.<span class="new badge blue"></span></a></li>');	
 					}
 				}
 				var prev=$('.fa-bell').html().trim();

@@ -25,7 +25,7 @@ $('#post').on("click",function(e){
 			{
 				url='confessions';
 			}
-			if(result=='0')
+			if(result==0)
 			{
 				window.location.replace(url);
 			}

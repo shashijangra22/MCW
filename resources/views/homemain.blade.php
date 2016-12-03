@@ -370,12 +370,12 @@ $("#RegisterForm").validate({
             })
             .done(function(result)
             {
-                if(result=='0')
+                if(result==0)
                 {
                 	Materialize.toast('Yeyy ! You are in.', 3000);
                     window.location.replace('home');
                 }
-                else if(result=='1')
+                else if(result==1)
                 {
                 	Materialize.toast('No such active account !', 3000);
                 	$('#loginSpinner').removeClass('active');

@@ -59,10 +59,10 @@
 	            <div class="card-content" style="padding: 10px 10px 5px 10px;">
 	              <div class="row" style="margin-bottom: 10px">
 		              <div class="col s2 m1">
-		                <img src="{{$post->user->displaypic}}" class="circle left" width="35" height="35">
+		                <a href="{{asset($post->user->username)}}"><img src="{{$post->user->displaypic}}" class="circle left" width="35" height="35"></a>
 		              </div>
 		              <div class="col s8 m10">
-		                <p>By <strong>{{$post->user->username}}</strong></p>
+		                <p>By <a href="{{asset($post->user->username)}}"><strong>{{$post->user->username}}</strong></a></p>
 		                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></p>
 		              </div>
 		              <div class="col s2 m1">

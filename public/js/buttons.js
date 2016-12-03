@@ -2,7 +2,18 @@
 //Notify BUTTON JS
 $(".notifyBtn").on("click",function(event)
 {
+	if (!$('.fa-bell').html()) 
+	{
+		return false;
+	}
 	$('.fa-bell').html('');
+	$.ajax({
+			url: "markallread",
+			type:"POST",
+			})
+		.done(function(result){
+			
+			});
 });
 
 
@@ -49,7 +60,7 @@ $(".likebutton").on("click",function(event)
 			})
 		.done(function(result){
 
-			 if(result=='like')
+			 if(result==0)
 			 {
 			 	var count=string.match(/\d/g);
 			 	count=Number(count.join(''));
@@ -57,7 +68,7 @@ $(".likebutton").on("click",function(event)
 			 	$("a[id="+pid+"likes]").html(count+" Likes");
 			 	el.children('i').html('favorite');
 			}
-			else if(result=='unlike')
+			else if(result==1)
 			{
 				var count=string.match(/\d/g);
 			 	count=Number(count.join(''));
@@ -111,7 +122,7 @@ $('.comment_input').keypress(function (e) {
 			 	count++;
 			 	$("a[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
-			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 5px;font-size: 12px;margin:auto"><img src="'+auth_displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+auth_username+'</b> '+comment+'</div>');
+			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+auth_displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+auth_username+'</b> '+comment+'</div>');
 				$('#'+pid+'commentspinner').addClass('hide');
 				$('#'+pid+'commentspinner').removeClass('active');
 				$('#'+pid+'commentbutton').removeClass('hide');
@@ -151,7 +162,7 @@ $('.comment_input').keypress(function (e) {
 	var pid=$(this).data('id');
 	if ($('#'+pid+'commentbox').is(':visible')) 
 	{
-		$('#'+pid+'commentbox').hide('normal');
+		$('#'+pid+'commentbox').hide();
 		return 0;
 	}
 	$('#'+pid+'spinner').show();
@@ -168,7 +179,7 @@ $('.comment_input').keypress(function (e) {
 		}
 		else
 		{
-			$('#'+pid+'likesbox').hide('normal');
+			$('#'+pid+'likesbox').hide();
 
 			var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 			
@@ -185,10 +196,10 @@ $('.comment_input').keypress(function (e) {
 				{
 					var date=d.getDate()+" "+month[d.getMonth()]+" | "+hours+":"+minutes+" pm";
 				}
-				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+result[key].username+'</b> '+result[key].data+' <p class="right" style="display:inline;font-size:8px">'+date+'</p></div>');	
+				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b><a href="'+result[key].username+'">'+result[key].username+'</a></b> '+result[key].data+' <p class="right" style="display:inline;font-size:8px">'+date+'</p></div>');	
 			}
 		}
-		$('#'+pid+'commentbox').show('normal');
+		$('#'+pid+'commentbox').show();
 		$('#'+pid+'spinner').hide();
 });
 
@@ -202,7 +213,7 @@ $('.comment_input').keypress(function (e) {
 	var pid=$(this).data('id');
 	if ($('#'+pid+'likesbox').is(':visible')) 
 	{
-		$('#'+pid+'likesbox').hide('normal');
+		$('#'+pid+'likesbox').hide();
 		return 0;
 	}
 	$('#'+pid+'spinner').show();
@@ -219,13 +230,13 @@ $('.comment_input').keypress(function (e) {
 		}
 		else
 		{
-			$('#'+pid+'commentbox').hide('normal');
+			$('#'+pid+'commentbox').hide();
 			for(var key in result)
 			{
-				$('#'+pid+'likesbox').append('<p style="font-size:12px;display:inline"><b> '+result[key].username+',</b></p>');	
+				$('#'+pid+'likesbox').append('<p style="font-size:12px;display:inline"><b><a href="'+result[key].username+'">'+result[key].username+'</a>, </b></p>');	
 			}
 		}
-		$('#'+pid+'likesbox').show('normal');
+		$('#'+pid+'likesbox').show();
 		$('#'+pid+'spinner').hide();
 });
 
@@ -234,26 +245,25 @@ $('.comment_input').keypress(function (e) {
 
 // load a post on notification click
 
-$(".viewStoryBtn").on("click",function(e)
+$(document).delegate('.viewStoryBtn','click',function(e)
 {
 	e.preventDefault();
-	$(".spinner-wrapper").fadeIn("slow");
-	$('#loadpost').empty();
-	var nid=$(this).data('id');
 	var pid=$(this).data('pid');
 	if ($('#'+pid+'likes').offset()) 
 	{
+		// $('ul.tabs').tabs('select_tab', 'test1'); // if post on same page but in a diff. tab
 		$('html,body').animate({
         scrollTop: $('#'+pid+'likes').offset().top-$('#'+pid+'likes').parent().parent().height()},
         'slow');
 		Materialize.toast('Its already on the page ;)',2000);
-		$(".spinner-wrapper").fadeOut("slow");
 		return false;
 	}
+	$(".spinner-wrapper").fadeIn("slow");
+	$('#loadpost').empty();
 	$.ajax({
 		type:'POST',
 		url:'getpost',
-		data:{nid:nid,pid:pid},
+		data:{pid:pid},
 		dataType:'json'
 		
 	})
@@ -355,7 +365,6 @@ $(".viewStoryBtn").on("click",function(e)
 				$("#loadpost").append(post);
 				$('#modal1').modal('open');
 			}
-			$(".materialboxed").materialbox();
 			
 		}
 	});

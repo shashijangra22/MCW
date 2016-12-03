@@ -21,11 +21,14 @@
 				$uname=App\User::find($usrid)->username;    		
 		    ?>
 		    	<blockquote style="font-size: 12px;margin: 10px 0px 0px 0px">
+		    		<a href="{{asset($uname)}}">{{$uname}}</a>
 		    		@if ($noti->type == 'App\Notifications\PostLiked')
-		    			{{$uname}} liked your <a style="cursor: pointer;" data-id="{{$noti->id}}" data-pid="{{$noti->data['post_id']}}" class="viewStoryBtn">post.</a>
+		    			 liked
 		    		@else
-		    			{{$uname}} commented on your <a style="cursor: pointer;" data-id="{{$noti->id}}" data-pid="{{$noti->data['post_id']}}" class="viewStoryBtn">post.</a>
+		    			commented on
 		    		@endif
+		    		your
+		    		<a style="cursor: pointer;" data-pid="{{$noti->data['post_id']}}" class="viewStoryBtn">post.</a>
 		    		<p class="right" style="margin-top: 0px;margin-bottom: 0px;display: inline;font-size: 10px">{{date("j M | h:i a",strtotime($noti->created_at))}}</p>
 		    	</blockquote>
 		    @endforeach
@@ -39,13 +42,13 @@
 			    @if ($postedon!=$user->username)
 			    	<blockquote style="font-size: 12px;margin: 10px 0px 0px 0px">
 			    		@if ($activity->type==0)
-			    			{{$postedby}} <a style="cursor: pointer;" data-id="1" data-pid="{{$activity->post_id}}" class="viewStoryBtn">posted</a> on the wall.
+			    			<a href="{{asset($postedby)}}">{{$postedby}}</a> <a style="cursor: pointer;" data-pid="{{$activity->post_id}}" class="viewStoryBtn">posted</a> on the wall.
 			    		@elseif ($activity->type==1)
-		    				{{$postedby}} liked {{$postedon}}'s <a style="cursor: pointer;" data-id="1" data-pid="{{$activity->post_id}}" class="viewStoryBtn">post.</a>
+		    				<a href="{{asset($postedby)}}">{{$postedby}}</a> liked {{$postedon}}'s <a style="cursor: pointer;" data-pid="{{$activity->post_id}}" class="viewStoryBtn">post.</a>
 			    		@else
-		    				{{$postedby}} commented on {{$postedon}}'s <a style="cursor: pointer;" data-id="1" data-pid="{{$activity->post_id}}" class="viewStoryBtn">post.</a>
+		    				<a href="{{asset($postedby)}}">{{$postedby}}</a> commented on {{$postedon}}'s <a style="cursor: pointer;" data-pid="{{$activity->post_id}}" class="viewStoryBtn">post.</a>
 			    		@endif
-			    		<p class="right" style="margin-top: 0px;margin-bottom: 0px;display: inline;font-size: 10px">{{date("j M | h:i a",strtotime($noti->created_at))}}</p>
+			    		<p class="right" style="margin-top: 0px;margin-bottom: 0px;display: inline;font-size: 10px">{{date("j M | h:i a",strtotime($activity->created_at))}}</p>
 		    	</blockquote>
 			    @endif
 		    @endforeach

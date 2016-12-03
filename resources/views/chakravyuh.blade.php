@@ -47,8 +47,8 @@
 			</div>
 			@endif	
 	</div>
-<div class="col l4 m4 s12" style="padding-left: 0px;padding-right: 0px">
-		<div class="card">
+<div class="col l4 m4 s12" style="padding-left: 5px;padding-right: 5px">
+		<div class="card z-depth-4">
 				<div class="card-content blue white-text center-align" style="padding-top: 0px;padding-bottom: 0px">
 					<span class="card-title" style="font-size: 20px;">Leaderboard</span>
 				<table>
@@ -61,7 +61,7 @@
 				    <tbody>
 				      @foreach($players as $player)
 				      	<tr>
-				        	<td>{{$player->User->username}}</td>
+				        	<td><a style="color: white"  href="{{asset($player->user->username)}}">{{$player->user->username}}</a></td>
 				        	<td>{{$player->level}}</td>
 				      	</tr>
 				      @endforeach

@@ -10,10 +10,10 @@
 
     <title>My College Wall</title>
 
-	<link rel="stylesheet" type="text/css" href="css/scroll.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('css/scroll.css')}}">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
 
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -71,7 +71,7 @@
 	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
 	      <?php 
-	      	$notifications=$user->unreadNotifications->take(5);
+	      	$notifications=$user->notifications->take(5);
 	      	$unread=$user->unreadNotifications->count();
 	      	$lastNotifyTime=0;
 	      ?>
@@ -84,30 +84,28 @@
 			        		if ($loop->index==0) {
 			        			$lastNotifyTime=$notification->created_at;	
 			        		}
-			        	?>	        
-			        	@if ($notification->type == 'App\Notifications\PostLiked')
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} liked your Post.
+			        	?>
+			        		<li><a style="cursor: pointer;" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} 
+                    @if ($notification->type == 'App\Notifications\PostLiked')
+                      liked
+                    @else
+                      commented on
+                    @endif 
+                  your Post.
 			        			@if ($notification->read_at==null)
 					        		<span class="new badge blue"></span>
 				        		@endif
 			        		</a></li>
-			        	@else
-			        		<li><a style="cursor: pointer;" data-id="{{$notification->id}}" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} commented on your Post.
-			        			@if ($notification->read_at==null)
-					        		<span class="new badge blue"></span>
-				        		@endif
-			        		</a></li>
-			        	@endif
 			        @endforeach
 			      @else
-		        	<li><a href="#!">No more Notifications to show !</a></li>
+		        	<li><a style="cursor: pointer;">No more Notifications to show !</a></li>
 		      	@endif
 	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
 	      <a style="font-size: 24px;" href="{{asset('home')}}" class="brand-logo">My College Wall</a>
-	      <a href="#" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
-	      <a style="padding-right: 20px" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
+	      <a style="cursor: pointer;" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
+	      <a style="padding-right: 20px;cursor: pointer;" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
@@ -115,19 +113,19 @@
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
 	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
-	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" href="#!" data-activates="dropdown1">
+	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown1" style="cursor: pointer;">
 	            <div class="chip white">
 	              {{$user->username}}
-	              <img src="{{$user->displaypic}}">
+	              <img src="{{asset($user->displaypic)}}">
 	            </div>
 	          </a></li>
 	      </ul>
 	      	<ul id="slide-out" class="side-nav">
 	          <li><div class="userView">
 	            <!-- <img class="background" src="img/5.jpg"> -->
-	            <a href="#"><img class="circle" src="{{$user->displaypic}}"></a>
-	            <a href="#"><span class="name">{{$user->username}}</span></a>
-	            <a href="#"><span class="email">{{$user->email}}</span></a>
+	            <a style="cursor: pointer;"><img class="circle" src="{{asset($user->displaypic)}}"></a>
+	            <a style="cursor: pointer;"><span class="name">{{$user->username}}</span></a>
+	            <a style="cursor: pointer;"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
 	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;" class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;" class="fa fa-heartbeat"></i> Confessions</a></li>
@@ -261,9 +259,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/buttons.js"></script>
-   <script type="text/javascript" src="js/chatbox.js"></script>
-   <script type="text/javascript" src="js/myjs.js"></script>
+  <script type="text/javascript" src="{{asset('js/buttons.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/chatbox.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/myjs.js')}}" ></script>
 
 @yield('JSwithTags')
 
@@ -274,7 +272,6 @@ var auth_id={{Auth::id()}};
 var auth_displaypic="{{$user->displaypic}}";
 var auth_username="{{$user->username}}";
 var lastNotifyTime="{{$lastNotifyTime}}";
-
 @yield('jscript')
 
 
