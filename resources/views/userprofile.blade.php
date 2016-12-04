@@ -5,7 +5,7 @@
 	<div class="col m12 s12 l6 offset-l3" style="padding-right: 5px;padding-left: 5px;">
 		<div class="card">
 			<div class="card-content" style="text-align: center;">
-					<a style="cursor: pointer;""><img src="{{asset($user2->displaypic)}}" class="z-depth-4 circle responsive-img"></a>
+					<a style="cursor: pointer;""><img src="{{asset($user2->displaypic)}}" class="z-depth-4 circle responsive-img" style="max-width: 150px;"></a>
 				<p><strong style="font-size: 20px">{{$user2->username}}</strong></p>
 				<p>{{count($posts)}} Posts | {{$user2->likes()->count()}} Likes | {{$user2->comments()->count()}} Comments</p>
 			</div>

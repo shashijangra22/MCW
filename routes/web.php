@@ -23,6 +23,7 @@ Route::get('societies','PagesController@getSocieties')->middleware('auth');
 Route::get('admin','PagesController@showAdmin')->middleware('auth');
 Route::get('logout','UserController@logoutUser')->middleware('auth');
 Route::get('verify/{token}','UserController@verifyUser');
+Route::get('reset/{token}','UserController@resetView');
 Route::get('notices','PagesController@getNotices')->middleware('auth');
 Route::get('{username}','PagesController@userProfile')->middleware('auth');
 
@@ -30,6 +31,8 @@ Route::get('{username}','PagesController@userProfile')->middleware('auth');
 
 Route::post('login','UserController@loginUser');
 Route::post('register','UserController@registerUser');
+Route::post('sendresetmail','UserController@sendResetMail');
+Route::post('resetpass','UserController@resetPass');
 
 // Post Routes
 

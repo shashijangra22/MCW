@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\UserRegistered;
+use App\Notifications\ForgotPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Session;
@@ -17,6 +18,41 @@ use DB;
 
 class UserController extends Controller
 {
+
+    public function resetPass(Request $request)     // reset actual password
+    {
+        $user=User::where('verifytoken',$request->verifytoken)->first();
+        if ($user) {
+            $user->password=bcrypt($request->newpass);
+            $user->verifytoken=str_random(20);
+            $user->save();
+            return 0;
+        }
+        return 1;
+    }
+
+    public function sendResetMail(Request $request)     // send mail with verify token
+    {
+        $temp=$request->verifyEmail;
+        $user=User::where('email',$temp)->first();
+        if ($user) {
+            $user->notify(new ForgotPassword($user));   // notify via mail if user exists
+            return 0;
+        }
+        return 1;
+    }
+
+    public function resetView($token)   // return reset password page after verifying token
+    {
+        $user=User::where('verifytoken',$token)->first();
+        if ($user!=NULL) {
+            return view('resetpassword')->with('user',$user);
+        }
+        else{
+            return "Invalid Token !";
+        }
+    }
+
     public function markallread()
     {
         $user=Auth::user();
@@ -67,6 +103,7 @@ class UserController extends Controller
             return "Invalid Token !";
         }
     }
+
 
     public function loginUser(Request $request)
     {

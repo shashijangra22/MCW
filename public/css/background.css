@@ -1,0 +1,15 @@
+.background_image {
+  overflow: hidden;
+  position: relative;
+    color: red;
+}
+.background_image:before {
+  background-color: white;
+  background-size: cover !important;
+  content: " ";
+  position: fixed;
+  background: url("http://mycollegewall.com/public/img/5.jpg") no-repeat ;
+  will-change: transform;
+  width: 100% !important;
+  height: 100% !important;
+}

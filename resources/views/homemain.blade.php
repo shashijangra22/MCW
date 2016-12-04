@@ -113,9 +113,46 @@
 								  </div>
 					        </div>
 					      </div>
-					      <p style="text-align: center;">Need an account ?<a style="cursor: pointer;margin-right: 0px" onclick="showRegisterForm()"> Sign Up !</a></p>
+					      <p style="text-align: center;margin-bottom: 0px;"><a style="cursor: pointer;margin-right: 0px" onclick="showPasswordForm()">Forgot Password ?</a></p>
+					      <p style="text-align: center;margin-top: 5px">Need an account ?<a style="cursor: pointer;margin-right: 0px" onclick="showRegisterForm()"> Sign Up !</a></p>
 					    </form>
 					 </div>
+				</div>
+			</div>
+			<div id="PasswordFormCard" class="hide card valign z-depth-5">
+				<div class="card-content" style="text-align: center;padding: 0px">
+					<span style="font-size: 20px" class="card-title">Forgot Password</span>
+				</div>
+				<div class="card-action" style="padding: 0px 15px 15px 15px;">
+					<div class="row" style="margin-bottom: 0px">
+						<form id="PasswordForm" role="form" class="col s12" style="text-align: center;">
+							<div class="row" style="margin-bottom: 0px">
+								<div class="input-field col s12">
+									<input type="text" name="verifyEmail" id="verifyEmail">
+									<label for="verifyEmail">Email</label>
+								</div>
+							</div>
+							<div class="row" style="margin-bottom: 0px">
+								<div class="input-field col s12">
+									<button class="btn waves-effect waves-light" id="PasswordFormButton" name="PasswordFormButton" type="submit">Send Reset Link</button>
+									<div id="verifySpinner" class="hide preloader-wrapper small">
+									    <div class="spinner-layer spinner-blue-only">
+										      <div class="circle-clipper left">
+										        <div class="circle"></div>
+										      </div>
+										     <div class="gap-patch">
+										        <div class="circle"></div>
+										      </div>
+										      <div class="circle-clipper right">
+										        <div class="circle"></div>
+										      </div>
+									    </div>
+								  </div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<p style="text-align: center;margin-bottom: 0px">Go back to <a style="cursor: pointer;margin-right: 0px" onclick="showLoginForm()"> Log In !</a></p>
 				</div>
 			</div>
 			<div id="RegisterFormCard" class="hide card valign z-depth-5">
@@ -316,14 +353,14 @@ $("#RegisterForm").validate({
             })
             .done(function(result)
             {
-                if(result=='0')
+                if(result==0)
                 {
                     Materialize.toast('Success :) Check your Mailbox !', 3000);
                     $('#RegisterSpinner').removeClass('active');
                     $('#RegisterSpinner').addClass('hide');
                     $('#RegisterFormButton').removeClass('hide');
                 }
-                else if(result=='1')
+                else if(result==1)
                 {
                 	Materialize.toast('Oopps ! Username already exists.', 3000);
                 	$('#RegisterSpinner').removeClass('active');
@@ -355,7 +392,12 @@ $("#RegisterForm").validate({
 	}
 	function showLoginForm() {
 		$('#RegisterFormCard').addClass('hide');
+		$('#PasswordFormCard').addClass('hide');
 		$('#LoginFormCard').removeClass('hide');
+	}
+	function showPasswordForm() {
+		$('#LoginFormCard').addClass('hide');
+		$('#PasswordFormCard').removeClass('hide');
 	}
 
 	$("#LoginFormButton").on("click",function(event){
@@ -389,6 +431,33 @@ $("#RegisterForm").validate({
                 	$('#loginSpinner').addClass('hide');
                 	$('#LoginFormButton').removeClass('hide');
                 }
+            });
+        });
+
+	$("#PasswordFormButton").on("click",function(event){
+            event.preventDefault();
+            $('#PasswordFormButton').addClass('hide');
+            $('#verifySpinner').addClass('active');
+            $('#verifySpinner').removeClass('hide');
+            $.ajax({
+                url: "sendresetmail",
+                type: "POST",
+                data: $("#PasswordForm").serialize()
+            })
+            .done(function(result)
+            {
+             	if (result==0) {
+             		Materialize.toast('Check Your Mail to verify !',3000);
+             		$('#verifySpinner').removeClass('active');
+                	$('#verifySpinner').addClass('hide');
+                	$('#PasswordFormButton').removeClass('hide');
+             	}
+             	else{
+             		Materialize.toast('No such Email Account!',3000);
+             		$('#verifySpinner').removeClass('active');
+                	$('#verifySpinner').addClass('hide');
+                	$('#PasswordFormButton').removeClass('hide');
+             	}
             });
         });
 
