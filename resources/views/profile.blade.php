@@ -151,8 +151,8 @@
 		            <div class="card-action" style="padding: 0px 10px 0px 10px;">
 			            <div class="row" style="padding-top: 0px;margin-bottom: auto;">
 			              <div class="col s2 m1" style="padding-top: 10px">
-			                <a style="cursor: pointer;margin-right: 0px;" class="likebutton left" value="{{$post->id}}">
-								<i class="material-icons" style="font-size:32px">@if($likes->contains('post_id',$post->id)) favorite @else favorite_border @endif</i>
+			                <a style="cursor: pointer;margin-right: 0px;" class="likebutton left" value="{{$likedpost->id}}">
+								<i class="material-icons" style="font-size:32px">@if($likes->contains('post_id',$likedpost->id)) favorite @else favorite_border @endif</i>
 							</a>
 			              </div>
 			              <div class="col s8 m10">
@@ -160,7 +160,7 @@
 			              </div>
 			              <div class="col s2 m1" style="padding-top: 10px">
 			                <a style="margin-right: 0px;cursor: pointer;" data-id="{{$likedpost->id}}" class="comment_button right" id="{{$likedpost->id}}commentbutton"><i style="font-size: 32px" class="material-icons">send</i></a>
-			              	<div id="{{$post->id}}commentspinner" class="hide preloader-wrapper small right">
+			              	<div id="{{$likedpost->id}}commentspinner" class="hide preloader-wrapper small right">
 						    <div class="spinner-layer spinner-red-only">
 						      <div class="circle-clipper left">
 						        <div class="circle"></div>
