@@ -134,7 +134,7 @@
 			              </div>
 		            </div>
 		              <blockquote style="text-align: justify;font-size: 12px;margin-top: 0px;margin-bottom: 10px">
-	              	{!!nl2br($post->data)!!}
+	              	{!!nl2br($likedpost->data)!!}
 	              </blockquote>
 		              <a id="{{$likedpost->id}}likes" data-id="{{$likedpost->id}}" class="chip likescount blue white-text" style="margin-right: 0px;font-size: 12px;padding: 6px;display: inline;cursor: pointer;">{{$likedpost->likes()->count()}} Likes</a>
 		              <a id="{{$likedpost->id}}comments" data-id="{{$likedpost->id}}" class="chip commentscount blue white-text" style="font-size: 12px;padding: 6px;cursor: pointer;display:inline">{{$likedpost->comments()->count()}} Comments</a>
