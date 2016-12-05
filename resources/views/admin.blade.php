@@ -39,7 +39,11 @@
 		    					<p><strong>Name : </strong>{{$usr->fname}} {{$usr->lname}}</p>
 		    					<p><strong>Username : </strong>{{$usr->username}}</p>
 		    					<p><strong>Email : </strong>{{$usr->email}}</p>
+		    					@if ($usr->active==1)
 		    					<p><strong>Level : </strong>{{$usr->level->level}}</p>
+		    					@else
+		    					<p><strong>Level : </strong>user not active</p>
+		    					@endif
 		    					<p><strong>Active : </strong>{{$usr->active}}</p>
 		    					<p><strong>Token : </strong>{{$usr->verifytoken}}</p>
 		    					<p><strong>Created At : </strong>{{$usr->created_at}}</p>
