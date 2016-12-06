@@ -82,6 +82,7 @@ $("#loadmore-button").on("click",function(e){
 			var d=new Date(result[key].created_at);
 			var hours=d.getHours();
 			var minutes=d.getMinutes();
+			if (hours<10) {hours='0'+hours;}
 			if (minutes<10) {minutes='0'+minutes;}
 			var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+minutes+"";
 			
