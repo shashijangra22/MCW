@@ -50,7 +50,7 @@
 	<div class="card green white-text">
 		<div class="card-content" style="padding-top: 5px;padding-bottom: 10px;text-align: center;">
 			<span class="card-title" style="font-size: 20px"><strong>{{$notice->head}}</strong></span>
-			<p style="text-align: justify;">{{$notice->data}}</p>
+			<p style="text-align: justify;">{!!nl2br($notice->data)!!}</p>
 		</div>
 	</div>
 </div>
@@ -85,7 +85,7 @@ $('#post').on("click",function(e){
 			})
 		.done(function(result){
 		$("#post-form")[0].reset();
-			if(result=='0')
+			if(result==0)
 			{
 				Materialize.toast("Notice added", 3000);
 			}

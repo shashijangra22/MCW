@@ -48,7 +48,7 @@ class PagesController extends Controller
     public function getNotices()
 	{
 		$user=Auth::user();
-		$notices=Notice::all();
+		$notices=Notice::all()->reverse();
 		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		return view('notices')->with('user',$user)->with('notices',$notices)->with('chats',$chats);
 	}
@@ -62,7 +62,7 @@ class PagesController extends Controller
 	{
 		$user=Auth::user();
 		$chat=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
-		$notices=Notice::all();
+		$notices=Notice::all()->reverse();
 		$likes=Like::where('user_id',$user->id)->get(['post_id']);
 		$posts=Post::where('type','0')->orderBy('created_at','desc')->take(5)->get();
 		return view('home1')->with('posts',$posts)->with('user',$user)->with('likes',$likes)->with('chats',$chat)->with('notices',$notices);

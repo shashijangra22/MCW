@@ -66,7 +66,7 @@
 		                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></p>
 		              </div>
 		              <div class="col s2 m1">
-		              @if ($post->user_id==$user->id || $user->username=='beerus')
+		              @if ($post->user_id==$user->id)
 		                <button class="btn-floating right delButton waves-effect waves-light" id="delButton" value="{{$post->id}}" ><i class="fa fa-trash" style="font-size: 16px"></i></button>
 		               @endif
 		              </div>
@@ -174,7 +174,7 @@
 	          <thead>
 	          <tr>
 	            <th>Notice Name</th>
-	            <th>Date</th>
+	            <th>Date Added</th>
 	          </tr>
 	        </thead>
 	        <tbody>
