@@ -122,7 +122,7 @@ $('.comment_input').keypress(function (e) {
 			 	count++;
 			 	$("a[id="+pid+"comments]").html(count+" Comments");
 			 	$("#"+pid+"commentinput").val("");
-			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+auth_displaypic+'" class="circle profile-pic" width="12" height="12" />	<b>'+auth_username+'</b> '+comment+'</div>');
+			 	$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><b>'+auth_username+'</b> '+comment+'</div>');
 				$('#'+pid+'commentspinner').addClass('hide');
 				$('#'+pid+'commentspinner').removeClass('active');
 				$('#'+pid+'commentbutton').removeClass('hide');
