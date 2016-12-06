@@ -186,17 +186,12 @@ $('.comment_input').keypress(function (e) {
 			for(var key in result)
 			{
 				var d=new Date(result[key].created_at);
-				var hours=d.getHours()%12;
-				if (hours==0) {hours=12;}
+				var hours=d.getHours();
 				var minutes=d.getMinutes();
-				if (d.getMinutes()<10) { minutes='0'+minutes;}
-				if(hours<10)
-					var date=d.getDate()+" "+month[d.getMonth()]+" | 0"+hours+":"+minutes+" am";
-				else
-				{
-					var date=d.getDate()+" "+month[d.getMonth()]+" | "+hours+":"+minutes+" pm";
-				}
-				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><img src="'+result[key].displaypic+'" class="circle profile-pic" width="12" height="12" />	<b><a href="'+result[key].username+'">'+result[key].username+'</a></b> '+result[key].data+' <p class="right" style="display:inline;font-size:8px">'+date+'</p></div>');	
+				if (hours<10) {hours='0'+hours;}
+				if (minutes<10) { minutes='0'+minutes;}
+					var date=d.getDate()+" "+month[d.getMonth()]+" | "+hours+":"+minutes+"";
+				$('#'+pid+'commentbox').append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><b><a href="'+result[key].username+'">'+result[key].username+'</a></b> '+result[key].data+' <p class="right" style="display:inline;font-size:8px">'+date+'</p></div>');	
 			}
 		}
 		$('#'+pid+'commentbox').show();
@@ -290,15 +285,11 @@ $(document).delegate('.viewStoryBtn','click',function(e)
 				temp.html(result[key].username);
 				temp=post.find('.prototimestamp');
 				var d=new Date(result[key].created_at);
-				var hours=d.getHours()%12;
-				if (hours==0) {hours=12;}
-
-				if(hours<10)
-					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+hours+":"+d.getMinutes()+" am";
-				else
-				{
-					var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
-				}
+				var hours=d.getHours();
+				var minutes=d.getMinutes();
+				if (hours<10) {hours='0'+hours;}
+				if (minutes<10) {minutes='0'+minutes;}
+				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+minutes+"";
 				temp.html(date);
 
 				if(auth_id==result[key].user_id)

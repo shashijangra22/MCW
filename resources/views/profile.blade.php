@@ -57,7 +57,7 @@
 			              </div>
 			              <div class="col s8 m10">
 			                <p>By <strong>{{$post->user->username}}</strong></p>
-			                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></p>
+			                <p style="font-size: 10px"><strong>{{date("j M | D H:i",strtotime($post->created_at))}}</strong></p>
 			              </div>
 			              <div class="col s2 m1">
 			              @if ($post->user_id==$user->id)
@@ -125,7 +125,7 @@
 			              </div>
 			              <div class="col s8 m10">
 			                <p>By <strong>{{$likedpost->user->username}}</strong></p>
-			                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($likedpost->created_at))}}</strong></p>
+			                <p style="font-size: 10px"><strong>{{date("j M | D H:i",strtotime($likedpost->created_at))}}</strong></p>
 			              </div>
 			              <div class="col s2 m1">
 			              @if ($likedpost->user_id==$user->id)
@@ -198,7 +198,7 @@
 					    		@else
 				    				You commented on {{$postedon}} <a style="cursor: pointer;" data-pid="{{$activity->post_id}}" class="viewStoryBtn">post.</a>
 					    		@endif
-					    		<p class="right" style="margin-top: 0px;margin-bottom: 0px;display: inline;font-size: 10px">{{date("j M | h:i a",strtotime($activity->created_at))}}</p>
+					    		<p class="right" style="margin-top: 0px;margin-bottom: 0px;display: inline;font-size: 10px">{{date("j M | H:i",strtotime($activity->created_at))}}</p>
 					    	</blockquote>
 						@endforeach
 					</div>

@@ -61,8 +61,8 @@
 				    <tbody>
 				      @foreach($players as $player)
 				      	<tr>
-				        	<td><a style="color: white"  href="{{asset($player->user->username)}}">{{$player->user->username}}</a></td>
-				        	<td>{{$player->level}}</td>
+				        	<td class="tdpadding"><a style="color: white"  href="{{asset($player->user->username)}}">{{$player->user->username}}</a></td>
+				        	<td class="tdpadding">{{$player->level}}</td>
 				      	</tr>
 				      @endforeach
 				    </tbody>
@@ -78,7 +78,7 @@
 		An answer can be a name, number, place or any word related to the image shown in the question :)
 	</blockquote>
 	<blockquote>
-		Mostly questions are based on tv shows, animes, movies, riddles. (I repeat MOSTLY :P)
+		Mostly questions are based on tv shows, animes, music, movies, sports, riddles. (I repeat, MOSTLY :P)
 	</blockquote>
 	<blockquote>
 		All answers should be strictly in small letters and without spaces. (if Barry Allen is the answer then type : barryallen) :P
@@ -87,7 +87,7 @@
 		You can search on Google or do whatever you want to get to the answer ;)
 	</blockquote>
 	<blockquote>
-		You can discuss in the chatbox with your college mates.
+		You can discuss in the chatbox with your college mates. But dont reveal answers or any obvious hints that leads to the answer.
 	</blockquote>
 	<blockquote>
 		There are {{$totalQ}} no. of questions in total. (We'll be adding more and more as per your intelligence :D )
@@ -96,7 +96,7 @@
 		If nobody clears a level then more hints would be provided accordingly. :) (Yeah we really want you to solve the chakravyuh.)
 	</blockquote>
 	<blockquote>
-		Top 5 players are listed on the leaderboard. Good Luck :)
+		Top 10 players are listed on the leaderboard. Good Luck :)
 	</blockquote>
 </div>
 @endsection

@@ -34,6 +34,7 @@ function pullMsg()
 				var today= new Date(result[key].created_at);
 				var hour=today.getHours();
 				var minutes=today.getMinutes();
+				if (minutes<10) {minutes='0'+minutes;}
 
 
 				$('#chatbox').append('<div class="row" style="margin-bottom:5px"><div class="left leftmsg"><p class="chatinfo">'+result[key].username+' | '+hour+':'+minutes+'</p>'+result[key].message+'</div></div>');
@@ -57,24 +58,14 @@ function pullMsg()
 
 //SEND MESSAGE
 
-		function checktime(i)
-		{
-
-			if(i < 10)
-			{
-				i='0'+i;
-
-			}
-			return i;
-		}
 
 
 		function sendMessage()
 	{
 		var today= new Date();
-		var hour=checktime(today.getHours());
-		var minutes=checktime(today.getMinutes());
-		
+		var hour=today.getHours();
+		var minutes=today.getMinutes();
+		if (minutes<10) {minutes='0'+minutes;}
 		var message=$("#message").val().trim();
 		if(message.length>0)
 		{

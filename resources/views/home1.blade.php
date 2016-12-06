@@ -63,7 +63,7 @@
 		              </div>
 		              <div class="col s8 m10">
 		                <p>By <a href="{{asset($post->user->username)}}"><strong>{{$post->user->username}}</strong></a></p>
-		                <p style="font-size: 10px"><strong>{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></p>
+		                <p style="font-size: 10px"><strong>{{date("j M | D H:i",strtotime($post->created_at))}}</strong></p>
 		              </div>
 		              <div class="col s2 m1">
 		              @if ($post->user_id==$user->id)
@@ -181,7 +181,7 @@
 	        @foreach($notices as $notice)
 	          <tr>
 	            <td style="padding-bottom: 5px;"><a style="color: red" href="{{asset('notices')}}">{{$notice->head}}</a></td>
-	            <td style="padding-bottom: 5px;">{{date("j M | D h:i a",strtotime($notice->created_at))}}</td>
+	            <td style="padding-bottom: 5px;">{{date("j M | D H:i",strtotime($notice->created_at))}}</td>
 	          </tr>
 	          @endforeach
 	        </tbody>

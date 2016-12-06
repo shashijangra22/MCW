@@ -224,11 +224,11 @@
         	@foreach($chats as $chat)
 				@if((Auth::user()->id)==($chat->user->id))
 					<div class="row" style="margin-bottom:5px">
-		              <div class="right rightmsg ">{{$chat->message}}<p class="chattime">{{date("h:i",strtotime($chat->created_at))}}</p></div>
+		              <div class="right rightmsg ">{{$chat->message}}<p class="chattime">{{date("H:i",strtotime($chat->created_at))}}</p></div>
 		            </div>
 				@else
 					<div class="row" style="margin-bottom:5px">
-		              <div class="leftmsg left"><p class="chatinfo">{{$chat->user->username}} | {{date("h:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
+		              <div class="leftmsg left"><p class="chatinfo">{{$chat->user->username}} | {{date("H:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
 		            </div>
 				@endif	
 				<?php $msgid=$chat->id; ?>
