@@ -80,15 +80,11 @@ $("#loadmore-button").on("click",function(e){
 			temp.html(result[key].username);
 			temp=post.find('.prototimestamp');
 			var d=new Date(result[key].created_at);
-			var hours=d.getHours()%12;
-			if (hours==0) {hours=12;}
-
-			if(hours<10)
-				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" 0"+hours+":"+d.getMinutes()+" am";
-			else
-			{
-				var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+d.getMinutes()+" pm";
-			}
+			var hours=d.getHours();
+			var minutes=d.getMinutes();
+			if (minutes<10) {minutes='0'+minutes;}
+			var date=d.getDate()+" "+month[d.getMonth()]+" | "+days[d.getDay()]+" "+hours+":"+minutes+"";
+			
 			temp.html(date);
 
 			if(auth_id==result[key].user_id)

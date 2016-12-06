@@ -34,6 +34,7 @@ function pullMsg()
 				var today= new Date(result[key].created_at);
 				var hour=today.getHours();
 				var minutes=today.getMinutes();
+				if (hour<10) {hour='0'+hour;}
 				if (minutes<10) {minutes='0'+minutes;}
 
 
@@ -65,6 +66,7 @@ function pullMsg()
 		var today= new Date();
 		var hour=today.getHours();
 		var minutes=today.getMinutes();
+		if (hour<10) {hour='0'+hour;}
 		if (minutes<10) {minutes='0'+minutes;}
 		var message=$("#message").val().trim();
 		if(message.length>0)
