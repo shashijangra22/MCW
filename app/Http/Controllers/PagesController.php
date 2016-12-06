@@ -87,7 +87,7 @@ class PagesController extends Controller
 	public function getChakravyuh()
 	{
 		$user=Auth::user();
-		$player=Level::orderBy('level','desc')->orderBy('updated_at','ASC')->take(5)->get(array('levels.level','levels.user_id'));
+		$player=Level::orderBy('level','desc')->orderBy('updated_at','ASC')->take(10)->get(array('levels.level','levels.user_id'));
 
 		$questions=Question::all();
 		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
