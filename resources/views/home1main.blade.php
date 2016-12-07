@@ -5,8 +5,8 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Our College Own Social Network">
-    <meta name="author" content="Saurav-Shashi-Vishul-Aman">
+    <meta name="description" content="Our College's Own Social Network">
+    <meta name="author" content="Shashi-Saurav-Vishul-Aman">
 
     <title>My College Wall</title>
 

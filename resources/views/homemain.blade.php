@@ -6,8 +6,8 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Our College Own Social Network">
-    <meta name="author" content="Saurav-Shashi-Vishul-Aman">
+    <meta name="description" content="Our College's Own Social Network">
+    <meta name="author" content="Shashi-Saurav-Vishul-Aman">
 
     <title>My College Wall</title>
     <link rel="stylesheet" type="text/css" href="css/new.css">
@@ -225,20 +225,20 @@
 	<h4>About Us</h4>
 	<div class="row container">
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
-			<img src="img/saurav.jpg" class="circle team">
-			<h5>Saurav</h5>
-			<a href="https://www.facebook.com/saurav.gupta.180410"><i class="fa fa-facebook iconpadding"></i></a>
-            <a href="https://www.instagram.com/srv.1195/"><i class="fa fa-instagram iconpadding"></i></a>
-            <a href="https://twitter.com/Srv1195"><i class="fa fa-twitter iconpadding"></i></a>
-			<h6>He Does Everything.</h6>
-		</div>
-		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/shashi.jpg" class="circle team" >
 			<h5>Shashi</h5>
 			<a href="https://www.facebook.com/shashijangra22"><i class="fa fa-facebook iconpadding"></i></a>
             <a href="https://www.instagram.com/shashijangra/"><i class="fa fa-instagram iconpadding"></i></a>
             <a href="https://twitter.com/shashijangra22"><i class="fa fa-twitter iconpadding"></i></a>
 			<h6>This Guy Orders All The Time.</h6>
+		</div>
+		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
+			<img src="img/saurav.jpg" class="circle team">
+			<h5>Saurav</h5>
+			<a href="https://www.facebook.com/saurav.gupta.180410"><i class="fa fa-facebook iconpadding"></i></a>
+            <a href="https://www.instagram.com/srv.1195/"><i class="fa fa-instagram iconpadding"></i></a>
+            <a href="https://twitter.com/Srv1195"><i class="fa fa-twitter iconpadding"></i></a>
+			<h6>He Does Everything.</h6>
 		</div>
 		<div class="col m12 s12 l3" style="text-align: center;margin-bottom: 10px">
 			<img src="img/vishul.jpg" class="circle team" >
@@ -360,16 +360,9 @@ $("#RegisterForm").validate({
                     $('#RegisterSpinner').addClass('hide');
                     $('#RegisterFormButton').removeClass('hide');
                 }
-                else if(result==1)
-                {
-                	Materialize.toast('Oopps ! Username already exists.', 3000);
-                	$('#RegisterSpinner').removeClass('active');
-                	$('#RegisterSpinner').addClass('hide');
-                	$('#RegisterFormButton').removeClass('hide');
-                }
                 else
                 {
-                	Materialize.toast('Oopps ! Email already exists.', 3000);
+                	Materialize.toast(result, 3000);
                 	$('#RegisterSpinner').removeClass('active');
                 	$('#RegisterSpinner').addClass('hide');
                 	$('#RegisterFormButton').removeClass('hide');
@@ -417,16 +410,9 @@ $("#RegisterForm").validate({
                 	Materialize.toast('Yeyy ! You are in.', 3000);
                     window.location.replace('home');
                 }
-                else if(result==1)
-                {
-                	Materialize.toast('No such active account !', 3000);
-                	$('#loginSpinner').removeClass('active');
-                	$('#loginSpinner').addClass('hide');
-                	$('#LoginFormButton').removeClass('hide');
-                }
                 else
                 {
-                	Materialize.toast('Both fields are required !', 3000);
+                	Materialize.toast(result, 5000);
                 	$('#loginSpinner').removeClass('active');
                 	$('#loginSpinner').addClass('hide');
                 	$('#LoginFormButton').removeClass('hide');

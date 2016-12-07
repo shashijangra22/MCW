@@ -109,53 +109,51 @@ class UserController extends Controller
     {
         $Username=$request->usrname;
         $Password=$request->psswd;
-        if(isset($Username) && isset($Password) && !empty($Password) && !empty($Username))
+        if (isset($Username) && isset($Password) && !empty($Password) && !empty($Username)) 
         {
-            if(Auth::attempt(['username'=> $Username, 'password'=>$Password, 'active'=>1]))
+            $user=User::where('username',$Username)->first();
+            if (isset($user)) 
             {
-                if(Auth::check())
+                if ($user->active==0)
+                    return $user->email . ' is not verified! Check your inbox again!';
+                elseif ($user->active==2)
+                    return 'You are Banned! Contact Admin!';
+                else
                 {
-                    return 0;
+                    if(Auth::attempt(['username'=> $Username, 'password'=>$Password]))
+                    {
+                        if(Auth::check())
+                            return 0;   // successfully logged in
+                    }
+                    else
+                        return 'Incorrect Password!';
                 }
             }
             else
-            {
-                return 1;
-            }
+                return 'Incorrect Username!';
         }
         else
-            return 2;
+            return 'Both fields required!';
     }
 
     public function registerUser(Request $request)
     {
         $data=$request->all();
-        $user=User::where('username',$data['username']);
-        $email=User::where('email',$data['email']);
-
-        if ($user->count()>0)
-        {
-            return 1;
-        }
-        elseif($email->count()>0)
-        {
-            return 2;
-        }
-
-        else
-        {
-            $user=User::create([
-                'fname' => $data['fname'],
-                'lname' => $data['lname'],
-                'email' => $data['email'],
-                'verifytoken' => str_random(20),
-                'active' => 0,
-                'username' => $data['username'],
-                'password' => bcrypt($data['password']),
-            ]);
-            $user->notify(new UserRegistered($user)); //Notify user through mail
-            return 0;
-        }
+        $username=User::where('username',$data['username'])->first();
+            if (isset($username))   return 'Oopps ! Username already taken.';
+        $email=User::where('email',$data['email'])->first();
+            if(isset($email))   return 'Oopps ! Email already exists.';
+        $user=User::create([
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'email' => $data['email'],
+            'verifytoken' => str_random(20),
+            'active' => 0,
+            'username' => $data['username'],
+            'password' => bcrypt($data['password']),
+        ]);
+        $user->notify(new UserRegistered($user)); //Notify user through mail
+        return 0;   // successully registered
     }
 
     public function logoutUser()
