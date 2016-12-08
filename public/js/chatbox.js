@@ -25,10 +25,15 @@ function pullMsg()
 
 		})
 		.done(function(result){
+			
 			if(result!=0)
 			{
-			
-			
+				if($('#sidenav-overlay').length <= 0)
+				{
+					console.log("hello");
+					$(".chat-button").addClass("red");
+				}
+							
 			for(var key in result)
 			{
 				var today= new Date(result[key].created_at);

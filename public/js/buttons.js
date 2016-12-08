@@ -361,3 +361,6 @@ $(document).delegate('.viewStoryBtn','click',function(e)
 	});
 	$(".spinner-wrapper").fadeOut("slow");
 });
+$(".chat-button").on("click",function(){
+	$(this).removeClass("red");
+});
