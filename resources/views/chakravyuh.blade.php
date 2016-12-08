@@ -15,7 +15,7 @@
 	              <img class="materialboxed" src="{{$questions[$user->level->level]->path}}">
 	            </div>
 				<div class="card-content" style="padding-top: 5px;padding-bottom: 5px">
-					<p style="text-align: center;"><strong>Hint: {{$questions[$user->level->level]->data}}</strong></p>
+					<p style="text-align: center;"><strong>Hint: {!!nl2br($questions[$user->level->level]->data)!!}</strong></p>
 				</div>
 				<div class="card-action" style="padding: 0px 10px 10px 10px;">
 					<div class="row" style="margin-bottom: 0px;">

@@ -16,8 +16,9 @@
 		        <li class="tab col s2"><a href="#posts">Posts</a></li>
 		        <li class="tab col s2"><a href="#comments">Comments</a></li>
 		        <li class="tab col s2"><a href="#chats">Chats</a></li>
-		        <li class="tab col s2"><a href="#likes">Likes</a></li>
-		        <li class="tab col s2"><a href="#questions">Questions</a></li>
+		        <li class="tab col s1"><a href="#likes">Likes</a></li>
+		        <li class="tab col s1"><a href="#questions">Questions</a></li>
+		        <li class="tab col s1"><a href="#forms">form</a></li>
 		      </ul>
 		    </div>
 		    <div id="users" class="col s12">
@@ -168,7 +169,7 @@
 		    				<div class="card-content" style="font-size: 12px">
 	    						<!-- <span class="card-title">Question : #{{++$counter}}</span> -->
 		    					<p><strong>Id : </strong>{{$question->id}}</p>
-		    					<p><strong>Hint : </strong>{{$question->data}}</p>
+		    					<p><strong>Hint : </strong>{!!nl2br($question->data)!!}</p>
 		    					<p><strong>Answer : </strong>{{$question->answer}}</p>
 		    					<p><strong>Date Created : </strong>{{$question->created_at}}</p>
 		    				</div>
@@ -176,6 +177,28 @@
 		    		</div>
 		    		@endforeach
 		    	</div>
+		    </div>
+		    <div class="col s12" id="forms">
+		    <div class="col s12 l3">
+				    	<div class="card">
+				    		<div class="card-content" style="text-align: center;padding-top: 0px;padding-bottom: 0px">
+				    			 <span class="card-title" style="font-size: 18px">Update hint</span>
+				    		</div>
+							<div class="card-action">
+								<form id="hint-form" role="form" action="#">
+				              	{{csrf_field()}}
+				                  <div class="row" style="margin: auto;">
+				                  	<input placeholder="question id..." type="text" id="questionid" name="questionid">
+				                  	<input placeholder="new hint..." type="text" id="hint" name="hint">
+				                  </div>
+				                  <div class="row" style="margin: auto;">
+				               		<a name="addHBtn" id="addHBtn" class="right btn"><i class="material-icons">send</i></a>
+				                  </div>
+			           			</form>
+							</div>
+						</div>
+					</div>
+		    	
 		    </div>
 		  </div>
 @endsection
@@ -252,6 +275,25 @@
 			{
 				Materialize.toast(result, 3000);
 			}
+			});
+		
+			
+		});
+
+$('#addHBtn').on("click",function(e){
+			e.preventDefault();
+		$.ajax({
+			url: "addHint",
+			type:"POST",
+			 
+			data:$("#hint-form").serialize(),
+			})
+		.done(function(result){
+		$("#hint-form")[0].reset();
+		if(result==1)
+		alert("updated");
+		else
+		alert("incorrect id");
 			});
 		
 			

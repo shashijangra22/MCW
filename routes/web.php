@@ -81,3 +81,4 @@ Route::post('toggleuser','AdminController@toggleuser');
 Route::post('deletepost','AdminController@deletepost');
 Route::post('deletecomment','AdminController@deletecomment');
 Route::post('deletechat','AdminController@deletechat');
+Route::post('addHint','QuestionController@addhint');

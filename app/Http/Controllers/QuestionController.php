@@ -49,4 +49,17 @@ class QuestionController extends Controller
     	}
     	return 1;
     }
+    public function addHint(Request $request)
+    {
+        $id=$request->questionid;
+        $hint=$request->hint;
+        if($question=Question::find($id))
+        {
+        $question->data=$question->data."\n".$hint;
+        $question->save();
+        return 1;
+    }
+    return 0;
+
+    }
 }
