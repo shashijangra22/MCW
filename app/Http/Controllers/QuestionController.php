@@ -3,37 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use File;
 use App\Http\Requests;
-use App\Post;
-use App\Like;
 use App\User;
-use App\Comment;
 use App\Question;
 use App\Level;
 use Auth;
-use Image;
 use DB;
 
 class QuestionController extends Controller
 {
-    public function addQuestion(Request $request)
-    {
-    	$question=new Question;
-        $question->data=$_POST["qBox"];
-        $question->answer=$_POST["answerBox"];
-        if (Input::hasFile('image')) 
-        {
-            $image=Input::file('image');
-            $image_name=time().$image->getClientOriginalName();
-            $image->move('uploads',$image_name);
-            $question->path='uploads/'.$image_name;
-                $question->save();
-        return 0;
-        }
-        return 1;
-    }
     public function checkAnswer(Request $request)
     {
     	$User=Auth::user();
@@ -48,18 +26,5 @@ class QuestionController extends Controller
     		return 0;
     	}
     	return 1;
-    }
-    public function addHint(Request $request)
-    {
-        $id=$request->questionid;
-        $hint=$request->hint;
-        if($question=Question::find($id))
-        {
-        $question->data=$question->data."\n".$hint;
-        $question->save();
-        return 1;
-    }
-    return 0;
-
     }
 }

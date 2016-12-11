@@ -76,9 +76,13 @@ Route::post('notices','NoticeController@addNotice');
 
 // Admin Routes
 
-Route::post('addQuestion','QuestionController@addQuestion');
+Route::post('searchuser','AdminController@searchuser');
+Route::post('getusers','AdminController@getusers');
 Route::post('toggleuser','AdminController@toggleuser');
+Route::post('getposts','AdminController@getposts');
 Route::post('deletepost','AdminController@deletepost');
+Route::post('getcomments','AdminController@getcomments');
 Route::post('deletecomment','AdminController@deletecomment');
-Route::post('deletechat','AdminController@deletechat');
-Route::post('addHint','QuestionController@addhint');
+Route::post('getquestions','AdminController@getquestions');
+Route::post('addQuestion','AdminController@addQuestion');
+Route::post('addHint','AdminController@addhint');

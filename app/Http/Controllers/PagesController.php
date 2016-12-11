@@ -31,16 +31,9 @@ class PagesController extends Controller
 	public function showAdmin()
 	{
 		$user=Auth::user();
-		$users=User::all();
-		$posts=Post::all();
-		$chats=Chat::all();
-		$likes=Like::all();
-		$comments=Comment::all();
-		$questions=Question::all();
-		// $notices=Notice::all();
-
+		$chats=Chat::orderBy('created_at', 'DESC')->take(100)->get()->reverse();
 		if ($user->username=='beerus') {
-			return view('admin')->with('users',$users)->with('posts',$posts)->with('comments',$comments)->with('user',$user)->with('chats',$chats)->with('likes',$likes)->with('questions',$questions);
+			return view('admin')->with('user',$user)->with('chats',$chats);
 		}
 		return back();
 	}
