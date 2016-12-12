@@ -10,23 +10,30 @@ use DB;
 
 class ChatController extends Controller
 {
-    public function sendMessage(Request $request)
+
+	public function initialMsgs()
+	{
+		$chats=DB::table('chats')->orderBy('created_at','DESC')->take(100)->join('users','chats.user_id','=','users.id')->get(array('chats.*','users.username'));
+		return array_reverse($chats->toArray());
+	}
+
+    public function sendMsg(Request $request)
     {
-    	$user=Auth::user()->id;
-    	$message=$request->input('text');
+    	$id=Auth::id();
+    	$message=$request->text;
     	$chat=new Chat;
     	$chat->message=$message;
-    	$chat->user_id=$user;
+    	$chat->user_id=$id;
     	$chat->save();
     	return 0;
  	}
 
  	public function pullMsg(Request $request)
  	{
- 		$mid=$request->input('mid');
- 		$user=Auth::id();
- 		$chats=DB::table('chats')->join('users','chats.user_id','=','users.id')->where('chats.id','>',$mid)->where('chats.user_id','!=',$user)->get(array('chats.*','users.username'));
- 		if(count($chats))
+ 		$msgId=$request->id;
+ 		$userId=Auth::id();
+ 		$chats=DB::table('chats')->where('chats.id','>',$msgId)->where('chats.user_id','!=',$userId)->join('users','chats.user_id','=','users.id')->get(array('chats.*','users.username'));
+ 		if($chats->count())
  		{
  			return $chats;
  		}

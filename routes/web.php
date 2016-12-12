@@ -58,8 +58,9 @@ Route::post('updatepic/{post}','UserController@updatePic');
 
 // Chat Routes
 
-Route::post('sendmessage','ChatController@sendMessage');
+Route::post('sendMsg','ChatController@sendMsg');
 Route::post('pullMsg','ChatController@pullMsg');
+Route::post('initialMsgs','ChatController@initialMsgs');
 
 // Notification Routes
 

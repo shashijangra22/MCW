@@ -220,19 +220,7 @@
         </div>
       <div id="scroll-chat" class="scrollbar" style="height: 80%">
         <div id="chatbox" class="scrollbox-content " style="padding-top: 5px;padding-left: 5px">
-        	<?php $msgid=-1; ?>
-        	@foreach($chats as $chat)
-				@if((Auth::user()->id)==($chat->user->id))
-					<div class="row" style="margin-bottom:5px">
-		              <div class="right rightmsg ">{{$chat->message}}<p class="chattime">{{date("H:i",strtotime($chat->created_at))}}</p></div>
-		            </div>
-				@else
-					<div class="row" style="margin-bottom:5px">
-		              <div class="leftmsg left"><p class="chatinfo">{{$chat->user->username}} | {{date("H:i",strtotime($chat->created_at))}}</p>{{$chat->message}}</div>
-		            </div>
-				@endif	
-				<?php $msgid=$chat->id; ?>
-			@endforeach
+        	 
         </div>
       </div>
         <div class="row valign-wrapper" style="margin: auto;height: 10%">
@@ -240,10 +228,10 @@
                 <a style="padding: 0px" onclick="hideChatBox();"><i style="font-size: 32px" class="material-icons">reply</i></a>
               </div>
               <div class="col s8 m8" style="padding-left: 0px;padding-right: 0px">
-                <input style="margin-bottom: 0px;" onkeydown = "if (event.keyCode == 13) sendMessage();" type="text" name="text" id="message" placeholder="Enter your message :)">
+                <input style="margin-bottom: 0px;" onkeydown = "if (event.keyCode == 13) $('#sendBtn').click();" type="text" placeholder="Enter your message :)">
               </div>
               <div class="col s2 m2" style="padding-top: 20px">
-              	<a style="padding: 0px" id="sendbutton" onclick="sendMessage();"><i id="sendIcon" class="material-icons" style="font-size: 32px">send</i></a>
+              	<a style="padding: 0px" id="sendBtn"><i id="sendIcon" class="material-icons" style="font-size: 32px">send</i></a>
               </div>
         </div>
   </div>
@@ -259,15 +247,14 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+   <script type="text/javascript" src="{{asset('js/myjs.js')}}" ></script>
   <script type="text/javascript" src="{{asset('js/buttons.js')}}"></script>
    <script type="text/javascript" src="{{asset('js/chatbox.js')}}"></script>
-   <script type="text/javascript" src="{{asset('js/myjs.js')}}" ></script>
 
 @yield('JSwithTags')
 
 
 <script type="text/javascript">
-var x={{$msgid}};
 var auth_id={{Auth::id()}};
 var auth_displaypic="{{$user->displaypic}}";
 var auth_username="{{$user->username}}";
