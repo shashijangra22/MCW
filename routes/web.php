@@ -39,7 +39,7 @@ Route::post('resetpass','UserController@resetPass');
 Route::post('savedata','PostController@store');
 Route::post('loadmore','PostController@loadmore');
 Route::post('getpost','PostController@getpost');
-Route::delete('delete/{post}','PostController@destroy');
+Route::post('delpost','PostController@delpost');
 
 // Like Routes
 
@@ -55,6 +55,8 @@ Route::post('showcomments','CommentController@showComments');
 
 Route::post('updateProfile','UserController@updateProfile');
 Route::post('updatepic/{post}','UserController@updatePic');
+Route::post('myprofileposts','PostController@myProfilePosts');
+Route::post('userprofileposts','PostController@userProfilePosts');
 
 // Chat Routes
 

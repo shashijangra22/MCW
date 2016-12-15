@@ -70,42 +70,13 @@
 	        <li><a href="{{asset('profile')}}"><i style="margin: 0px;" class="fa fa-user"></i> My Profile</a></li>
 	        <li><a href="{{asset('logout')}}"><i style="margin: 0px;" class="fa fa-reply"></i> Logout</a></li>
 	      </ul>
-	      <?php 
-	      	$notifications=$user->notifications->take(5);
-	      	$unread=$user->unreadNotifications->count();
-	      	$lastNotifyTime=0;
-	      ?>
 	      <ul id="dropdown2" class="dropdown-content">
-			    @if (count($notifications))
-			        @foreach ($notifications as $notification)
-						<?php 
-			        		$usrid=$notification->data['user_id'];
-			        		$name=App\User::find($usrid)->username;
-			        		if ($loop->index==0) {
-			        			$lastNotifyTime=$notification->created_at;	
-			        		}
-			        	?>
-			        		<li><a style="cursor: pointer;" data-pid="{{$notification->data['post_id']}}" class="viewStoryBtn"> {{ $name }} 
-                    @if ($notification->type == 'App\Notifications\PostLiked')
-                      liked
-                    @else
-                      commented on
-                    @endif 
-                  your Post.
-			        			@if ($notification->read_at==null)
-					        		<span class="new badge blue"></span>
-				        		@endif
-			        		</a></li>
-			        @endforeach
-			      @else
-		        	<li><a style="cursor: pointer;">No more Notifications to show !</a></li>
-		      	@endif
 	      </ul>
 	  <nav class="blue">
 	    <div class="nav-wrapper">
 	      <a style="font-size: 24px;" href="{{asset('home')}}" class="brand-logo">My College Wall</a>
 	      <a style="cursor: pointer;" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
-	      <a style="padding-right: 20px;cursor: pointer;" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell">@if($unread) {{$unread}}@endif</i></a>
+	      <a style="padding-right: 20px;cursor: pointer;" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell"></i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
 	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
@@ -141,65 +112,52 @@
 	  </nav>
 	</div>
 
-
-<!-- prototype -->
-
-<div class="card z-depth-4 feed" id="prototype" style="display: none;">
-	<div class="card-image protoimage" style="display: none;">
-      <img class="materialboxed" src=""/>
-    </div>
+<div class="card feed z-depth-4" id="prototype" style="display: none">
     <div class="card-content" style="padding: 10px 10px 5px 10px;">
-      <div class="row" style="margin-bottom: 10px">
-          <div class="col s2 m1">
-            <img src="" class="circle left protodisplaypic" width="35" height="35">
+          <div class="row" style="margin-bottom: 10px">
+            <div class="col s2 m1">
+              <a class="postUserImg"><img class="circle left postUserImg" width="35" height="35"></a>
+            </div>
+            <div class="col s8 m10">
+              <p>By <a class="postUsername"></a></p>
+              <p style="font-size: 10px"><strong class="timestamp"></strong></p>
+            </div>
+            <div class="col s2 m1 deleteBtn">
+            </div>
           </div>
-          <div class="col s8 m10">
-            <p>By <strong class="protousername"></strong></p>
-            <p style="font-size: 10px"><strong class="prototimestamp"></strong></p>
-          </div>
-          <div class="col s2 m1 protodelete"></div>
-      </div>
-      <blockquote style="font-size: 12px;text-align: justify;margin-top: 0px;margin-bottom: 10px" class="protodata">
-      </blockquote>
-      <a id="protolikes" class="chip likescount blue white-text" style="font-size: 12px;margin-right: 0px;padding: 6px;display: inline;cursor: pointer;" data-id=""></a>
-      <a id="protocomments" data-id="" class="chip commentscount blue white-text" style="font-size: 12px;padding: 6px;cursor: pointer;display:inline"></a>
-      <i style="display: none;" id="protospinner" class="fa fa-spinner fa-pulse"></i>
-      <div id="protolikesbox" style="display: none;">
-		
-	  </div>
-      <div id="protocommentbox" style="display: none">
-      
-	  </div>
-
+          <blockquote style="text-align: justify;font-size: 12px;margin-top: 0px;margin-bottom: 10px">
+          </blockquote>
+          <a class="chip likescount blue white-text" style="margin-right: 0px;font-size: 12px;padding: 6px;display: inline;cursor: pointer;"></a>
+          <a class="chip commentscount blue white-text" style="font-size: 12px;padding: 6px;cursor: pointer;display:inline"></a>
+        <i style="display: none;" class="fa fa-spinner fa-pulse"></i>
+          <div class="likesBox" style="display: none;"></div>
+          <div class="commentsBox" style="display: none"></div>
     </div>
-    
-    <div class="card-action" style="padding: 0px 10px 0px 10px;">
-        <div class="row" style="padding-top: 0px;margin-bottom: auto;">
-          <div class="col s2 m1" style="padding-top: 10px">
-      			<a style="cursor: pointer;margin-right: 0px" class="likebutton left" value=""><i class="material-icons" style="font-size:32px"></i></a>
-          </div>
+        <div class="card-action" style="padding: 0px 10px 0px 10px;">
+          <div class="row" style="padding-top: 0px;margin-bottom: auto;">
+              <div class="col s2 m1" style="padding-top: 10px">
+          <i style="color:red;cursor:pointer;font-size: 32px" class="likeBtn left material-icons"></i>
+      </div>
           <div class="col s8 m10">
-            <input  style="margin-bottom: 10px" data-id="" id="protocommentinput" type="text" class="comment_input" placeholder="write a comment :)">
+            <input class="comment_input" style="margin-bottom: 10px" type="text" placeholder="write a comment :)">
           </div>
-          <div class="col s2 m1" style="padding-top: 10px">
-            <a style="margin-right: 0px;cursor: pointer;" data-id="" class="comment_button right" id="protocommentbutton"><i style="font-size: 32px" class="material-icons">send</i></a>
-            <div id="protocommentspinner" class="hide preloader-wrapper small right">
-                <div class="spinner-layer spinner-red-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+            <div class="col s2 m1" style="padding-top: 10px">
+              <i style="color: grey;cursor: pointer;font-size: 32px" class="commentBtn right material-icons">send</i>
+              <div class="hide commentSpinner preloader-wrapper small right active">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
                 </div>
             </div>
           </div>
         </div>
-    </div>
-</div>
-
-<button class="btn-floating right delButton waves-effect waves-light" id="protodelbutton" value="" style="display: none;"><i class="fa fa-trash" style="font-size: 16px; "></i></button>
+  </div>
 
 <div id="maindiv" class="container">
 	@yield('content')
@@ -248,40 +206,16 @@
 <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
    <script type="text/javascript" src="{{asset('js/myjs.js')}}" ></script>
-  <script type="text/javascript" src="{{asset('js/buttons.js')}}"></script>
-   <script type="text/javascript" src="{{asset('js/chatbox.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/linkify.min.js')}}" ></script>
+   <script type="text/javascript" src="{{asset('js/linkify-jquery.min.js')}}" ></script>
 
 @yield('JSwithTags')
-
 
 <script type="text/javascript">
 var auth_id={{Auth::id()}};
 var auth_displaypic="{{$user->displaypic}}";
 var auth_username="{{$user->username}}";
-var lastNotifyTime="{{$lastNotifyTime}}";
 @yield('jscript')
-
-
-$(document).ready(function(){
-	$('.modal').modal();
-    $('#post').attr('disabled',true);
-
-    $('#mytext').keyup(function(){
-        if($(this).val().length !=0){
-            $('#post').attr('disabled', false);
-        }
-        else
-        {
-            $('#post').attr('disabled', true);        
-        }
-    })
-});
-
-
-function hideChatBox() {
-	$('.button-collapse').sideNav('hide');
-}
-
 
 </script>
 </html>

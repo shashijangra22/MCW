@@ -18,7 +18,7 @@ class LikeController extends Controller
     {
 
         $userid=Auth::id();
-        $postid=$request->post_id;
+        $postid=$request->pid;
         if(Like::where('post_id',$postid)->where('user_id',$userid)->exists())
         {
             $existing_like=Like::where('post_id','=',$postid)->where('user_id','=',$userid)->first();

@@ -64,25 +64,32 @@ class UserController extends Controller
     {
         $lastNotifyTime=$request->lastNotifyTime;
         $user=Auth::user();
-        $unread=$user->unreadNotifications->where('created_at','>',$lastNotifyTime);
-        if($unread->count())
+        if ($lastNotifyTime==0) 
         {
-            foreach ($unread as $temp) {
-                $x=User::find($temp->data['user_id'])->username;
-                if ($temp->type=='App\Notifications\PostLiked') {
-                    $y=0;
+            $notif=$user->notifications()->take(5)->get();
+            if (isset($notif)) {
+                foreach ($notif as $temp) {
+                    $temp['username']=User::find($temp->data['user_id'])->username;
+                    $temp['category']=($temp->type=='App\Notifications\PostLiked') ? 0:1;
                 }
-                else
-                {
-                    $y=1;
-                }
-                $temp['username']=$x;
-                $temp['category']=$y;
+              return $notif;
             }
-
-          return $unread;
+            return 0;
         }
-        return 0;
+        else
+        {
+            $unread=$user->unreadNotifications->where('created_at','>',$lastNotifyTime);
+            if(isset($unread))
+            {
+                foreach ($unread as $temp) {
+                    $temp['username']=User::find($temp->data['user_id'])->username;
+                    $temp['category']=($temp->type=='App\Notifications\PostLiked') ? 0:1;
+                }
+
+              return $unread;
+            }
+            return 0;
+        }
     }
 
     public function verifyUser($token)
