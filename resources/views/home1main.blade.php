@@ -78,12 +78,13 @@
 	      <a style="cursor: pointer;" data-activates="slide-out" class="button-collapse"><i style="font-size: 20px" class="fa fa-bars"></i></a>
 	      <a style="padding-right: 20px;cursor: pointer;" class="notifyBtn dropdown-button right" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown2"><i style="margin: 0px;height: auto;" class="fa fa-bell"></i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li class="active homeBtn"><a href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
-	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
-	          <li class="activityBtn"><a href="{{asset('activity')}}"><i class="fa fa-users"></i> Activity Log</a></li>
+	        <li class="active homeBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
+            <li class="confessionsBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="peopleBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('people')}}"><i class="fa fa-user"></i> People</a></li>
+	          <li class="activityBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('activity')}}"><i class="fa fa-users"></i> Activity Log</a></li>
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
-	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
-	          <li class="noticesBtn"><a href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
+	          <li class="chakravyuhBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
+	          <li class="noticesBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('notices')}}"><i class="fa fa-info-circle"></i> Notices</a></li>
 	          <li class="profileBtn"><a class="dropdown-button" data-constrainwidth="false" data-beloworigin="true" data-activates="dropdown1" style="cursor: pointer;">
 	            <div class="chip white">
 	              {{$user->username}}
@@ -99,7 +100,8 @@
 	            <a style="cursor: pointer;"><span class="email">{{$user->email}}</span></a>
 	          </div></li>
 	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;" class="fa fa-home"></i> Home</a></li>
-	          <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;" class="fa fa-heartbeat"></i> Confessions</a></li>
+            <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;" class="fa fa-heartbeat"></i> Confessions</a></li>
+	          <li class="peopleBtn"><a href="{{asset('people')}}"><i style="margin: 0px;" class="fa fa-user"></i> People</a></li>
 	          <!-- <li class="societiesBtn"><a disabled="true" href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="activityBtn"><a href="{{asset('activity')}}"><i style="margin: 0px;" class="fa fa-users"></i> Activity Log</a></li>
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i style="margin: 0px;" class="fa fa-empire"></i> Chakravyuh</a></li>

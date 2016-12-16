@@ -18,6 +18,14 @@ use DB;
 
 class PagesController extends Controller
 {
+
+	public function getPeople()
+	{
+		$user=Auth::user();
+		$totalUsers = User::count();
+		return view ('people')->with('user',$user)->with('totalUsers',$totalUsers);
+	}
+
 	public function getActivity()
 	{
 		$user=Auth::user();

@@ -25,6 +25,7 @@ Route::get('logout','UserController@logoutUser')->middleware('auth');
 Route::get('verify/{token}','UserController@verifyUser');
 Route::get('reset/{token}','UserController@resetView');
 Route::get('notices','PagesController@getNotices')->middleware('auth');
+Route::get('people','PagesController@getPeople')->middleware('auth');
 Route::get('{username}','PagesController@userProfile')->middleware('auth');
 
 // User Routes
@@ -33,6 +34,8 @@ Route::post('login','UserController@loginUser');
 Route::post('register','UserController@registerUser');
 Route::post('sendresetmail','UserController@sendResetMail');
 Route::post('resetpass','UserController@resetPass');
+Route::post('searchpeople','UserController@searchpeople');
+Route::post('getpeople','UserController@getPeople');
 
 // Post Routes
 

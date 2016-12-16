@@ -570,3 +570,98 @@ var profileModule = (function() {
 	}
 
 })();
+
+var peopleModule = (function() {
+		
+	var lastID = 0;
+
+	var $el = $('#peopleModule');
+	var $cardsRow = $el.find('#cardsRow');
+	var $protoCard = $cardsRow.find('#protoUser');
+	var $loadMoreRow = $el.find('#loadMore');
+		var $loadMoreBtn = $loadMoreRow.find('button');
+		var $loader = $loadMoreRow.find('#loader');
+	var $searchRow = $el.find('#searchRow');
+		var $searchBtn = $searchRow.find('button');
+		var $searchInput = $searchRow.find('input');
+		var $searchLoader = $searchRow.find('#searchLoader');
+	var $searchResult = $el.find('#searchResult');
+
+	$searchBtn.on('click',searchPeople);
+	$loadMoreBtn.on('click',getPeople);
+
+	function getPeople() {
+		$loadMoreBtn.addClass('hide');
+		$loader.removeClass('hide');
+			$.ajax({
+				type:'POST',
+				data:{id:lastID},
+				url:'getpeople'
+			}).done(function(result) {
+				if (result!=0) {
+					for (var key in result){
+						lastID=result[key].id;
+						var card = fillData(result[key],$protoCard.clone(true),'people');
+						$cardsRow.append(card);
+						card.fadeIn();
+					}
+					$loader.addClass('hide');
+					$loadMoreBtn.removeClass('hide');
+				}
+				else
+				{
+					Materialize.toast('No more users!',2000);
+					$loader.addClass('hide');
+				}
+			});
+	}
+
+	function fillData(obj,card,type) {
+			card.attr('id',obj.id+type+'card');
+			var temp=card.find('div.card-content');
+			temp.find('img').attr('src',obj.displaypic);
+			temp.find('a').html('@'+obj.username);
+			temp.find('a').attr('href',obj.username);
+			temp.find('p').html(obj.posts+' Posts | '+obj.comments+' Comments | '+obj.likes+' Likes');
+			return card;
+	}
+
+	function searchPeople() {
+		$searchBtn.addClass('hide');
+			$searchLoader.removeClass('hide');
+			var data = $searchInput.val().trim(); 
+			if (data.length) {
+				$.ajax({
+					type:"POST",
+					data:{data:data},
+					url:"searchpeople"
+				}).done(function(result){
+					if (result==1) {
+						Materialize.toast('No Such User!',2000);
+						$searchResult.html('');
+					}
+					else
+					{
+						Materialize.toast('User found!',2000);
+						var card=fillData(result,$protoCard.clone(true),'people');
+						card.attr('id','searchedUser');
+						card.attr('class','col s12 l4 offset-l4');
+						$searchResult.html(card);
+						card.fadeIn();
+					}
+					$searchLoader.addClass('hide');
+					$searchBtn.removeClass('hide');
+				});
+				$searchInput.val('');
+			}
+			else{
+				Materialize.toast('Blank User ??',2000);
+				$searchLoader.addClass('hide');
+				$searchBtn.removeClass('hide');
+			}
+	}
+	return {
+		getPeople : getPeople,
+		lastID : lastID
+	}
+})();

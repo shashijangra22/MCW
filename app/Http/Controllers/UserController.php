@@ -19,6 +19,31 @@ use DB;
 class UserController extends Controller
 {
 
+    public function getPeople(Request $request)
+    {
+        $users=User::where('id','>',$request->id)->take(8)->select('username','displaypic','id')->get();
+        if ($users->count()) {
+            foreach ($users as $user) {
+                $user['posts']=$user->posts()->count();
+                $user['likes']=$user->likes()->count();
+                $user['comments']=$user->comments()->count();
+            }
+            return $users;
+        }
+        return 0;
+    }
+
+    public function searchpeople(Request $request){
+        $user = User::where('username',$request->data)->select('username', 'displaypic')->first();
+        if (isset($user)) {
+            $user['posts']=$user->posts()->count();
+            $user['likes']=$user->likes()->count();
+            $user['comments']=$user->comments()->count();
+            return $user;
+        }
+        return 1;
+    }
+
     public function resetPass(Request $request)     // reset actual password
     {
         $user=User::where('verifytoken',$request->verifytoken)->first();
