@@ -60,7 +60,7 @@
 			              <i data-id="{{$post->id}}" style="color:red;cursor:pointer;font-size: 32px" class="likeBtn left material-icons">@if($likes->contains('post_id',$post->id)) favorite @else favorite_border @endif</i>
 						</div>
 		              <div class="col s8 m10">
-		                <input style="margin-bottom: 10px" data-id="{{$post->id}}" type="text" placeholder="write a comment :)">
+		                <input class="comment_input" style="margin-bottom: 10px" data-id="{{$post->id}}" type="text" placeholder="write a comment :)">
 		              </div>
 		              <div class="col s2 m1" style="padding-top: 10px">
 			              <i data-id="{{$post->id}}" style="color: grey;cursor: pointer;font-size: 32px" class="commentBtn right material-icons">send</i>

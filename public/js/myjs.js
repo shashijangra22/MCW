@@ -337,16 +337,20 @@ var notifModule = (function() {
 				data:{lastNotifyTime:lastNotifyTime}
 			}).done(function(result) {
 				if (result.length>0) {
+					var count=0;
 					for (var key in result){
-						if (result[key].category==0) {
-							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' liked your Post.</a></li>');
+						var type = (result[key].category==0) ? ' liked':' commented on';
+						if (result[key].read_at==null) {
+							count++;
+							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +' your Post.<span class="new badge blue"></span></a></li>');
 						}
-						else
-						{
-							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' commented on your Post.</a></li>');	
+						else{
+							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +' your Post.</a></li>');	
 						}
 					}
 					lastNotifyTime=result[0].created_at;
+					var temp = (count) ? ' '+count:'';
+					$('.fa-bell').html(temp);			
 				}
 			});
 		}
@@ -491,6 +495,11 @@ var chatModule = (function() {
 			});
 		}setTimeout(pullMsg,3000);
 	}
+
+	return {
+		myTime : myTime
+	}
+
 })();
 
 $(document).delegate('.viewStoryBtn','click',function(e)
@@ -660,8 +669,93 @@ var peopleModule = (function() {
 				$searchBtn.removeClass('hide');
 			}
 	}
-	return {
-		getPeople : getPeople,
-		lastID : lastID
+})();
+
+
+var discussModule = (function() {
+	
+	var $el = $('#discussModule');
+	var $addTopicRow = $el.find('div.addTopicRow');
+	var $topicsRow = $el.find('div.topicsRow');
+		var $protoTopic = $topicsRow.find('div.protoTopic');
+	var $modal = $addTopicRow.find('div.modal');
+		var $modalContent = $modal.find('div.modal-content');
+		var $modalInput = $modal.find('input');
+		var $addThreadBtn = $modal.find('a');
+	var $input = $addTopicRow.find('input.topic');
+	$addTopicRow.find('a.addBtn').on('click',addTopic);
+	$topicsRow.find('a.joinBtn').on('click',showModal);
+	$addThreadBtn.on('click',addThread);
+
+	function addThread() {
+		var did = $modal.data('id');
+		var data = $modalInput.val().trim();
+		
+		if (data.length==0) {
+			Materialize.toast('empty thread ?',2000);
+			return false;
+		}
+		var t = chatModule.myTime(new Date());
+		$.ajax({
+			type:'POST',
+			url:'addthread',
+			data:{data:data,did:did}
+		}).done(function(result) {
+			$modalInput.val('');
+			$modalContent.append('<div class="row" style="margin-bottom:5px"><div class="right rightmsg">'+data+'<p class="chattime">'+t+'</p></div></div>');
+			$modalContent.scrollTop($modalContent.prop("scrollHeight"));
+		});
 	}
+
+	function addTopic() {
+		var topic = $input.val().trim(); 
+		if (topic.length==0) {
+			Materialize.toast('empty topic ?',2000);
+			return false;
+		}
+
+		$.ajax({
+			type:'POST',
+			url:'addtopic',
+			data:{topic:topic}
+		}).done(function(result) {
+			$input.val('');
+			Materialize.toast('Topic Added',2000);
+			var card = $protoTopic.clone(true);
+			card.find('span').html(topic);
+			card.find('p.username').html(auth_username);
+			card.find('p.counter').html('0 Threads');
+			card.find('a.joinBtn').data('id',Number(result));
+			$topicsRow.prepend(card);
+			card.fadeIn();
+		});
+
+	}
+
+	function showModal(e) {
+		$modalContent.html('');
+		$modal.data('id',$(e.target).data('id'));
+		var did = $(e.target).data('id');
+		$.ajax({
+			type:'POST',
+			url:'getthreads',
+			data:{did:did},
+			dataType:'json'
+		}).done(function(result) {
+			for (var key in result){
+				var temp = result[key];
+				var t = chatModule.myTime(new Date(temp.created_at));
+			 	if (temp.username==auth_username) {
+			 		$modalContent.append('<div class="row" style="margin-bottom:5px"><div class="right rightmsg primary-color">'+temp.data+'<p class="chattime">'+t+'</p></div></div>');
+			 	}
+			 	else
+			 	{
+			 		$modalContent.append('<div class="row" style="margin-bottom:5px"><div class="left leftmsg"><p class="chatinfo">'+temp.username+' | '+t+'</p>'+temp.data+'</div></div>');
+			 	}
+			}
+			$modalContent.scrollTop($modalContent.prop("scrollHeight"));
+		});
+		$modal.modal('open');
+	}
+
 })();

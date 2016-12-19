@@ -10,6 +10,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
+    public function threads()
+    {
+        return $this->hasMany(Thread::class);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

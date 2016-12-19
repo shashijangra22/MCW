@@ -12,12 +12,20 @@ use App\Comment;
 use App\Notice;
 use App\Question;
 use App\Activity;
+use App\Discussion;
 use Auth;
 use Illuminate\Support\Facades\View;
 use DB;
 
 class PagesController extends Controller
 {
+
+	public function getDiscuss()
+	{
+		$user=Auth::user();
+		$discussions=Discussion::all()->reverse();
+		return view('discuss')->with('user',$user)->with('discussions',$discussions);
+	}
 
 	public function getPeople()
 	{
@@ -29,7 +37,7 @@ class PagesController extends Controller
 	public function getActivity()
 	{
 		$user=Auth::user();
-		$activities=Activity::orderBy('created_at', 'DESC')->take(20)->where('user_id','!=',$user->id)->get();
+		$activities=Activity::orderBy('created_at', 'DESC')->where('user_id','!=',$user->id)->take(20)->get();
 		return view('activity')->with('user',$user)->with('activities',$activities);
 	}
 

@@ -26,6 +26,7 @@ Route::get('verify/{token}','UserController@verifyUser');
 Route::get('reset/{token}','UserController@resetView');
 Route::get('notices','PagesController@getNotices')->middleware('auth');
 Route::get('people','PagesController@getPeople')->middleware('auth');
+Route::get('discuss','PagesController@getDiscuss')->middleware('auth');
 Route::get('{username}','PagesController@userProfile')->middleware('auth');
 
 // User Routes
@@ -53,6 +54,13 @@ Route::post('showlikes','LikeController@showLikes');
 
 Route::post('savecomment','CommentController@savecomment');
 Route::post('showcomments','CommentController@showComments');
+
+// Discussion Routes
+
+Route::post('addtopic','DiscussionController@addTopic');
+Route::post('gettopics','DiscussionController@getTopics');
+Route::post('addthread','ThreadController@addThread');
+Route::post('getthreads','ThreadController@getThreads');
 
 // Profile Routes
 
