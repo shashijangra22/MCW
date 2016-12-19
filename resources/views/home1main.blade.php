@@ -80,7 +80,8 @@
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li class="active homeBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('home')}}"><i class="fa fa-home"></i> Home</a></li>
             <li class="confessionsBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('confessions')}}"><i class="fa fa-heartbeat"></i> Confessions</a></li>
-	          <li class="peopleBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('people')}}"><i class="fa fa-user"></i> People</a></li>
+            <li class="peopleBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('people')}}"><i class="fa fa-user"></i> People</a></li>
+	          <li class="discussBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('discuss')}}"><i class="fa fa-comments"></i> Discuss</a></li>
 	          <li class="activityBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('activity')}}"><i class="fa fa-users"></i> Activity Log</a></li>
 	          <!-- <li class="societiesBtn"><a href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="chakravyuhBtn"><a style="font-size: 12px;padding: 0px 12px" href="{{asset('chakravyuh')}}"><i class="fa fa-empire"></i> Chakravyuh</a></li>
@@ -101,7 +102,8 @@
 	          </div></li>
 	          <li class="homeBtn active"><a href="{{asset('home')}}"><i style="margin: 0px;" class="fa fa-home"></i> Home</a></li>
             <li class="confessionsBtn"><a href="{{asset('confessions')}}"><i style="margin: 0px;" class="fa fa-heartbeat"></i> Confessions</a></li>
-	          <li class="peopleBtn"><a href="{{asset('people')}}"><i style="margin: 0px;" class="fa fa-user"></i> People</a></li>
+            <li class="peopleBtn"><a href="{{asset('people')}}"><i style="margin: 0px;" class="fa fa-user"></i> People</a></li>
+	          <li class="discussBtn"><a href="{{asset('discuss')}}"><i style="margin: 0px;" class="fa fa-comments"></i> Discuss</a></li>
 	          <!-- <li class="societiesBtn"><a disabled="true" href="{{asset('societies')}}">Societies</a></li> -->
 	          <li class="activityBtn"><a href="{{asset('activity')}}"><i style="margin: 0px;" class="fa fa-users"></i> Activity Log</a></li>
 	          <li class="chakravyuhBtn"><a href="{{asset('chakravyuh')}}"><i style="margin: 0px;" class="fa fa-empire"></i> Chakravyuh</a></li>

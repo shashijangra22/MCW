@@ -499,11 +499,9 @@ var chatModule = (function() {
 	return {
 		myTime : myTime
 	}
-
 })();
 
-$(document).delegate('.viewStoryBtn','click',function(e)
-{
+$(document).delegate('.viewStoryBtn','click',function(e){
 	e.preventDefault();
 	$('#loadpost').empty();
 	var pid=$(this).data('pid');
@@ -577,7 +575,6 @@ var profileModule = (function() {
 		myProfilePosts : myProfilePosts,
 		userProfilePosts : userProfilePosts
 	}
-
 })();
 
 var peopleModule = (function() {
@@ -669,8 +666,11 @@ var peopleModule = (function() {
 				$searchBtn.removeClass('hide');
 			}
 	}
-})();
 
+	return {
+		getPeople : getPeople
+	}
+})();
 
 var discussModule = (function() {
 	
@@ -723,7 +723,7 @@ var discussModule = (function() {
 			Materialize.toast('Topic Added',2000);
 			var card = $protoTopic.clone(true);
 			card.find('span').html(topic);
-			card.find('p.username').html(auth_username);
+			card.find('p.username').html('By <a href="'+auth_username+'">'+auth_username+'</a>');
 			card.find('p.counter').html('0 Threads');
 			card.find('a.joinBtn').data('id',Number(result));
 			$topicsRow.prepend(card);
@@ -733,6 +733,7 @@ var discussModule = (function() {
 	}
 
 	function showModal(e) {
+		$modal.find('p').html($(e.target).closest('div.card').find('span').html());
 		$modalContent.html('');
 		$modal.data('id',$(e.target).data('id'));
 		var did = $(e.target).data('id');
@@ -757,5 +758,4 @@ var discussModule = (function() {
 		});
 		$modal.modal('open');
 	}
-
 })();
