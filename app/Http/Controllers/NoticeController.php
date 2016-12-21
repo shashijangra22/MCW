@@ -18,8 +18,8 @@ class NoticeController extends Controller
     public function addNotice(Request $request)
 	{
 		$notice=new Notice;
-        $notice->data=$request->mytext;
-        $notice->head=$request->noticeHeader;
+        $notice->data=e($request->mytext);
+        $notice->head=e($request->noticeHeader);
         $notice->save();
         return 0;
 	}

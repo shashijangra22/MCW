@@ -15,7 +15,7 @@ class DiscussionController extends Controller
     	$user=Auth::user();
     	$discuss = new Discussion;
     	$discuss->user_id=$user->id;
-    	$discuss->topic=$request->topic;
+    	$discuss->topic=e($request->topic);
     	$discuss->save();
     	return $discuss->id;
     }

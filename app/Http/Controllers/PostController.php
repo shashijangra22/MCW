@@ -25,7 +25,7 @@ class PostController extends Controller
         $uid=Auth::id();
         $post=new Post;
         $post->user_id=$uid;
-        $post->data=$request->mytext;
+        $post->data=e($request->mytext);
         $post->type=$request->type;
 
         if ($request->type==0) {

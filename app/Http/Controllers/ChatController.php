@@ -20,9 +20,8 @@ class ChatController extends Controller
     public function sendMsg(Request $request)
     {
     	$id=Auth::id();
-    	$message=$request->text;
     	$chat=new Chat;
-    	$chat->message=$message;
+    	$chat->message=e($request->text);
     	$chat->user_id=$id;
     	$chat->save();
     	return 0;

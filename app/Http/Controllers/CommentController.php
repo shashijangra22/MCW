@@ -22,7 +22,7 @@ class CommentController extends Controller
         $comment=new Comment;
         $comment->user_id=$user_id;
         $comment->post_id=$postid;
-        $comment->data=$request->data;
+        $comment->data=e($request->data);
         $comment->save();
         $post=Post::where('id','=',$postid)->first();
         $post->comments++;

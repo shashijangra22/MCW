@@ -47,13 +47,16 @@ class UserController extends Controller
     public function resetPass(Request $request)     // reset actual password
     {
         $user=User::where('verifytoken',$request->verifytoken)->first();
+        if ($user->active==2) {
+            return 'You are banned!';
+        }
         if ($user) {
             $user->password=bcrypt($request->newpass);
             $user->verifytoken=str_random(20);
             $user->save();
             return 0;
         }
-        return 1;
+        return 'No such account !';
     }
 
     public function sendResetMail(Request $request)     // send mail with verify token

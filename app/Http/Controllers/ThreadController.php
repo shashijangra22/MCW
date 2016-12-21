@@ -16,7 +16,7 @@ class ThreadController extends Controller
     	$thread = new Thread;
     	$thread->user_id = Auth::id();
     	$thread->discussion_id = $request->did;
-    	$thread->data = $request->data;
+    	$thread->data = e($request->data);
     	$thread->save();
     	return 'Thread Added';
     }
