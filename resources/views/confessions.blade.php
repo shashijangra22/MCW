@@ -1,6 +1,7 @@
 @extends('home1main')
 
 @section('content')
+
 <div class="row">
 
 <div class="col s12 m12 l6 offset-l3" id="main-feed" style="padding-left: 5px;padding-right: 5px">
@@ -43,8 +44,7 @@
 			<div class="card feed z-depth-4">
 	            <div class="card-content" style="padding: 0px 10px 5px 10px;">
 		              <span class="card-title" style="font-size: 20px">#{{$loop->remaining+1}} Confession</span>
-		              <card
-		              <span style="display: inline;"><strong style="font-size: 10px">{{date("j M | D h:i a",strtotime($post->created_at))}}</strong></span>
+		              <span style="display: inline;"><strong style="font-size: 10px">• {{$post->user->gender}} • {{$post->user->dept}} • {{$post->user->year}} yr • {{date("j M | D H:i",strtotime($post->created_at))}}</strong></span>
 	              <blockquote style="text-align: justify;font-size: 12px;margin-top: 0px;margin-bottom: 10px">
 	              	{!!nl2br($post->data)!!}
 	              </blockquote>

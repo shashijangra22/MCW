@@ -159,7 +159,7 @@ $.ajaxSetup(
                 }
                 else
                 {
-                	Materialize.toast('No such account !', 3000);
+                	Materialize.toast(result, 3000);
                 	$('#submitSpinner').removeClass('active');
                 	$('#submitSpinner').addClass('hide');
                 	$('#ResetPasswordFormButton').removeClass('hide');

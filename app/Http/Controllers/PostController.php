@@ -28,39 +28,28 @@ class PostController extends Controller
         $post->data=e($request->mytext);
         $post->type=$request->type;
 
-        if ($request->type==0) {
-                $activity=new Activity;
-                $activity->user_id=$uid;
-                $activity->type=0;            
-        }
-
         if(Input::hasFile('image'))
         {
             $image=Input::file('image');
-            $image_name=time().$image->getClientOriginalName();
-            $image->move('uploads',$image_name);
+            $image_name=time().'.jpg';
+
+            Image::make($image)->resize(null, 504,function ($constraint)
+            {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save('uploads/'.$image_name);
+
             $post->path='uploads/'.$image_name;
-        
-            $post->save();
+        }
+        $post->save();
+        if ($request->type==0) {
+            $activity=new Activity;
+            $activity->user_id=$uid;
+            $activity->type=0;      
             $activity->post_id=$post->id;
-            $activity->save();
-            $image=Image::make($post->path)->resize(null,504,function ($constraint) 
-                {
-                    $constraint->aspectRatio();
-                });
-            $image->orientate();
-            $image->save($post->path);
-            return 0;
+            $activity->save();   
         }
-        else
-        {
-        	$post->save();
-            if ($request->type==0) {
-                $activity->post_id=$post->id;
-                $activity->save();
-            }
-        	return 0;
-        }
+        return 0;
     }
 
     public function delpost(Request $request)

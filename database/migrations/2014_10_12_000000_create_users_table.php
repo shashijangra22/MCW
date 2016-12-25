@@ -19,9 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('lname');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('gender')->nullable();
+            $table->string('dept')->nullable();
+            $table->string('year')->nullable();
             $table->string('password');
             $table->string('displaypic')->default("profile_pic/default.png");
-            $table->integer('active');
+            $table->integer('active')->default(0);
             $table->string('verifytoken')->nullable();
             $table->rememberToken();
             $table->timestamps();

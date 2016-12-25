@@ -14,6 +14,7 @@ use Auth;
 use App\Http\Requests;
 use App\User;
 use App\Level;
+use Image;
 use DB;
 
 class UserController extends Controller
@@ -183,7 +184,6 @@ class UserController extends Controller
             'lname' => $data['lname'],
             'email' => $data['email'],
             'verifytoken' => str_random(20),
-            'active' => 0,
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
@@ -213,7 +213,7 @@ class UserController extends Controller
         {
             $user->lname=$lname;
         }
-        if ($usernames->count()>0 && $user->username!=$username)
+        if ($usernames && $user->username!=$username)
         {
             return "Username already exists!";
         }
@@ -221,32 +221,29 @@ class UserController extends Controller
         {
             $user->username=$username;
         }
+        $user->gender=$request->gender;
+        $user->dept=$request->dept;
+        $user->year=$request->year;
 		$user->save();
 		return 'Successfully edited :)';
 	}
 
-	public function updatePic(Request $request,$id)
+	public function updatePic(Request $request)
     {
+        if (Input::hasFile('pic')) {
+            $user=Auth::user();
+            if($user->displaypic!="profile_pic/default.png"){
+                File::delete($user->displaypic);
+            }
 
-                if(Input::hasFile('pic'))
-                {
-                   $user=User::find($id);
-                   $ppath=$user->displaypic;
-                   $pic=Input::file('pic');
-                   $pic_name=time().$pic->getClientOriginalName();
-                   $cpath='profile_pic/'.$pic_name;
-                   $pic->move('profile_pic',$pic_name);
-                if($user->displaypic!="profile_pic/default.png")
-                {
-                       File::delete($ppath);
-                }
-                    $user->displaypic=$cpath; 
-                    $user->save();
-                    return 'Success :) Refresh the page to see changes!';
-                }
-                else
-                    return "Not able to upload !";
+            $image = Input::file('pic');
+            $image_name = time().'jpg';
 
-            
+            Image::make($image)->resize(150,150)->save('profile_pic/'.$image_name);
+            $user->displaypic='profile_pic/'.$image_name;
+            $user->save();
+            return 'Success :) Refresh the page to see changes!';
+        }
+        return 'No Image recieved!';            
     }
 }

@@ -65,7 +65,7 @@ Route::post('getthreads','ThreadController@getThreads');
 // Profile Routes
 
 Route::post('updateProfile','UserController@updateProfile');
-Route::post('updatepic/{post}','UserController@updatePic');
+Route::post('updatepic','UserController@updatePic');
 Route::post('myprofileposts','PostController@myProfilePosts');
 Route::post('userprofileposts','PostController@userProfilePosts');
 
