@@ -91,6 +91,27 @@ class UserController extends Controller
 
     public function newnotify(Request $request)
     {
+
+        function notifType($value){
+            switch ($value) {
+                case 'App\Notifications\PostLiked':
+                    return 0;
+                    break;
+                
+                case 'App\Notifications\PostCommented':
+                    return 1;
+                    break;
+                
+                case 'App\Notifications\UserMentioned':
+                    return 2;
+                    break;
+                
+                default:
+                    return null;
+                    break;
+            }
+        }
+
         $lastNotifyTime=$request->lastNotifyTime;
         $user=Auth::user();
         if ($lastNotifyTime==0) 
@@ -99,7 +120,7 @@ class UserController extends Controller
             if (isset($notif)) {
                 foreach ($notif as $temp) {
                     $temp['username']=User::find($temp->data['user_id'])->username;
-                    $temp['category']=($temp->type=='App\Notifications\PostLiked') ? 0:1;
+                     $temp['category'] = notifType($temp->type);
                 }
               return $notif;
             }
@@ -112,7 +133,7 @@ class UserController extends Controller
             {
                 foreach ($unread as $temp) {
                     $temp['username']=User::find($temp->data['user_id'])->username;
-                    $temp['category']=($temp->type=='App\Notifications\PostLiked') ? 0:1;
+                    $temp['category'] = notifType($temp->type);
                 }
 
               return $unread;

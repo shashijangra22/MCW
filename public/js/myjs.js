@@ -339,13 +339,23 @@ var notifModule = (function() {
 				if (result.length>0) {
 					var count=0;
 					for (var key in result){
-						var type = (result[key].category==0) ? ' liked':' commented on';
-						if (result[key].read_at==null) {
-							count++;
-							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +' your Post.<span class="new badge blue"></span></a></li>');
+						
+						if (result[key].category==0) {
+							var type = ' liked your post.';
+						}
+						else if (result[key].category==1) {
+							var type = ' commented on you post.';
 						}
 						else{
-							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +' your Post.</a></li>');	
+							var type = ' mentioned you in a comment.';
+						}
+
+						if (result[key].read_at==null) {
+							count++;
+							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +'<span class="new badge blue"></span></a></li>');
+						}
+						else{
+							$('#dropdown2').append('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +'</a></li>');	
 						}
 					}
 					lastNotifyTime=result[0].created_at;
@@ -378,13 +388,18 @@ var notifModule = (function() {
 					for (var key in result)
 					{
 						lastNotifyTime=result[key].created_at;
+
 						if (result[key].category==0) {
-							$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' liked your Post.<span class="new badge blue"></span></a></li>');
+							var type = ' liked your post.';
 						}
-						else
-						{
-							$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + ' commented on your Post.<span class="new badge blue"></span></a></li>');	
+						else if (result[key].category==1) {
+							var type = ' commented on you post.';
 						}
+						else{
+							var type = ' mentioned you in a comment.';
+						}
+						
+						$('#dropdown2').prepend('<li><a style="cursor:pointer;" class="viewStoryBtn" data-pid="'+result[key].data.post_id+'">'+result[key].username + type +'<span class="new badge blue"></span></a></li>');
 					}
 					var prev=$('.fa-bell').html().trim();
 					var all=Number(prev)+result.length;
