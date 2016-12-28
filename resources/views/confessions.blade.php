@@ -19,6 +19,7 @@
 			                  <textarea name="mytext" id="mytext" class="materialize-textarea" placeholder="Want to confess something ??" style="padding-top: 0px;margin-bottom: 1rem;"></textarea>
 			                </div>
 			                <div class="row" style="margin: auto">
+			                <div class="fileUpload btn waves-effect waves-light"><i class="material-icons">add_a_photo</i><input type="file" accept="image/*" class="upload" name="image" id="image"/></div>
 			                  <input type="hidden" name="type" value="1">
 			                   <a disabled class="right btn"><i class="material-icons">send</i></a>
 			                   <div class="hide postspinner preloader-wrapper small right active">
@@ -42,6 +43,9 @@
 		<div class="col s12" id="postsRow">
 			@foreach($posts as $post)
 			<div class="card feed z-depth-4">
+			@if ($post->path!=null)
+				<div class="card-image"><img src="{{$post->path}}"></div>
+			@endif
 	            <div class="card-content" style="padding: 0px 10px 5px 10px;">
 		              <span class="card-title" style="font-size: 20px">#{{$loop->remaining+1}} Confession</span>
 		              <span style="display: inline;"><strong style="font-size: 10px">• {{$post->user->gender}} • {{$post->user->dept}} • {{$post->user->year}} yr • {{date("j M | D H:i",strtotime($post->created_at))}}</strong></span>

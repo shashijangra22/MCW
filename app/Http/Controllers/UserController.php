@@ -225,7 +225,7 @@ class UserController extends Controller
         $lname=$request->lname;
         $username=$request->username;
         $user=Auth::user();
-        $usernames=User::where('username',$username);
+        $usernames=User::where('username',$username)->first();
         if($fname!=NULL && !empty($fname))
         {
             $user->fname=$fname;

@@ -149,6 +149,7 @@ var postModule = (function() {
 	}
 
 	function commentPost(e) {
+		var commentsBox = $(e.target).closest('div.card').find('div.commentsBox');
 		var $input = $(e.target).closest('div.row').find('input');
 		var comment = $input.val().trim();
 		if (comment.length<=0) {
@@ -173,6 +174,7 @@ var postModule = (function() {
 				count = Number(count.join(''));
 				count++;
 				comments.html(count+' Comments');
+				commentsBox.append('<div class="row" style="padding-top: 2px;font-size: 12px;margin:auto"><b><a href="'+auth_username+'">'+auth_username+'</a></b> '+comment+' <p class="right" style="display:inline;font-size:8px">'+myTime(new Date())+'</p></div>');
 				$input.val('');
 				spinner.siblings('i').removeClass('hide');
 				spinner.addClass('hide');
